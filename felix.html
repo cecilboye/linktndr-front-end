@@ -1,0 +1,22 @@
+<h1>OefenBestand Felix</h1>
+<script>
+    function ophalen(){
+        fetch("https://localhost:7199/api/Medewerker")
+        .then(res => res.json())
+        .then(d => toonallen(d))
+    }
+    function toonallen(allemedewerkers){
+        for(var x = 0; x < allemedewerkers.length; x++){
+            document.getElementById("rooster").innerHTML += "<h1>"+allemedewerkers[x].firstName+"</h1>";
+        }
+    }
+    function aanmaken(){
+        var vnaam = document.getElementById("voornaam").value;
+        fetch("https://localhost:7199/api/Medewerker/demomedewerkeraanmaken/"+vnaam)
+    }
+</script>
+<input id="voornaam">
+<button onclick="aanmaken()">aanmaken</button>
+
+<button onclick="ophalen()">Get me Staff!!</button>
+<div id="rooster"></div>
