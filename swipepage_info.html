@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap HTML Template</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+
+.card-header {
+  position: relative;
+  background-color: #f5f5f5;
+  padding: 10px;
+}
+
+.card-title {
+  margin: 0;
+  text-align: center;
+}
+
+.card-body {
+  margin-top: 50px;
+}
+
+.navigator {
+  width: 150px;
+}
+
+/* added styles */
+
+.profilepic {
+  width: 200px;
+  border-radius: 200px;
+  padding: 20px 20px 20px 20px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+</style>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Logo</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Link 1</a></li>
+          <li><a href="#">Link 2</a></li>
+          <li><a href="#">Link 3</a></li>
+          <li><a href="#">Link 4</a></li>
+          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign
+              Up</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-4">
+        <div class="card" style="">
+          <div class="text-center">
+            <img src="img/prfofilepicthumb.jpg" class="card-img-top profilepic" alt="...">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text text-center">orem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sed magna felis. Curabitur vitae justo nibh. Vestibulum ante ipsum primis in faucibus orci luctus</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item text-center">Cras justo odio</li>
+            <li class="list-group-item text-center">Dapibus ac facilisis in</li>
+            <li class="list-group-item text-center">Vestibulum at eros</li>
+            <li class="list-group-item text-center">Vestibulum at eros</li>
+          </ul>
+          <div class="card-footer">
+            <button type="button" class="btn btn-success">Like</button>
+            <button type="button" class="btn btn-danger">Dislike</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+    
+    </html>
+    
