@@ -1,0 +1,32 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <table class="table table-hover">
+            <tbody id="Medewerkers"></tbody>
+        </table>
+    
+        <script  type="module">
+            import {URL} from "./local.js";
+            
+            function ApiGetMedewerkers()
+            {
+                fetch(URL + 'Medewerker')
+                    .then(res => res.json(), console.log("fetch complete"))
+                    .then(data =>
+                    {
+                        console.log(data);
+    
+                        data.forEach(id => 
+                        {
+                            document.getElementById("Medewerkers").innerHTML += (`<tr><td>${id.talentManager_Id}</td><td>${id.firstName}</td><td>${id.lastName}</td><td>${id.dateOfBirth}</td><td width="100"></td></tr>`);
+                        })
+                    })
+                    console.log("fetch called");
+            }
+    
+            ApiGetMedewerkers();
+        </script>
+    </body>
+</html>
