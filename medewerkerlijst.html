@@ -1,15 +1,13 @@
 <html>
     <head>
-
+        <script type="text/javascript" src="./local.js"></script>
     </head>
     <body>
         <table class="table table-hover">
             <tbody id="Medewerkers"></tbody>
         </table>
     
-        <script  type="module">
-            import {URL} from "./local.js";
-            
+        <script>            
             function ApiGetMedewerkers()
             {
                 fetch(URL + 'Medewerker')
