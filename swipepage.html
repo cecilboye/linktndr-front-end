@@ -12,68 +12,63 @@
   <!-- Bootstrap JS -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
-    .btn-primary {
-      padding: 10px 50px 10px 50px;
+    .carousel-control .glyphicon-chevron-left,
+    .icon-prev,
+    .carousel-control .glyphicon-chevron-right {
+      margin-left: -100px;
+      color: black;
+      opacity: 1 !important;
     }
 
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 5px;
+    .carousel-control {
+      font-size: 50px;
+      padding: 20px 40px;
+      opacity: 1;
     }
 
-    .card-header {
-      position: relative;
-      background-color: #f5f5f5;
-      padding: 10px;
+    .carousel-control .glyphicon-chevron-right,
+    .carousel-control .icon-next {
+      margin-right: -100px;
+      opacity: 1 !important;
+      ;
     }
 
-    .arrow {
-      font-size: 20px;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    .left {
-      left: 0;
-      margin-left: 330px;
-    }
-
-    .right {
-      right: 0;
-      margin-right: 330px;
-    }
-
-    .card-title {
-      margin: 0;
-      text-align: center;
-    }
-
-    .card-body {
-      margin-top: 50px;
-    }
-
-    .card-body .btn-primary {
-      width: 100%;
-    }
-
-    .navigator {
-      width: 150px;
-    }
-
-    /* added styles */
-    .arrow-wrapper {
-      display: flex;
-      justify-content: center;
-    }
-
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    .test{ 
+      background-color:green; 
+      height: 200px;
     }
   </style>
+  <script>
+
+    window.onload = function () {
+      fetch("https://localhost:7199/api/Medewerker").then(
+        a => a.json()
+      ).then(b => letgohupake(b))
+    }
+    function letgohupake(dedata) {
+      console.log(dedata)
+      document.getElementById('decarouseldiv').innerHTML = ""
+      var x = 0;
+      var active = ""
+      for (i = 0; i < dedata.length; i++) {
+        if (i == 0) {
+          active = "active"
+        } else {
+          active = ""
+        }
+        document.getElementById('decarouseldiv').innerHTML += `
+            <div class="item ${active}">
+              <img src="img/IMG_0857.jpg" alt="Moestafa" class="profilepic">
+              <div class="carousel-caption">
+                <h3>${dedata[i].firstName}</h3>
+                <a href="swipepage_info.html" class="btn btn-primary">Meer info</a>
+              </div>
+              <div class="test"></div>
+            </div>
+            `
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -93,8 +88,7 @@
           <li><a href="#">Link 2</a></li>
           <li><a href="#">Link 3</a></li>
           <li><a href="#">Link 4</a></li>
-          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign
-              Up</a></li>
+          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
         </ul>
       </div>
     </div>
@@ -103,37 +97,34 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-4 arrow left">
-        <div class="arrow-wrapper">
-          <img class="navigator" src="img/left-arrow.png">
-        </div>
+        <div class="arrow-wrapper"> </div>
       </div>
 
       <div class="col-sm-4">
-        <div class="card" style="width: 28rem;">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="180">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6"
-                  dy=".3em">Image cap</text>
-              </svg>
-              <div class="card-header">
-                <h5 class="card-title">Werknemer naam</h5>
-              </div>
-              <div class="card-body">
-                <div class="text-center">
-                  <a href="#" class="btn btn-primary">Meer info</a>
-                </div>
-              </div>
-            </div>
-          </div>
-    
-          <div class="col-sm-4 arrow right">
-            <div class="arrow-wrapper">
-              <img class="navigator" src="img/right-arrow.png">
-            </div>
-          </div>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" id="decarouseldiv"> </div>
+
+          <!-- Left and right controls -->
+          <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+          </a>
         </div>
       </div>
-    </body>
-    
-    </html>
-    
+
+      <div class="col-sm-4 arrow right">
+        <div class="arrow-wrapper">
+        
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
