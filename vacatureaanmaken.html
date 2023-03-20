@@ -58,10 +58,10 @@
                         <input type="text" class="form-control" id="bedrijfsnaam"/>
                     </div>
                     <select class="form-control" id="uitstroomrichting">
-                        <option value="Devops">Devops</option>
-                        <option value="Informatie Analist">Informatie Analist</option>
-                        <option value="C# Programmeur">C# Programmeur</option>
-                        <option value="java Programmeur">java Programmeur</option>
+                        <option value="0">Devops</option>
+                        <option value="1">Informatie Analist</option>
+                        <option value="2">C# Programmeur</option>
+                        <option value="3">java Programmeur</option>
                     </select>
                     <div class="form-group hiddeninput Opdrachtgever">
                         <label for="Locatie">Locatie:</label>
@@ -89,15 +89,17 @@
             const title = document.getElementById("title").value;       
 			const description = document.getElementById("description").value;
 			const bedrijfsnaam = document.getElementById("bedrijfsnaam").value;
-            const uitstroomrichting = document.getElementById("uitstroomrichting");
+            const uitstroomrichting = parseInt(document.getElementById("uitstroomrichting").value);
             const locatie = document.getElementById("locatie").value;
             const startdatum = document.getElementById("startdatum").value;
             const einddatum = document.getElementById("einddatum").value;
+            const Opdrachtgever = 1;
 
 			// Create data object
 			const data = {
                 title:title,
 				description: description,
+                OpdrachtgeverId:Opdrachtgever,
 				bedrijfsnaam: bedrijfsnaam,
                 uitstroomrichting: uitstroomrichting,
                 location:locatie,

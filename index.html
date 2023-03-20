@@ -12,6 +12,13 @@
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="includes/globalscript.js"></script>
+
+    <style>
+        #usertype-menu-item, .item-ingelogd{
+            color:white;
+            margin-top:14px;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,11 +34,8 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                    <li><a href="#">Link 3</a></li>
-                    <li><a href="#">Link 4</a></li>
-                    <li id="usertype-menu-item"></li> <!-- New list item for user type -->
+                    <li class="item-ingelogd">Je bent ingelogd als:</li>
+                    <li id="usertype-menu-item"></li> 
                     <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                 </ul>
             </div>
@@ -89,11 +93,6 @@
             })
 			.catch(error => console.error(error));
 		}
-
-        function updateUserTypeMenuItem(usertype) {
-            const usertypeMenuItem = document.getElementById('usertype-menu-item');
-            usertypeMenuItem.innerHTML = `<a href="#">${usertype}</a>`;
-        }
 	</script>
 </body>
 

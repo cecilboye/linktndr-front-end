@@ -2,7 +2,9 @@ const BASEURL = "https://localhost:7199";
 
 window.onload = function(){
     var arr = JSON.parse( localStorage.getItem('userData') );
-    console.log(arr);
+    console.log(arr["Usertype"]);
+
+    document.getElementById("usertype-menu-item").innerHTML = arr["Usertype"];
     //localStorage.clear();
 }
 
