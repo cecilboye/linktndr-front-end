@@ -30,7 +30,7 @@
                     <li><a href="#">Link 2</a></li>
                     <li><a href="#">Link 3</a></li>
                     <li><a href="#">Link 4</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                 </ul>
             </div>
         </div>
@@ -53,11 +53,40 @@
                         <label for="pwd">Password:</label>
                         <input type="password" class="form-control" id="pwd">
                     </div>
-                    <button type="submit" class="btn btn-default">Login</button>
+                    
+                    <button type="submit" class="btn btn-default" onclick="submitForm(event)">Login</button>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+		function submitForm(e) {
+            e.preventDefault();
+			// Get form data
+			const email = document.getElementById("email").value;
+			const password = document.getElementById("pwd").value;
+            const usertype = "medewerker";
+
+			// Create data object
+			const data = {
+				email: email,
+				password: password,
+                usertype: usertype
+			};
+
+			// Send data as JSON to backend URL using Fetch API
+			fetch('https://localhost:7199/api/Users/check', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error(error));
+		}
+	</script>
 </body>
 
 </html>
