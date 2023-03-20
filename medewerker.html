@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +11,28 @@
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+<script>
+
+    function displayData(data) {
+        const nameElement = document.getElementById('name');
+        const ulElement = document.getElementById('info-list');
+
+        nameElement.textContent = data[0].firstName;
+
+        ulElement.innerHTML = '';
+        Object.entries(data[0]).forEach(([key, value]) => {
+            const li = document.createElement('li');
+            li.textContent = `${key}: ${value}`;
+            ulElement.appendChild(li);
+        });
+    }
+
+    window.onload = function() {
+        fetch("https://localhost:7199/api/Medewerker")
+            .then(response => response.json())
+            .then(data => displayData(data));
+    }
+</script>
 <style>
 
 .profilepic{
@@ -49,33 +70,27 @@ ul{
             </div>
         </div>
     </nav>
-
 <div class="container">
     <div class="row">
         <div class="col-sm-5 col-sm-offset-1">
-            <h4>Name</h4>
+            <h4 id="name">Name</h4>
             <p>
                 Lorem ipsum dolor sit amet, consectetur
                 incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur
                 incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur
                 incididunt ut labore et dolore magna aliqua.
             </p>
-            <ul>
-                <li>Voornaam</li>
-                <li>Achternaam</li>
-                <li>Birthday</li>
-                <li>Postcode</li>
-                <li>Huisnummer</li>
-                <li>Email</li>
-                <li>Telefoonnummer</li>
-                <li>Radius</li>
-                <li>Uistroomrichting</li>
+            <ul id="info-list">
+             
             </ul>
         </div>
-
-        <div class="col-sm-6">
-            <img class="profilepic" src="img/profilepicfull.jpg">
-        </div>
+    <div class="col-sm-6">
+        <img class="profilepic" src="img/profilepicfull.jpg">
     </div>
+</div>
 </body>
 </html>
+
+
+
+
