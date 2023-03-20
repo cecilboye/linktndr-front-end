@@ -16,11 +16,15 @@
     function displayData(data) {
         const nameElement = document.getElementById('name');
         const ulElement = document.getElementById('info-list');
+        const profileText = document.getElementById('profileText');
+        //const profilePic = document.getElementById('profilepic');
 
-        nameElement.textContent = data[0].firstName;
+        nameElement.textContent = data.firstName;
+        profileText.textContent = data.profileText;
+        //profilePic.textContent = data.photo;
 
         ulElement.innerHTML = '';
-        Object.entries(data[0]).forEach(([key, value]) => {
+        Object.entries(data).forEach(([key, value]) => {
             const li = document.createElement('li');
             li.textContent = `${key}: ${value}`;
             ulElement.appendChild(li);
@@ -28,7 +32,7 @@
     }
 
     window.onload = function() {
-        fetch("https://localhost:7199/api/Medewerker")
+        fetch("https://localhost:7199/api/Medewerker/2")
             .then(response => response.json())
             .then(data => displayData(data));
     }
@@ -74,18 +78,11 @@ ul{
     <div class="row">
         <div class="col-sm-5 col-sm-offset-1">
             <h4 id="name">Name</h4>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur
-                incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur
-                incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur
-                incididunt ut labore et dolore magna aliqua.
-            </p>
-            <ul id="info-list">
-             
-            </ul>
+            <p id="profileText"></p>
+            <ul id="info-list"></ul>
         </div>
     <div class="col-sm-6">
-        <img class="profilepic" src="img/profilepicfull.jpg">
+        <img class="profilepic" src="">
     </div>
 </div>
 </body>
