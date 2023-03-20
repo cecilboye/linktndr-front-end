@@ -90,6 +90,19 @@
                 // Store data in localStorage
                 localStorage.setItem('userData', JSON.stringify(data));
                 console.log(data);
+                var arr = JSON.parse( localStorage.getItem('userData') );
+                switch(arr["Usertype"]){
+                    case "Medewerker":
+                        window.location.href = "./medewerker.html";
+                    break;
+                    case "Talentmanager":
+                        window.location.href = "./talentmanager.html";
+                    break;
+                    case "Opdrachtgever":
+                        window.location.href = "./vacature.html";
+                    break;
+                }
+                
             })
 			.catch(error => console.error(error));
 		}
