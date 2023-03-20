@@ -36,6 +36,42 @@
         padding: 10px 50px 10px 50px;
     }
 </style>
+<script src="includes/globalscript.js"></script>
+<script>
+    window.onload = function(){
+        console.log("toon vacatures");
+        fetch(BASEURL + "/api/Vacature")
+        .then(r => r.json())
+        .then(d => toonVacatures(d))
+    }
+    function toonVacatures(vacatures){
+        let vacatureScherm = document.getElementById("vacaturelijst");
+        vacatureScherm.innerHTML = "";
+        for(let x = 0; x < vacatures.length; x++){
+            vacatureScherm.innerHTML += `
+            <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <div class="card">
+                    <div class="card-header text-bold">
+                        ${vacatures[x].title}
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center ">
+                            <button type="button" class="btn btn-primary p-2"> <a href="swipepage.html?vacid=${vacatures[x].id}">Info </a></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-left">
+                            <p class="text-muted">${vacatures[x].location}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            `
+        }
+    }
+</script>
 
 <body>
     <nav class="navbar navbar-inverse">
@@ -60,7 +96,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container" id="vacaturelijst">
         <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
                 <div class="card">
