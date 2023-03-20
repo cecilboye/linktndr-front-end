@@ -48,8 +48,12 @@
     }
   </style>
   <script>
-
+    let vacatureId = -1;
     window.onload = function () {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      vacatureId = urlParams.get('vacid');
+      console.log(vacatureId);
       fetch("https://localhost:7199/api/Medewerker").then(
         a => a.json()
       ).then(b => letgohupake(b))
