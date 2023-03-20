@@ -36,6 +36,14 @@
         padding: 10px 50px 10px 50px;
     }
 </style>
+<script src="includes/globalscript.js"></script>
+<script>
+    window.onload = function(){
+        console.log("toon vacatures");
+        fetch(BASEURL + "/api/Vacature")
+        .then(r => console.log(r))
+    }
+</script>
 
 <body>
     <nav class="navbar navbar-inverse">
