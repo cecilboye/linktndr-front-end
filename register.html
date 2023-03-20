@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap HTML Template</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Logo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                    <li><a href="#">Link 3</a></li>
+                    <li><a href="#">Link 4</a></li>
+                    <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h1>Welcome to LinkTinder</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <form>
+                    <div class="form-group">
+                        <label for="email">Email address:</label>
+                        <input type="email" class="form-control" id="email"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Password:</label>
+                        <input type="password" class="form-control" id="pwd"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Usertype:</label>
+                        <select class="form-control"  id="usertype" onchange="showDiv(this)">
+                            <option value="" selected>Selecteer wat je bent:</option>
+                            <option value="Medewerker">Medewerker</option>
+                            <option value="Talentmanager">Talentmanager</option>
+                            <option value="Opdrachtgever">Opdrachtgever</option>
+                          </select>
+                    </div>
+                    <div class="form-group hiddeninput Medewerker Talentmanager">
+                        <label for="firstname">Voornaam:</label>
+                        <input type="text" class="form-control" id="firstname"/>
+                    </div>
+                    <div class="form-group hiddeninput Medewerker Talentmanager">
+                        <label for="lastname">Achternaam:</label>
+                        <input type="text" class="form-control" id="lastname"/>
+                    </div>
+                    <div class="form-group hiddeninput Medewerker">
+                        <label for="DateOfBirth">Geboortedatum:</label>
+                        <input type="date" class="form-control" id="DateOfBirth"/>
+                    </div>
+                    <div class="form-group hiddeninput">
+                        <label for="PostCode">Postcode:</label>
+                        <input type="text" class="form-control" id="PostCode"/>
+                    </div>
+                    <div class="form-group hiddeninput">
+                        <label for="HouseNumber">Huisnummer:</label>
+                        <input type="text" class="form-control" id="HouseNumber"/>
+                    </div>
+                    <div class="form-group hiddeninput Opdrachtgever">
+                        <label for="name">Bedrijfsnaam:</label>
+                        <input type="text" class="form-control" id="name"/>
+                    </div>
+                    <div class="form-group hiddeninput Medewerker Talentmanager Opdrachtgever">
+                        <label for="telephone">Telefoonnummer:</label>
+                        <input type="text" class="form-control" id="telephone"/>
+                    </div>
+                    <button type="submit" class="btn btn-default" onclick="submitForm(event)">Registreer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+		function submitForm(e) {
+            e.preventDefault();
+			// Get form data
+			const email = document.getElementById("email").value;
+			const password = document.getElementById("pwd").value;
+            const usertype = document.getElementById("usertype").value;
+
+			// Create data object
+			const data = {
+				email: email,
+				password: password,
+                usertype: usertype
+			};
+
+			// Send data as JSON to backend URL using Fetch API
+			fetch('https://localhost:7199/api/Users/add', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error(error));
+		}
+        function showDiv(e){
+            let elements = document.getElementsByClassName("hiddeninput");
+            Array.from(elements).forEach(function (element) {
+                if(element.classList.contains(e.value)){
+                    element.style.display = "block";
+                }else{
+                    element.style.display = "none";
+                }
+            });
+        }
+	</script>
+</body>
+
+</html>
