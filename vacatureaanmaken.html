@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vacatrue aanmaken</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Logo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                    <li><a href="#">Link 3</a></li>
+                    <li><a href="#">Link 4</a></li>
+                    <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h1>Vacature aanmaken</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <form>
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input type="text" class="form-control" id="title"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <input type="text" class="form-control" id="description"/>
+                    </div>
+                    <div class="form-group hiddeninput Opdrachtgever">
+                        <label for="bedrijfsnaam">Bedrijfsnaam:</label>
+                        <input type="text" class="form-control" id="bedrijfsnaam"/>
+                    </div>
+                    <select class="form-control" id="uitstroomrichting">
+                        <option value="0">Devops</option>
+                        <option value="1">Informatie Analist</option>
+                        <option value="2">C# Programmeur</option>
+                        <option value="3">java Programmeur</option>
+                    </select>
+                    <div class="form-group hiddeninput Opdrachtgever">
+                        <label for="Locatie">Locatie:</label>
+                        <input type="text" class="form-control" id="locatie"/>
+                    </div>
+                    <div class="form-group hiddeninput Opdrachtgever">
+                        <label for="Startdatum">Startdatum:</label>
+                        <input type="Date" class="form-control" id="startdatum"/>
+                    </div>
+                    <div class="form-group hiddeninput Opdrachtgever">
+                        <label for="Einddatum">Einddatum:</label>
+                        <input type="Date" class="form-control" id="einddatum"/>
+                    </div>
+
+                    <button type="submit" class="btn btn-default" onclick="submitForm(event)">Registreer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+		function submitForm(e) {
+            e.preventDefault();
+	
+            console.log("naaruploaden") 
+            const title = document.getElementById("title").value;       
+			const description = document.getElementById("description").value;
+			const bedrijfsnaam = document.getElementById("bedrijfsnaam").value;
+            const uitstroomrichting = parseInt(document.getElementById("uitstroomrichting").value);
+            const locatie = document.getElementById("locatie").value;
+            const startdatum = document.getElementById("startdatum").value;
+            const einddatum = document.getElementById("einddatum").value;
+            const Opdrachtgever = 1;
+
+			// Create data object
+			const data = {
+                title:title,
+				description: description,
+                OpdrachtgeverId:Opdrachtgever,
+				bedrijfsnaam: bedrijfsnaam,
+                uitstroomrichting: uitstroomrichting,
+                location:locatie,
+                startdatum:startdatum,
+                einddatum:einddatum
+			};
+            console.log(JSON.stringify(data));
+			// Send data as JSON to backend URL using Fetch API
+			fetch('https://localhost:7199/api/Vacature/add', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error(error));
+		}
+        function showDiv(e){
+            let elements = document.getElementsByClassName("hiddeninput");
+            Array.from(elements).forEach(function (element) {
+                if(element.classList.contains(e.value)){
+                    element.style.display = "block";
+                }else{
+                    element.style.display = "none";
+                }
+            });
+        }
+	</script>
+</body>
+
+</html>
