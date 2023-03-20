@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>.hiddeninput {display: "none"; }</style>
 </head>
 
 <body>
@@ -46,17 +47,19 @@
             <div class="col-sm-4 col-sm-offset-4">
                 <form>
                     <div class="form-group">
-                        <label for="email">Email address:</label>
-                        <input type="email" class="form-control" id="email"/>
+                        <label for="email">Emailadres:</label>
+                        <input type="email" class="form-control" id="email" placeholder="Edo@rooseboom.nl" required/>
                     </div>
                     <div class="form-group">
-                        <label for="pwd">Password:</label>
-                        <input type="password" class="form-control" id="pwd"/>
+                        <label for="pwd">Wachtwoord:</label>
+                        <input type="password" class="form-control" id="pwd" placeholder="p@ssw0rd!" required/>
+                        <label for="pwd">Wachtwoord nogmaals:</label>
+                        <input type="password" class="form-control" id="pwd2" placeholder="p@ssw0rd!" required/>
                     </div>
                     <div class="form-group">
-                        <label for="pwd">Usertype:</label>
-                        <select class="form-control"  id="usertype" onchange="showDiv(this)">
-                            <option value="" selected>Selecteer wat je bent:</option>
+                        <label for="usertype">Type gebruiker:</label>
+                        <select class="form-control"  id="usertype" onchange="showDiv(this)" required>
+                            <option value="" disabled selected>Selecteer wat je bent:</option>
                             <option value="Medewerker">Medewerker</option>
                             <option value="Talentmanager">Talentmanager</option>
                             <option value="Opdrachtgever">Opdrachtgever</option>
@@ -64,33 +67,60 @@
                     </div>
                     <div class="form-group hiddeninput Medewerker Talentmanager">
                         <label for="firstname">Voornaam:</label>
-                        <input type="text" class="form-control" id="firstname"/>
+                        <input type="text" class="form-control" id="firstname" placeholder="Edo" required/>
                     </div>
                     <div class="form-group hiddeninput Medewerker Talentmanager">
                         <label for="lastname">Achternaam:</label>
-                        <input type="text" class="form-control" id="lastname"/>
+                        <input type="text" class="form-control" id="lastname" placeholder="Rooseboom" required/>
                     </div>
                     <div class="form-group hiddeninput Medewerker">
                         <label for="DateOfBirth">Geboortedatum:</label>
-                        <input type="date" class="form-control" id="DateOfBirth"/>
+                        <input type="date" class="form-control" id="DateOfBirth" placeholder="27-11-1997" required/>
                     </div>
                     <div class="form-group hiddeninput">
                         <label for="PostCode">Postcode:</label>
-                        <input type="text" class="form-control" id="PostCode"/>
+                        <input type="text" class="form-control" id="PostCode" placeholder="6969HH" required/>
                     </div>
                     <div class="form-group hiddeninput">
                         <label for="HouseNumber">Huisnummer:</label>
-                        <input type="text" class="form-control" id="HouseNumber"/>
+                        <input type="text" class="form-control" id="HouseNumber" placeholder="69a" required/>
                     </div>
                     <div class="form-group hiddeninput Opdrachtgever">
                         <label for="name">Bedrijfsnaam:</label>
-                        <input type="text" class="form-control" id="name"/>
+                        <input type="text" class="form-control" id="name" placeholder="Bert B.V." required/>
                     </div>
                     <div class="form-group hiddeninput Medewerker Talentmanager Opdrachtgever">
                         <label for="telephone">Telefoonnummer:</label>
-                        <input type="text" class="form-control" id="telephone"/>
+                        <input type="number" class="form-control" id="telephone" placeholder="0669696969" required/>
                     </div>
-                    <button type="submit" class="btn btn-default" onclick="submitForm(event)">Registreer</button>
+                    <div class="form-group hiddeninput Medewerker">
+                        <label for="Talentmanager">Talentmanager:</label>
+                        <select class="form-control"  id="Talentmanager">
+                        </select>
+                    </div>
+                    <div class="form-group hiddeninput Medewerker">
+                        <label for="radius">Afstand voorkeur: <span id="rangevalue">50</span>km</label>
+                        <input type="range" class="form-control" id="radius" min="10" max="200" value="50" oninput="showValue(this.value)" />
+                    </div>
+                    <div class="form-group hiddeninput Medewerker">
+                        <label for="uitstroomrichting">uitstroomrichting:</label>
+                        <select class="form-control"  id="usertype">
+                            <option value="" selected>Selecteer je uitstroomrichting:</option>
+                            <option value="Dev-ops">Dev ops</option>
+                            <option value="C# programmer">C# progameur</option>
+                            <option value="Data analyst">Data analyst</option>
+                          </select>
+                    </div>
+                    <div class="form-group hiddeninput Medewerker">
+                        <textarea class="form-control" name="bio" id="bio" cols="30" rows="10" placeholder="Vul hier een korte beschrijving van jezelf in"></textarea>
+                    </div>
+                    <div class="form-group hiddeninput Medewerker">
+                        <label for="image">Foto:</label>
+                        <input  type="text" class="form-control" id="image" placeholder="Vul hier een URL van een foto die je wilt uploaden"/>
+                    </div>
+                    <div class="form-group hiddeninput Medewerker Talentmanager Opdrachtgever">
+                        <button type="submit" class="btn btn-default btn-outline-primary" onclick="submitForm(event)">Registreer</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -111,7 +141,7 @@
 			};
 
 			// Send data as JSON to backend URL using Fetch API
-			fetch('https://localhost:7199/api/Users/add', {
+			fetch('https://localhost:7199/api/Users/add_talentmanager', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -131,6 +161,29 @@
                     element.style.display = "none";
                 }
             });
+        }
+        window.onload = function(){
+            let elements = document.getElementsByClassName("hiddeninput");
+            Array.from(elements).forEach(function (element) {
+                element.style.display = "none";
+            });
+            let element = document.getElementById("Talentmanager");
+            fetch('https://localhost:7199/api/Talentmanager')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    // Create option elements and add them to the select element
+                    data.forEach(item => {
+                        const option = document.createElement("option");
+                        option.text = item.firstName+" "+item.lastName;
+                        option.value = item.id;
+                        element.add(option);
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+        function showValue(value) {
+            document.getElementById("rangevalue").innerHTML = value;
         }
 	</script>
 </body>
