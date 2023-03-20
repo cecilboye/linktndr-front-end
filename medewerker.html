@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script type="text/javascript" src="./local.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootstrap HTML Template</title>
@@ -22,6 +24,12 @@
         nameElement.textContent = data.firstName;
         profileText.textContent = data.profileText;
         //profilePic.textContent = data.photo;
+
+        data.uitstroomrichting = uitstroomrichtingOptions[data.uitstroomrichting];
+        
+
+        console.log(data.uitstroomrichting)
+
 
         ulElement.innerHTML = '';
         Object.entries(data).forEach(([key, value]) => {
