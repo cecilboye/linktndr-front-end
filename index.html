@@ -30,7 +30,8 @@
                     <li><a href="#">Link 2</a></li>
                     <li><a href="#">Link 3</a></li>
                     <li><a href="#">Link 4</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li id="usertype-menu-item"></li> <!-- New list item for user type -->
+                    <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                 </ul>
             </div>
         </div>
@@ -62,19 +63,18 @@
     <script>
 		function submitForm(e) {
             e.preventDefault();
-			// Get form data
+
 			const email = document.getElementById("email").value;
 			const password = document.getElementById("pwd").value;
             const usertype = "medewerker";
 
-			// Create data object
+	
 			const data = {
 				email: email,
 				password: password,
                 usertype: usertype
 			};
 
-			// Send data as JSON to backend URL using Fetch API
 			fetch('https://localhost:7199/api/Users/check', {
 				method: 'POST',
 				headers: {
@@ -86,6 +86,25 @@
 			.then(data => console.log(data))
 			.catch(error => console.error(error));
 		}
+
+        function submitForm(e) {
+            e.preventDefault();
+  
+            fetch('https://localhost:7199/api/Users/check', {
+            
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                updateUserTypeMenuItem(data.usertype);
+            })
+            .catch(error => console.error(error));
+        }
+
+        function updateUserTypeMenuItem(usertype) {
+            const usertypeMenuItem = document.getElementById('usertype-menu-item');
+            usertypeMenuItem.innerHTML = `<a href="#">${usertype}</a>`;
+        }
 	</script>
 </body>
 
