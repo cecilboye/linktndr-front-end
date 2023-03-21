@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <script type="text/javascript" src="./local.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootstrap HTML Template</title>
@@ -36,11 +38,10 @@
         padding: 10px 50px 10px 50px;
     }
 </style>
-<script src="includes/globalscript.js"></script>
 <script>
     window.onload = function(){
         console.log("toon vacatures");
-        fetch(BASEURL + "/api/Vacature")
+        fetch(URL + "Vacature")
         .then(r => r.json())
         .then(d => toonVacatures(d))
     }

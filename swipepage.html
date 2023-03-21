@@ -2,6 +2,8 @@
 <html>
 
 <head>
+  <script type="text/javascript" src="./local.js"></script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bootstrap HTML Template</title>
@@ -49,37 +51,79 @@
   </style>
   <script>
     let vacatureId = -1;
+
+    //maak een vacature-object aan (zelfde variabelen als VacatureDTO)
+    let vacature = {id: -1, title: "", description: "", uitstroomrichting: 0, location: "", startdate: null, enddate: null, opdrachtgeverId: -1, opdrachtgeverName: "", OpdrachtgeverEmail: "", opdrachtgeverTelephone: -1}
+    let active = "active";
+
+    //wanneer het scherm wordt geladen pakt het alle medewerkers
     window.onload = function () {
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       vacatureId = urlParams.get('vacid');
       console.log(vacatureId);
-      fetch("https://localhost:7199/api/Medewerker").then(
-        a => a.json()
-      ).then(b => letgohupake(b))
+
+      fetch(URL + "Medewerker")
+        .then(a => a.json())
+        .then(b => letgohupake(b))
     }
-    function letgohupake(dedata) {
-      console.log(dedata)
-      document.getElementById('decarouseldiv').innerHTML = ""
-      var x = 0;
-      var active = ""
-      for (i = 0; i < dedata.length; i++) {
-        if (i == 0) {
-          active = "active"
-        } else {
-          active = ""
-        }
-        document.getElementById('decarouseldiv').innerHTML += `
-            <div class="item ${active}">
-              <img src="img/IMG_0857.jpg" alt="Moestafa" class="profilepic">
-              <div class="carousel-caption">
-                <h3>${dedata[i].firstName}</h3>
-                <a href="swipepage_info.html" class="btn btn-primary ">Meer info</a>
-              </div>
-              <div class="test"></div>
-            </div>
-            `
+
+    //splitst de array op in losse medewerkers
+    function letgohupake(data) {
+      //eerst controleren of er een vacatureId is meegegeven
+      if(vacatureId == undefined)
+      {
+        console.log("geen vacatureId meegegeven!")
       }
+      //indien er een vacatureId is meegegeven, splits de data op en filter ze!
+      else
+      {
+        console.log(URL + "Vacature/" + vacatureId);
+        fetch(URL + "Vacature/" + vacatureId)
+          .then(v => v.json())
+          .then(w => data.forEach(t => Filter(t, w)))
+          //.then(w => console.log(w))
+      }
+    }
+
+    //checkt of de medewerker voldoet aan de eisen. zo ja, voegt de slide toe aan de carroussel
+    function Filter(data, vacature){
+      //uitstroomrichting-check
+      if (vacature.uitstroomrichting != data.uitstroomrichting)
+      {
+        console.log(`${data.firstName} voldoet niet aan de juiste uitstroomrichting (${vacature.uitstroomrichting}) en wordt dus niet getoond`);
+        return;
+      }
+
+      //afstand-check
+      
+      
+      if ()
+      {
+        //
+      }
+      //de medewerker mag getoond worden. huzzah!
+      else
+      {
+        console.log(`${data.firstName} voldoet aan de eisen. succes!`);
+        AddToCarroussel(data);
+      }
+    }
+    
+    //voeg de medewerker toe aan het carroussel!
+    function AddToCarroussel(data){
+      document.getElementById('decarouseldiv').innerHTML += `
+        <div class="item ${active}">
+          <img src="img/IMG_0857.jpg" alt="Moestafa" class="profilepic">
+          <div class="carousel-caption">
+            <h3>${data.firstName}</h3>
+            <a href="swipepage_info.html" class="btn btn-primary ">Meer info</a>
+          </div>
+          <div class="test"></div>
+        </div>`;
+
+      //zet na de eerste toevoeging de andere profielen op inactief, zodat ze niet allemaal tegelijk worden weergegeven
+      active = "inactive";
     }
   </script>
 </head>
