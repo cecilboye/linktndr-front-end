@@ -48,17 +48,17 @@
                 <form>
                     <div class="form-group">
                         <label for="email">Emailadres:</label>
-                        <input type="email" class="form-control" id="email" placeholder="Edo@rooseboom.nl" required/>
+                        <input type="email" class="form-control" id="email" placeholder="Edo@rooseboom.nl"/>
                     </div>
                     <div class="form-group">
                         <label for="pwd">Wachtwoord:</label>
-                        <input type="password" class="form-control" id="pwd" placeholder="p@ssw0rd!" required/>
+                        <input type="password" class="form-control" id="pwd" placeholder="p@ssw0rd!"/>
                         <label for="pwd">Wachtwoord nogmaals:</label>
-                        <input type="password" class="form-control" id="pwd2" placeholder="p@ssw0rd!" required/>
+                        <input type="password" class="form-control" id="pwd2" placeholder="p@ssw0rd!"/>
                     </div>
                     <div class="form-group">
                         <label for="usertype">Type gebruiker:</label>
-                        <select class="form-control"  id="usertype" onchange="showDiv(this)" required>
+                        <select class="form-control"  id="usertype" onchange="showDiv(this)">
                             <option value="" disabled selected>Selecteer wat je bent:</option>
                             <option value="Medewerker">Medewerker</option>
                             <option value="Talentmanager">Talentmanager</option>
@@ -67,31 +67,31 @@
                     </div>
                     <div class="form-group hiddeninput Medewerker Talentmanager">
                         <label for="firstname">Voornaam:</label>
-                        <input type="text" class="form-control" id="firstname" placeholder="Edo" required/>
+                        <input type="text" class="form-control" id="firstname" placeholder="Edo"/>
                     </div>
                     <div class="form-group hiddeninput Medewerker Talentmanager">
                         <label for="lastname">Achternaam:</label>
-                        <input type="text" class="form-control" id="lastname" placeholder="Rooseboom" required/>
+                        <input type="text" class="form-control" id="lastname" placeholder="Rooseboom"/>
                     </div>
                     <div class="form-group hiddeninput Medewerker">
                         <label for="DateOfBirth">Geboortedatum:</label>
-                        <input type="date" class="form-control" id="DateOfBirth" placeholder="27-11-1997" required/>
+                        <input type="date" class="form-control" id="DateOfBirth" placeholder="27-11-1997"/>
                     </div>
                     <div class="form-group hiddeninput">
                         <label for="PostCode">Postcode:</label>
-                        <input type="text" class="form-control" id="PostCode" placeholder="6969HH" required/>
+                        <input type="text" class="form-control" id="PostCode" placeholder="6969HH"/>
                     </div>
                     <div class="form-group hiddeninput">
                         <label for="HouseNumber">Huisnummer:</label>
-                        <input type="text" class="form-control" id="HouseNumber" placeholder="69a" required/>
+                        <input type="text" class="form-control" id="HouseNumber" placeholder="69a"/>
                     </div>
                     <div class="form-group hiddeninput Opdrachtgever">
                         <label for="name">Bedrijfsnaam:</label>
-                        <input type="text" class="form-control" id="name" placeholder="Bert B.V." required/>
+                        <input type="text" class="form-control" id="name" placeholder="Bert B.V."/>
                     </div>
                     <div class="form-group hiddeninput Medewerker Talentmanager Opdrachtgever">
                         <label for="telephone">Telefoonnummer:</label>
-                        <input type="number" class="form-control" id="telephone" placeholder="0669696969" required/>
+                        <input type="number" class="form-control" id="telephone" placeholder="0669696969"/>
                     </div>
                     <div class="form-group hiddeninput Medewerker">
                         <label for="Talentmanager">Talentmanager:</label>
@@ -132,25 +132,43 @@
 			const email = document.getElementById("email").value;
 			const password = document.getElementById("pwd").value;
             const usertype = document.getElementById("usertype").value;
+            const firstname = document.getElementById("firstname").value;
+            const lastname = document.getElementById("lastname").value;
+            const telephone = document.getElementById("telephone").value;
 
 			// Create data object
 			const data = {
-				email: email,
-				password: password,
-                usertype: usertype
+                User: {
+                    email: email,
+                    password: password,
+                    usertype: usertype,
+                },
+                Talentmanager: {
+                    firstname: firstname,
+                    lastname: lastname,
+                    email: email,
+                    telephone: telephone
+                }
 			};
 
 			// Send data as JSON to backend URL using Fetch API
-			fetch('https://localhost:7199/api/Users/add_talentmanager', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(data)
-			})
-			.then(response => response.json())
-			.then(data => console.log(data))
-			.catch(error => console.error(error));
+			fetch('https://localhost:7199/api/Users/add_user_talentmanager', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => console.error(error));
 		}
         function showDiv(e){
             let elements = document.getElementsByClassName("hiddeninput");
