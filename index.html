@@ -78,7 +78,7 @@
 				password: password
 			};
 
-			fetch('https://localhost:7199/api/Users/check', {
+			fetch('https://localhost:7199/api/User/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -95,8 +95,8 @@
                 // Store data in localStorage
                 localStorage.setItem('userData', JSON.stringify(data));
                 console.log(data);
-                var arr = JSON.parse( localStorage.getItem('userData') );
-                switch(arr["Usertype"]){
+
+                switch(data["usertype"]){
                     case "Medewerker":
                         window.location.href = "./medewerker.html";
                     break;
