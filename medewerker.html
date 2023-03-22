@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <script type="text/javascript" src="./local.js"></script>
 
@@ -12,6 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="includes/globalscript.js"></script>
 </head>
 <script>
 
@@ -26,7 +28,7 @@
         //profilePic.textContent = data.photo;
 
         data.uitstroomrichting = uitstroomrichtingOptions[data.uitstroomrichting];
-        
+
 
         console.log(data.uitstroomrichting)
 
@@ -39,27 +41,33 @@
         });
     }
 
-    window.onload = function() {
+    window.onload = function () {
         fetch("https://localhost:7199/api/Medewerker/2")
             .then(response => response.json())
             .then(data => displayData(data));
     }
 </script>
 <style>
+    .profilepic {
+        object-fit: contain;
+        width: 400px;
+    }
 
-.profilepic{
-    object-fit: contain;
-    width:400px;
-}
+    ul {
+        line-height: 50px;
+    }
 
-ul{
-    line-height: 50px;
-}
+    #usertype-menu-item,
+    .item-ingelogd {
+        color: white;
+        margin-top: 14px;
+    }
 
-.container{
-    margin-top: 100px;
-}
+    .container {
+        margin-top: 100px;
+    }
 </style>
+
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -73,29 +81,24 @@ ul{
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                    <li><a href="#">Link 3</a></li>
-                    <li><a href="#">Link 4</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li class="item-ingelogd">Je bent ingelogd als:&nbsp;</li>
+                    <li id="usertype-menu-item"></li>
+                    <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-5 col-sm-offset-1">
-            <h4 id="name">Name</h4>
-            <p id="profileText"></p>
-            <ul id="info-list"></ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5 col-sm-offset-1">
+                <h4 id="name">Name</h4>
+                <p id="profileText"></p>
+                <ul id="info-list"></ul>
+            </div>
+            <div class="col-sm-6">
+                <img class="profilepic" src="">
+            </div>
         </div>
-    <div class="col-sm-6">
-        <img class="profilepic" src="">
-    </div>
-</div>
 </body>
+
 </html>
-
-
-
-
