@@ -3,11 +3,13 @@ const BASEURL = "https://localhost:7199";
 window.onload = function(){
 
     //localStorage.clear();
-    /*var arr = JSON.parse( localStorage.getItem('userData') );
-    console.log(arr["Usertype"]);
-
-    document.getElementById("usertype-menu-item").innerHTML = arr["Usertype"];
-    */
+    if (localStorage.getItem("UserData") === null) {
+        window.location.href = "./";
+    }else{
+        var userData = JSON.parse(localStorage.getItem('UserData') );
+        console.log(userData);
+        document.getElementById("usertype-menu-item").innerHTML = userData["usertype"];
+    }    
 }
 
 function updateUserTypeMenuItem(usertype) {
