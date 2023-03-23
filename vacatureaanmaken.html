@@ -52,11 +52,6 @@
                         <input type="text" class="form-control" id="description" />
                     </div>
 
-                    <div class="form-group">
-                        <label for="opdrachtgever">Opdrachtgever:</label>
-                        <select class="form-control" id="opdrachtgever"></select>
-                    </div>
-
                     <select class="form-control" id="uitstroomrichting">
                         <option value="DEVOPS">Devops</option>
                         <option value="INFO">Informatie Analist</option>
@@ -109,59 +104,36 @@
             console.log("naaruploaden")
             const title = document.getElementById("title").value;
             const description = document.getElementById("description").value;
-            const Opdrachtgever = document.getElementById("opdrachtgever").value;
             const uitstroomrichting = document.getElementById("uitstroomrichting").value;
             const locatie = document.getElementById("locatie").value;
             const startdatum = document.getElementById("startdatum").value;
             const einddatum = document.getElementById("einddatum").value;
+            const OpdrachtgeverId = 1;
+
 
             // Create data object
             const data = {
                 title: title,
                 description: description,
-                OpdrachtgeverId: Opdrachtgever,
+                opdrachtgeverId: OpdrachtgeverId,
                 uitstroomrichting: uitstroomrichting,
                 location: locatie,
                 startdatum: startdatum,
                 einddatum: einddatum
+
             };
 
             function logInModal(message) {
-                // Convert the message to a string, in case it's an object or another data type
-                const messageString = String(message);
-
-                // Update the modal body text
+               
+                const messageString = String(message);  
+                
                 $('#myModal .modal-body p').text(messageString);
 
-                // Show the modal
                 $('#myModal').modal('show');
             }
 
-
-            // Now you can call this function instead of using alert:
-
-
-
-            function fetchOpdrachtgevers() {
-                fetch('https://localhost:7199/api/Vacature/opdrachtgevers')
-                    .then(response => response.json())
-                    .then(opdrachtgevers => {
-                        const opdrachtgeverSelect = document.getElementById('opdrachtgever');
-                        opdrachtgevers.forEach(opdrachtgever => {
-                            const option = document.createElement('option');
-                            option.value = opdrachtgever.id;
-                            option.text = opdrachtgever.name; // Replace 'name' with the appropriate property for the Opdrachtgever name
-                            opdrachtgeverSelect.add(option);
-                        });
-                    })
-                    .catch(error => console.error(error));
-            }
-
-            fetchOpdrachtgevers();
-
-
             console.log(JSON.stringify(data));
-            // Send data as JSON to backend URL using Fetch API
+
             fetch('https://localhost:7199/api/Vacature/add', {
                 method: 'POST',
                 headers: {
