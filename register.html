@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>.hiddeninput {display: "none"; }</style>
 </head>
 
 <body>
@@ -26,10 +27,8 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                    <li><a href="#">Link 3</a></li>
-                    <li><a href="#">Link 4</a></li>
+                    <li class="item-ingelogd">Je bent ingelogd als:&nbsp;</li>
+                    <li id="usertype-menu-item"></li> 
                     <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                 </ul>
             </div>
@@ -46,17 +45,19 @@
             <div class="col-sm-4 col-sm-offset-4">
                 <form>
                     <div class="form-group">
-                        <label for="email">Email address:</label>
-                        <input type="email" class="form-control" id="email"/>
+                        <label for="email">Emailadres:</label>
+                        <input type="email" class="form-control" id="Email" placeholder="email@email.nl"/>
                     </div>
                     <div class="form-group">
-                        <label for="pwd">Password:</label>
-                        <input type="password" class="form-control" id="pwd"/>
+                        <label for="pwd">Wachtwoord:</label>
+                        <input type="password" class="form-control" id="Password" placeholder="p@ssw0rd!"/>
+                        <label for="pwd">Wachtwoord nogmaals:</label>
+                        <input type="password" class="form-control" id="Password2" placeholder="p@ssw0rd!"/>
                     </div>
                     <div class="form-group">
-                        <label for="pwd">Usertype:</label>
-                        <select class="form-control"  id="usertype" onchange="showDiv(this)">
-                            <option value="" selected>Selecteer wat je bent:</option>
+                        <label for="usertype">Type gebruiker:</label>
+                        <select class="form-control"  id="UserType" onchange="showDiv(this)">
+                            <option value="" disabled selected>Selecteer wat je bent:</option>
                             <option value="Medewerker">Medewerker</option>
                             <option value="Talentmanager">Talentmanager</option>
                             <option value="Opdrachtgever">Opdrachtgever</option>
@@ -64,33 +65,58 @@
                     </div>
                     <div class="form-group hiddeninput Medewerker Talentmanager">
                         <label for="firstname">Voornaam:</label>
-                        <input type="text" class="form-control" id="firstname"/>
+                        <input type="text" class="form-control" id="FirstName" placeholder="Edo"/>
                     </div>
                     <div class="form-group hiddeninput Medewerker Talentmanager">
                         <label for="lastname">Achternaam:</label>
-                        <input type="text" class="form-control" id="lastname"/>
+                        <input type="text" class="form-control" id="LastName" placeholder="Rooseboom"/>
                     </div>
                     <div class="form-group hiddeninput Medewerker">
                         <label for="DateOfBirth">Geboortedatum:</label>
-                        <input type="date" class="form-control" id="DateOfBirth"/>
+                        <input type="date" class="form-control" id="DateOfBirth" placeholder="27-11-1997"/>
                     </div>
-                    <div class="form-group hiddeninput">
+                    <div class="form-group hiddeninput Medewerker">
                         <label for="PostCode">Postcode:</label>
-                        <input type="text" class="form-control" id="PostCode"/>
+                        <input type="text" class="form-control" id="PostCode" placeholder="6969HH"/>
                     </div>
-                    <div class="form-group hiddeninput">
+                    <div class="form-group hiddeninput Medewerker">
                         <label for="HouseNumber">Huisnummer:</label>
-                        <input type="text" class="form-control" id="HouseNumber"/>
+                        <input type="text" class="form-control" id="HouseNumber" placeholder="69a"/>
                     </div>
                     <div class="form-group hiddeninput Opdrachtgever">
                         <label for="name">Bedrijfsnaam:</label>
-                        <input type="text" class="form-control" id="name"/>
+                        <input type="text" class="form-control" id="Name" placeholder="Bert B.V."/>
                     </div>
                     <div class="form-group hiddeninput Medewerker Talentmanager Opdrachtgever">
                         <label for="telephone">Telefoonnummer:</label>
-                        <input type="text" class="form-control" id="telephone"/>
+                        <input type="number" class="form-control" id="Telephone" placeholder="0669696969"/>
                     </div>
-                    <button type="submit" class="btn btn-default" onclick="submitForm(event)">Registreer</button>
+                    <div class="form-group hiddeninput Medewerker">
+                        <label for="Talentmanager">Talentmanager:</label>
+                        <select class="form-control"  id="Talentmanager">
+                        </select>
+                    </div>
+                    <div class="form-group hiddeninput Medewerker">
+                        <label for="radius">Afstand voorkeur: <span id="rangevalue">50</span>km</label>
+                        <input type="range" class="form-control" id="Radius" min="10" max="200" value="50" oninput="showValue(this.value)" />
+                    </div>
+                    <div class="form-group hiddeninput Medewerker">
+                        <label for="uitstroomrichting">uitstroomrichting:</label>
+                        <select class="form-control"  id="Specialization">
+                            <option value="" disabled selected>Selecteer je uitstroomrichting:</option>
+                          </select>
+                    </div>
+                    <div class="form-group hiddeninput Medewerker">
+                        <textarea class="form-control" name="bio" id="Bio" cols="30" rows="10" placeholder="Vul hier een korte beschrijving van jezelf in"></textarea>
+                    </div>
+                    <div class="form-group hiddeninput Medewerker">
+                        <label for="image">Foto:</label>
+                        <input  type="text" class="form-control" id="Image" placeholder="Vul hier een URL van een foto die je wilt uploaden"/>
+                    </div>
+                    <div class="form-group hiddeninput Medewerker Talentmanager Opdrachtgever">
+                        <button type="submit" class="btn btn-default btn-outline-primary" onclick="submitForm(event)">Registreer</button>
+                        <label for="submit"><span id="submitinfo" class="text-success"></span></label>
+                    </div>
                 </form>
             </div>
         </div>
@@ -99,29 +125,80 @@
 		function submitForm(e) {
             e.preventDefault();
 			// Get form data
-			const email = document.getElementById("email").value;
-			const password = document.getElementById("pwd").value;
-            const usertype = document.getElementById("usertype").value;
+			const email = document.getElementById("Email").value;
+			const password = document.getElementById("Password").value;
+            const password2 = document.getElementById("Password2").value;
+            const usertype = document.getElementById("UserType").value;
+            const firstname = document.getElementById("FirstName").value;
+            const lastname = document.getElementById("LastName").value;
+            const telephone = document.getElementById("Telephone").value;
+            const dateofbirth = document.getElementById("DateOfBirth").value;
+            const postcode = document.getElementById("PostCode").value;
+            const housenumber = document.getElementById("HouseNumber").value;
+            const name = document.getElementById("Name").value;
+            const radius = document.getElementById("Radius").value;
+            const specialization = document.getElementById("Specialization").value;
+            const bio = document.getElementById("Bio").value;
+            const image = document.getElementById("Image").value;
+            const talentmanagerid = document.getElementById("Talentmanager").value;
 
-			// Create data object
-			const data = {
-				email: email,
-				password: password,
-                usertype: usertype
-			};
-
+            let data = {};
+            switch(usertype){
+                case "Medewerker":
+                    data = {
+                        name: firstname+" "+lastname,
+                        dateofbirth: dateofbirth,
+                        postcode: postcode,
+                        housenumber: housenumber,
+                        email: email,
+                        password: password,
+                        telephone: telephone,
+                        radius: radius,
+                        uitstroomrichting: specialization,
+                        photo: image,
+                        profiletext: bio,
+                        talentmanagerid: talentmanagerid
+                    }
+                break;
+                case "Talentmanager":
+                    data = {
+                        email: email,
+                        password: password,
+                        name: firstname+" "+lastname,
+                        telephone: telephone,
+                    }
+                break;
+                case "Talentmanager":
+                    data = {
+                        email: email,
+                        password: password,
+                        name: name,
+                        telephone: telephone,
+                    }
+                break;
+            }
 			// Send data as JSON to backend URL using Fetch API
-			fetch('https://localhost:7199/api/Users/add', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(data)
-			})
-			.then(response => response.json())
-			.then(data => console.log(data))
-			.catch(error => console.error(error));
+			fetch('https://localhost:7199/api/'+usertype+'/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data){
+                    document.getElementById("submitinfo").innerHTML = 'registratie succesvol afgerond. <a href="./">klik hier</a> om naar de inlog pagina te gaan.';
+                }
+            })
+            .catch(error => console.error(error));
 		}
+        //show inputs based on selected option
         function showDiv(e){
             let elements = document.getElementsByClassName("hiddeninput");
             Array.from(elements).forEach(function (element) {
@@ -132,7 +209,45 @@
                 }
             });
         }
+        window.onload = function(){
+            //hide all inputs
+            let elements = document.getElementsByClassName("hiddeninput");
+            Array.from(elements).forEach(function (element) {
+                element.style.display = "none";
+            });
+            //get all talentmanagers and put them in select tag as options
+            let element = document.getElementById("Talentmanager");
+            fetch('https://localhost:7199/api/Talentmanager')
+                .then(response => response.json())
+                .then(data => {
+                    // Create option elements and add them to the select element
+                    data.forEach(item => {
+                        const option = document.createElement("option");
+                        option.text = item.name;
+                        option.value = item.id;
+                        element.add(option);
+                    });
+                })
+                .catch(error => console.error(error));
+            //get all specialization values and put them in a select tag as options
+            let SpecializationSelectElement = document.getElementById("Specialization");
+            fetch('https://localhost:7199/api/Specialization')
+                .then(response => response.json())
+                .then(data => {
+                    // Create option elements and add them to the select element
+                    for (var key in data) {
+                        const option = document.createElement("option");
+                        option.text = data[key];
+                        option.value = key;
+                        SpecializationSelectElement.add(option);
+                    }
+                })
+                .catch(error => console.error(error));
+        }
+        //show value above radius input
+        function showValue(value) {
+            document.getElementById("rangevalue").innerHTML = value;
+        }
 	</script>
 </body>
-
 </html>

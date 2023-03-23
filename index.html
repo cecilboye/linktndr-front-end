@@ -11,6 +11,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        #usertype-menu-item, .item-ingelogd{
+            color:white;
+            margin-top:14px;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,11 +33,8 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                    <li><a href="#">Link 3</a></li>
-                    <li><a href="#">Link 4</a></li>
-                    <li id="usertype-menu-item"></li> <!-- New list item for user type -->
+                    <li class="item-ingelogd">Je bent ingelogd als:&nbsp;</li>
+                    <li id="usertype-menu-item"></li> 
                     <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                 </ul>
             </div>
@@ -66,45 +70,46 @@
 
 			const email = document.getElementById("email").value;
 			const password = document.getElementById("pwd").value;
-            const usertype = "medewerker";
 
 	
 			const data = {
 				email: email,
-				password: password,
-                usertype: usertype
+				password: password
 			};
 
-			fetch('https://localhost:7199/api/Users/check', {
+			fetch('https://localhost:7199/api/User/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify(data)
 			})
-			.then(response => response.json())
-			.then(data => console.log(data))
+			.then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Store data in localStorage
+                localStorage.setItem('UserData', JSON.stringify(data));
+                console.log(data);
+
+                switch(data["usertype"]){
+                    case "Medewerker":
+                        window.location.href = "./medewerker.html";
+                    break;
+                    case "Talentmanager":
+                        window.location.href = "./talentmanager.html";
+                    break;
+                    case "Opdrachtgever":
+                        window.location.href = "./vacature.html";
+                    break;
+                }
+                
+            })
 			.catch(error => console.error(error));
 		}
-
-        function submitForm(e) {
-            e.preventDefault();
-  
-            fetch('https://localhost:7199/api/Users/check', {
-            
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                updateUserTypeMenuItem(data.usertype);
-            })
-            .catch(error => console.error(error));
-        }
-
-        function updateUserTypeMenuItem(usertype) {
-            const usertypeMenuItem = document.getElementById('usertype-menu-item');
-            usertypeMenuItem.innerHTML = `<a href="#">${usertype}</a>`;
-        }
 	</script>
 </body>
 
