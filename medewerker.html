@@ -14,60 +14,28 @@
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="includes/globalscript.js"></script>
+
+    <style>
+        .profilepic {
+            object-fit: contain;
+            width: 400px;
+        }
+    
+        ul {
+            line-height: 50px;
+        }
+    
+        #usertype-menu-item,
+        .item-ingelogd {
+            color: white;
+            margin-top: 14px;
+        }
+    
+        .container {
+            margin-top: 100px;
+        }
+    </style>
 </head>
-<script>
-
-    function displayData(data) {
-        const nameElement = document.getElementById('name');
-        const ulElement = document.getElementById('info-list');
-        const profileText = document.getElementById('profileText');
-        //const profilePic = document.getElementById('profilepic');
-
-        nameElement.textContent = data.firstName;
-        profileText.textContent = data.profileText;
-        //profilePic.textContent = data.photo;
-
-        data.uitstroomrichting = uitstroomrichtingOptions[data.uitstroomrichting];
-
-
-        console.log(data.uitstroomrichting)
-
-
-        ulElement.innerHTML = '';
-        Object.entries(data).forEach(([key, value]) => {
-            const li = document.createElement('li');
-            li.textContent = `${key}: ${value}`;
-            ulElement.appendChild(li);
-        });
-    }
-
-    window.onload = function () {
-        fetch("https://localhost:7199/api/Medewerker/2")
-            .then(response => response.json())
-            .then(data => displayData(data));
-    }
-</script>
-<style>
-    .profilepic {
-        object-fit: contain;
-        width: 400px;
-    }
-
-    ul {
-        line-height: 50px;
-    }
-
-    #usertype-menu-item,
-    .item-ingelogd {
-        color: white;
-        margin-top: 14px;
-    }
-
-    .container {
-        margin-top: 100px;
-    }
-</style>
-
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -83,7 +51,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="item-ingelogd">Je bent ingelogd als:&nbsp;</li>
                     <li id="usertype-menu-item"></li>
-                    <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><button class="btn btn-light btn-outline-primary" onclick="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</button></li>
                 </ul>
             </div>
         </div>
@@ -99,6 +67,40 @@
                 <img class="profilepic" src="">
             </div>
         </div>
+        <script>
+            var userData = JSON.parse(localStorage.getItem('UserData') );
+            document.getElementById("usertype-menu-item").innerHTML = userData["usertype"];
+            fetch("https://localhost:7199/api/Medewerker/"+userData["token"])
+                .then(response => response.json())
+                .then(data => displayData(data));
+            function displayData(data) {
+                const nameElement = document.getElementById('name');
+                const ulElement = document.getElementById('info-list');
+                const profileText = document.getElementById('profileText');
+                //const profilePic = document.getElementById('profilepic');
+        
+                nameElement.textContent = data.name;
+                profileText.textContent = data.profileText;
+                //profilePic.textContent = data.photo;
+        
+                data.uitstroomrichting = uitstroomrichtingOptions[data.uitstroomrichting];
+        
+        
+                console.log(data.uitstroomrichting)
+        
+        
+                ulElement.innerHTML = '';
+                Object.entries(data).forEach(([key, value]) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${key}: ${value}`;
+                    ulElement.appendChild(li);
+                });
+            }
+            function logout(){
+                localStorage.clear();
+                window.location.href = "./";
+            }
+        </script>
 </body>
 
 </html>

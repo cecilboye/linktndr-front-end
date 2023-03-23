@@ -11,7 +11,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="includes/globalscript.js"></script>
 
     <style>
         #usertype-menu-item, .item-ingelogd{
@@ -93,7 +92,7 @@
             })
             .then(data => {
                 // Store data in localStorage
-                localStorage.setItem('userData', JSON.stringify(data));
+                localStorage.setItem('UserData', JSON.stringify(data));
                 console.log(data);
 
                 switch(data["usertype"]){
