@@ -1,8 +1,9 @@
 const BASEURL = "https://localhost:7199";
 
+// after is een anonymous function
 function onPageLoad(after) {
     if (!localStorage.getItem("Token")) {
-        window.location.href = "./";
+        window.location.href = "./index.html";
     }else{
         var userToken = localStorage.getItem('Token');
         if (!!userToken) {
