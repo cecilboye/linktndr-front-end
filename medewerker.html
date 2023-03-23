@@ -14,60 +14,28 @@
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="includes/globalscript.js"></script>
+
+    <style>
+        .profilepic {
+            object-fit: contain;
+            width: 400px;
+        }
+    
+        ul {
+            line-height: 50px;
+        }
+    
+        #usertype-menu-item,
+        .item-ingelogd {
+            color: white;
+            margin-top: 14px;
+        }
+    
+        .container {
+            margin-top: 100px;
+        }
+    </style>
 </head>
-<script>
-
-    function displayData(data) {
-        const nameElement = document.getElementById('name');
-        const ulElement = document.getElementById('info-list');
-        const profileText = document.getElementById('profileText');
-        //const profilePic = document.getElementById('profilepic');
-
-        nameElement.textContent = data.firstName;
-        profileText.textContent = data.profileText;
-        //profilePic.textContent = data.photo;
-
-        data.uitstroomrichting = uitstroomrichtingOptions[data.uitstroomrichting];
-
-
-        console.log(data.uitstroomrichting)
-
-
-        ulElement.innerHTML = '';
-        Object.entries(data).forEach(([key, value]) => {
-            const li = document.createElement('li');
-            li.textContent = `${key}: ${value}`;
-            ulElement.appendChild(li);
-        });
-    }
-
-    window.onload = function () {
-        fetch("https://localhost:7199/api/Medewerker/2")
-            .then(response => response.json())
-            .then(data => displayData(data));
-    }
-</script>
-<style>
-    .profilepic {
-        object-fit: contain;
-        width: 400px;
-    }
-
-    ul {
-        line-height: 50px;
-    }
-
-    #usertype-menu-item,
-    .item-ingelogd {
-        color: white;
-        margin-top: 14px;
-    }
-
-    .container {
-        margin-top: 100px;
-    }
-</style>
-
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -83,7 +51,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="item-ingelogd">Je bent ingelogd als:&nbsp;</li>
                     <li id="usertype-menu-item"></li>
-                    <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><button class="btn btn-light btn-outline-primary" onclick="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</button></li>
                 </ul>
             </div>
         </div>
@@ -91,14 +59,271 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-5 col-sm-offset-1">
-                <h4 id="name">Name</h4>
-                <p id="profileText"></p>
-                <ul id="info-list"></ul>
+                <div class="row">
+                    <div class="col-sm-12"><img src="" id="PhotoElement" class="img-thumbnail"/></div>
+                </div>
+                <div class="row">
+                    <label for="NameElement" class="col-sm-4">Naam:</label>
+                    <div class="col-sm-8"><p id="NameElement"></p></div>
+                </div>
+                <div class="row">
+                    <label for="DateOfBirthElement" class="col-sm-4">Geboortedatum:</label>
+                    <div class="col-sm-8"><p id="DateOfBirthElement"></p></div>
+                </div>
+                <div class="row">
+                    <label for="PostCodeElement" class="col-sm-4">Postcode:</label>
+                    <div class="col-sm-8"><p id="PostCodeElement"></p></div>
+                </div>
+                <div class="row">
+                    <label for="HouseNumberElement" class="col-sm-4">Huisnummer:</label>
+                    <div class="col-sm-8"><p id="HouseNumberElement"></p></div>
+                </div>
+                <div class="row">
+                    <label for="EmailElement" class="col-sm-4">Emailadres:</label>
+                    <div class="col-sm-8"><p id="EmailElement"></p></div>
+                </div>
+                <div class="row">
+                    <label for="TelephoneElement" class="col-sm-4">Telefoonnummer:</label>
+                    <div class="col-sm-8"><p id="TelephoneElement"></p></div>
+                </div>
+                <div class="row">
+                    <label for="TalentmanagerElement" class="col-sm-4">Talentmanager:</label>
+                    <div class="col-sm-8"><p id="TalentmanagerElement"></p></div>
+                </div>
+                <div class="row">
+                    <label for="RadiusElement" class="col-sm-4">Afstandvoorkeur:</label>
+                    <div class="col-sm-8"><p id="RadiusElement"></p></div>
+                </div>
+                <div class="row">
+                    <label for="SpecializationElement" class="col-sm-4">Uitstroomrichting:</label>
+                    <div class="col-sm-8"><p id="SpecializationElement"></p></div>
+                </div>
+                <div class="row">
+                    <label for="BioElement" class="col-sm-4">Bio:</label>
+                    <div class="col-sm-8"><p id="BioElement"></p></div>
+                </div>
+                <div class="row">
+                    <!--<button type="submit" class="btn btn-default btn-outline-primary" onclick="submitForm(event)">Bewerk</button>-->
+                    <button type="button" class="btn btn-primary col-sm-12" data-toggle="modal" data-target="#EditModal" data-id="@mdo">Bewerk</button>
+                </div>
+                <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Bewerk gegevens</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group row">
+                                    <label for="firstname" class="col-sm-10">Naam:</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="NameInput" placeholder="Voornaam Achternaam"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="DateOfBirth" class="col-sm-10">Geboortedatum:</label>
+                                    <div class="col-sm-12">
+                                        <input type="date" class="form-control" id="DateOfBirthInput" placeholder="27-11-1997"/>
+                                    </div>
+                                    
+                                </div>
+                                <div class="form-group row">
+                                    <label for="PostCode" class="col-sm-10">Postcode:</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="PostCodeInput" placeholder="6969HH"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="HouseNumber" class="col-sm-10">Huisnummer:</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="HouseNumberInput" placeholder="69a"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-sm-10">Emailadres:</label>
+                                    <div class="col-sm-12">
+                                        <input type="email" class="form-control" id="EmailInput" placeholder="email@email.nl"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="telephone" class="col-sm-10">Telefoonnummer:</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="TelephoneInput" placeholder="0669696969"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="Talentmanager" class="col-sm-10">Talentmanager:</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control"  id="TalentmanagerInput">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="radius" class="col-sm-10">Afstand voorkeur: <span id="RangeValue">50</span>km</label>
+                                    <div class="col-sm-12">
+                                        <input type="range" class="form-control" id="RadiusInput" min="10" max="200" value="50" oninput="showValue(this.value)" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="uitstroomrichting" class="col-sm-10">Uitstroomrichting:</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control"  id="SpecializationInput">
+                                            <option value="" disabled selected>Selecteer je uitstroomrichting:</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="bio" class="col-sm-10">Bio:</label>
+                                    <div class="col-sm-12">
+                                        <textarea class="form-control" name="bio" id="BioInput" cols="30" rows="10" placeholder="Vul hier een korte beschrijving van jezelf in"><p id="profileText"></p></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="image" class="col-sm-10">Foto:</label>
+                                    <div class="col-sm-12">
+                                        <input  type="text" class="form-control" id="PhotoInput" placeholder="Vul hier een URL van een foto die je wilt uploaden"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="password" class="col-sm-10">password:</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="PasswordInput" placeholder="P@55W0RD!" required/>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                          <button type="button" class="btn btn-primary" onclick="submitForm(event)">Opslaan</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
             </div>
             <div class="col-sm-6">
                 <img class="profilepic" src="">
             </div>
         </div>
+        <script>
+            var userData = JSON.parse(localStorage.getItem('UserData') );
+            document.getElementById("usertype-menu-item").innerHTML = userData["usertype"];
+            fetch("https://localhost:7199/api/Medewerker/"+userData["token"])
+                .then(response => response.json())
+                .then(returndata => displayData(returndata));
+            function displayData(data) {
+                //get all talentmanagers and put them in select tag as options
+                let element = document.getElementById("TalentmanagerInput");
+                fetch('https://localhost:7199/api/Talentmanager')
+                    .then(response => response.json())
+                    .then(fetchdata => {
+                        // Create option elements and add them to the select element
+                        fetchdata.forEach(item => {
+                            const option = document.createElement("option");
+                            option.text = item.name;
+                            option.value = item.id;
+                            if(item.id == data.talentManagerId){
+                                option.selected = "selected";
+                            }
+                            element.add(option);
+                        });
+                    })
+                    .catch(error => console.error(error));
+                //get all specialization values and put them in a select tag as options
+                let SpecializationSelectElement = document.getElementById("SpecializationInput");
+                fetch('https://localhost:7199/api/Specialization')
+                    .then(response => response.json())
+                    .then(fetchdata => {
+                        // Create option elements and add them to the select element
+                        let i = 0;
+                        for (var key in fetchdata) {
+                            const option = document.createElement("option");
+                            option.text = fetchdata[key];
+                            option.value = key;
+                            if(i == data.uitstroomrichting){
+                                option.selected = "selected";
+                                document.getElementById("SpecializationElement").innerHTML = fetchdata[key];
+                            }
+                            SpecializationSelectElement.add(option);
+                            i++;
+                        }
+                    })
+                    .catch(error => console.error(error));
+
+                console.log(data);
+
+                document.getElementById("PhotoElement").src = data.photo;
+                document.getElementById('NameElement').innerHTML = data.name;
+                document.getElementById("DateOfBirthElement").innerHTML = new Date(data.dateOfBirth).toISOString().substring(0, 10);
+                document.getElementById("PostCodeElement").innerHTML = data.postCode;
+                document.getElementById("HouseNumberElement").innerHTML = data.houseNumber;
+                document.getElementById("EmailElement").innerHTML = data.email;
+                document.getElementById("TelephoneElement").innerHTML = data.telephone;
+                document.getElementById("TalentmanagerElement").innerHTML = data.talentManagerName;
+                document.getElementById("RadiusElement").innerHTML = data.radius;
+                document.getElementById("BioElement").innerHTML = data.profileText;
+
+                document.getElementById("NameInput").value = data.name;
+                document.getElementById("DateOfBirthInput").value = new Date(data.dateOfBirth).toISOString().substring(0, 10);
+                document.getElementById("PostCodeInput").value = data.postCode;
+                document.getElementById("HouseNumberInput").value = data.houseNumber;
+                document.getElementById("EmailInput").value = data.email;
+                document.getElementById("TelephoneInput").value = data.telephone;
+                document.getElementById("RadiusInput").value = data.radius;
+                document.getElementById("RangeValue").innerHTML = data.radius;
+                document.getElementById("BioInput").value = data.profileText;
+                document.getElementById("PhotoInput").value = data.photo;
+            }
+            
+            function submitForm(e) {
+                e.preventDefault();
+                // Get form data
+                const updateddata = {
+                    Name: document.getElementById("NameInput").value,
+                    DateOfBirth: document.getElementById("DateOfBirthInput").value,
+                    PostCode: document.getElementById("PostCodeInput").value,
+                    HouseNumber: document.getElementById("HouseNumberInput").value,
+                    Email: document.getElementById("EmailInput").value,
+                    Password: document.getElementById("PasswordInput").value,
+                    Telephone: document.getElementById("TelephoneInput").value,
+                    Radius: document.getElementById("RadiusInput").value,
+                    Uitstroomrichting: document.getElementById("SpecializationInput").value,
+                    Photo: document.getElementById("PhotoInput").value,
+                    ProfileText: document.getElementById("BioInput").value,
+                    TalentManagerId: document.getElementById("TalentmanagerInput").value
+                }
+                console.log(updateddata);
+                // Send data as JSON to backend URL using Fetch API
+                fetch('https://localhost:7199/api/Medewerker/update/'+userData["token"], {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updateddata)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok:'+ JSON.stringify(response));
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if(data){
+                        cosole.log(data);
+                        //document.getElementById("submitinfo").innerHTML = 'registratie succesvol afgerond. <a href="./">klik hier</a> om naar de inlog pagina te gaan.';
+                    }
+                })
+                .catch(error => console.error(error));
+            }
+            
+            function logout(){
+                localStorage.clear();
+                window.location.href = "./";
+            }
+
+        </script>
 </body>
 
 </html>
