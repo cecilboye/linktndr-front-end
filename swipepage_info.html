@@ -3,7 +3,6 @@
 
 <head>
   <script type="text/javascript" src="./local.js"></script>
-  <script type="text/javascript" src="./functies.js"></script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,7 +81,7 @@
       <div class="col-sm-4 col-sm-offset-4">
         <div class="card">
           <div class="text-center">
-            <img id="photo" src=null class="card-img-top profilepic" alt="...">
+            <img id="photo" src="img/placeholder.jpg" class="card-img-top profilepic" alt="...">
             </div>
             <div class="card-body">
               <h5 id="name" class="card-title" style="font-weight: bold;"></h5>              
@@ -95,8 +94,8 @@
               <p id="profileText" class="card-text text-center" style="padding:1%; padding-bottom:0px;";></p>
             </div>
             <div class="card-footer">
-              <button id="like" type="button" class="btn btn-success">Like</button>
-              <button id="dislike" type="button" class="btn btn-danger">Dislike</button>
+              <button id="like" type="button" onclick="Like()" class="btn btn-success">Like</button>
+              <button id="dislike" type="button" onclick="Dislike()" class="btn btn-danger">Dislike</button>
             </div>
           </div>
         </div>
@@ -118,15 +117,48 @@
       //pas de profieldata aan en stel de buttons correct in
       function DisplayMedewerker(data)
       {
-        console.log(data);
+        //console.log(data);
 
         document.getElementById("photo").src = data.photo;
         document.getElementById("name").innerText = data.name;
         document.getElementById("profileText").innerText = data.profileText;
         document.getElementById("uitstroomrichting").innerText = uitstroomrichtingOptions[data.uitstroomrichting];
+      }
 
-        document.getElementById("like").onclick = `href`;
-        document.getElementById("like").innerHTML = ``;
+      function Like()
+      {
+        if (id == null || vacid == null)
+        {
+          console.log("Missing data, could not create match");
+        }
+        else
+        {
+          let res = AddSollicitatie(id, vacid);
+        }
+      }
+
+      function AddSollicitatie (idMedewerker, idVacature)
+      {
+        let sollicitatie = {
+            "medewerkerId": idMedewerker,
+            "vacatureId": idVacature
+        }
+
+        fetch(URL + 'Sollicitatie/add',{
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(sollicitatie)
+        })
+        .then(a => {
+          window.location = `swipepage.html?vacid=${vacid}`;
+        });
+      }
+
+      function Dislike()
+      {
+        window.location = `swipepage.html?vacid=${vacid}`;
       }
     </script>
   </body>

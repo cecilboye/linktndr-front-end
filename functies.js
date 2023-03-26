@@ -12,12 +12,10 @@ function AddSollicitatie (idMedewerker, idVacature)
         },
         body:JSON.stringify(sollicitatie)
     })
-    .then(response => {
-        alert(toString(response));
-    })
-    .catch(error => {
-        alert('f in de chat');
-    });    
+    .then(a => {return true;});
+    //.catch(error => {
+    //    console.log("false");
+    //});    
 }
 /*
 function ShowSollicitatie (idMedewerker, idVacature)

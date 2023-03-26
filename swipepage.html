@@ -48,6 +48,14 @@
     h3 {
       color: black !important;
     }
+    
+    .profilepic {
+      width: 400px;
+      height: 400px;
+      border-radius: 200px;
+      padding: 20px 20px 20px 20px;
+      object-fit: cover;
+    }
   </style>
   <script>
     let vacatureId = -1;
@@ -163,13 +171,15 @@
     function AddToCarroussel(data){
       document.getElementById('decarouseldiv').innerHTML += `
         <div class="item ${active}">
-          <img src="img/IMG_0857.jpg" alt="Moestafa" class="profilepic">
+          <img src="${data.photo}" alt="Moestafa" class="profilepic">
           <div class="carousel-caption">
             <h3>${data.name}</h3>
-            <a href="swipepage_info.html?id=${data.id}?vacid=${vacatureId}" class="btn btn-primary ">Meer info</a>
+            <a href="swipepage_info.html?id=${data.id}&vacid=${vacatureId}" class="btn btn-primary ">Meer info</a>
           </div>
           <div class="test"></div>
         </div>`;
+
+        //class="profilepic"
 
       //zet na de eerste toevoeging de andere profielen op inactief, zodat ze niet allemaal tegelijk worden weergegeven
       active = "inactive";
