@@ -2,6 +2,8 @@
 <html>
 
 <head>
+  <script type="text/javascript" src="./local.js"></script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bootstrap HTML Template</title>
@@ -12,52 +14,47 @@
   <!-- Bootstrap JS -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-top: 30px;
+    }
 
-.card {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-top: 30px;
-}
+    .card-header {
+      position: relative;
+      background-color: #f5f5f5;
+      padding: 10px;
+    }
 
-.card-header {
-  position: relative;
-  background-color: #f5f5f5;
-  padding: 10px;
-}
+    .card-title {
+      margin: 0;
+      text-align: center;
+    }
 
-.card-title {
-  margin: 0;
-  text-align: center;
-}
+    .card-body {
+      margin-top: 10px;
+    }
 
-.card-body {
-  margin-top: 10px;
-}
+    .navigator {
+      width: 150px;
+    }
 
-.navigator {
-  width: 150px;
-}
+    /* added styles */
 
-/* added styles */
+    .profilepic {
+      width: 300px;
+      height: 300px;
+      border-radius: 200px;
+      padding: 20px 20px 20px 20px;
+      object-fit: cover;
+    }
 
-.profilepic {
-  width: 300px;
-  height: 300px;
-  border-radius: 200px;
-  padding: 20px 20px 20px 20px;
-  object-fit: cover;
-}
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-}
-
-
-
-</style>
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
 </head>
-
 <body>
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -82,30 +79,88 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-4 col-sm-offset-4">
-        <div class="card" style="">
+        <div class="card">
           <div class="text-center">
-            <img src="img/IMG_0857.jpg" class="card-img-top profilepic" alt="...">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title" style="font-weight: bold;">Bio</h5>
-            <p class="card-text text-center" style="padding:1%; padding-bottom:0px;";>Moestafa is een enthousiaste professional met een passie voor technologie en communicatie. Hij heeft een diploma in Informatica en heeft de afgelopen jaren gewerkt als IT-consultant voor verschillende bedrijven. David heeft echter altijd al een interesse gehad in de telecomindustrie en wil graag zijn vaardigheden en kennis toepassen in deze sector.</p>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item text-center">10 jaar glasvezel ervaring</li>
-            <li class="list-group-item text-center">Moestafa is een teamspeler</li>
-            <li class="list-group-item text-center">sterke communicatieve vaardigheden</li>
-            <li class="list-group-item text-center">zeer gemotiveerde werknemer</li>
-          </ul>
-          <div class="card-footer">
-            <button type="button" class="btn btn-success">Like</button>
-            <button type="button" class="btn btn-danger">Dislike</button>
+            <img id="photo" src="img/placeholder.jpg" class="card-img-top profilepic" alt="...">
+            </div>
+            <div class="card-body">
+              <h5 id="name" class="card-title" style="font-weight: bold;"></h5>              
+              <ul class="list-group list-group-flush">
+                <li id="uitstroomrichting" class="list-group-item text-center"></li>
+                <!--<li class="list-group-item text-center">Moestafa is een teamspeler</li>
+                <li class="list-group-item text-center">sterke communicatieve vaardigheden</li>
+                <li class="list-group-item text-center">zeer gemotiveerde werknemer</li>-->
+              </ul>
+              <p id="profileText" class="card-text text-center" style="padding:1%; padding-bottom:0px;";></p>
+            </div>
+            <div class="card-footer">
+              <button id="like" type="button" onclick="Like()" class="btn btn-success">Like</button>
+              <button id="dislike" type="button" onclick="Dislike()" class="btn btn-danger">Dislike</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
 
-    
-    </html>
+    <script>
+      //extraheer de id's van de medewerker en vacature uit de URL
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      let id = urlParams.get('id');
+      let vacid = urlParams.get('vacid');
+
+      //trek de medewerker-info uit de database
+      fetch(URL + "Medewerker/" + id)
+        .then(a => a.json())
+        .then(b => DisplayMedewerker(b));
+      
+      //pas de profieldata aan en stel de buttons correct in
+      function DisplayMedewerker(data)
+      {
+        //console.log(data);
+
+        document.getElementById("photo").src = data.photo;
+        document.getElementById("name").innerText = data.name;
+        document.getElementById("profileText").innerText = data.profileText;
+        document.getElementById("uitstroomrichting").innerText = uitstroomrichtingOptions[data.uitstroomrichting];
+      }
+
+      function Like()
+      {
+        if (id == null || vacid == null)
+        {
+          console.log("Missing data, could not create match");
+        }
+        else
+        {
+          let res = AddSollicitatie(id, vacid);
+        }
+      }
+
+      function AddSollicitatie (idMedewerker, idVacature)
+      {
+        let sollicitatie = {
+            "medewerkerId": idMedewerker,
+            "vacatureId": idVacature
+        }
+
+        fetch(URL + 'Sollicitatie/add',{
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(sollicitatie)
+        })
+        .then(a => {
+          window.location = `swipepage.html?vacid=${vacid}`;
+        });
+      }
+
+      function Dislike()
+      {
+        window.location = `swipepage.html?vacid=${vacid}`;
+      }
+    </script>
+  </body>
+</html>
     
