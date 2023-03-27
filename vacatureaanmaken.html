@@ -142,11 +142,16 @@
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    logInModal('Response status:' + response.status);
+                    console.log('Response status:' , response.status);
                     return response.json();
                 })
                 .then(data => console.log(data))
                 .catch(error => console.error(error));
+
+                if (response.status == 200)
+                {
+                    logInModal("Vacature is sucessvol opgeslagen")
+                }
 
             function showDiv(e) {
                 let elements = document.getElementsByClassName("hiddeninput");
