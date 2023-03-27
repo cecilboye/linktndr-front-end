@@ -2,7 +2,6 @@
 <html>
 
 <head>
-    <script type="text/javascript" src="./local.js"></script>
     <script src="includes/globalscript.js"></script>
 
     <meta charset="UTF-8">
@@ -37,8 +36,8 @@
     </style>
 </head>
 <body>
-    <div lt-include-html="header.html">
-    </div>
+    <div id="header" lt-include-html="header.html"></div>
+    <div id="footer"></div>
     
     <div class="container">
         <div class="row">
@@ -195,7 +194,7 @@
             onPageLoad((userData) => {
                 //get all talentmanagers and put them in select tag as options
                 let element = document.getElementById("TalentmanagerInput");
-                fetch('https://localhost:7199/api/Talentmanager')
+                fetch(URL + 'Talentmanager')
                     .then(response => response.json())
                     .then(fetchdata => {
                         // Create option elements and add them to the select element
@@ -274,7 +273,7 @@
                 }
                 console.log(updateddata);
                 // Send data as JSON to backend URL using Fetch API
-                fetch('https://localhost:7199/api/Medewerker/update/'+localStorage.getItem('UserId'), {
+                fetch(URL + 'Medewerker/update/'+localStorage.getItem('UserId'), {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'

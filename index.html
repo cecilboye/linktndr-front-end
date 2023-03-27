@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <script src="includes/globalscript.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootstrap HTML Template</title>
@@ -11,21 +13,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="./includes/globalscript.js"></script>
-
-    <style>
-        #usertype-menu-item, .item-ingelogd{
-            color:white;
-            margin-top:14px;
-        }
-    </style>
 </head>
 
 <body>
-    <div lt-include-html="header.html">
-
-    </div>
-
+    <div id="header" lt-include-html="header.html"></div>
+    <div id="footer"></div>
+    
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center">
@@ -52,7 +45,7 @@
     <script>
         let token = localStorage.getItem('Token');
         let usertype = localStorage.getItem('UserType');
-        console.log(token);
+        //console.log(token);
         if (!!token && !!usertype) {
             switch(usertype){
                 case "MEDEWERKER":
@@ -67,7 +60,8 @@
             }
         }
 
-        includeHTML();
+        AddHeader();
+        //includeHTML();
 
 		function submitForm(e) {
             e.preventDefault();
@@ -80,7 +74,7 @@
 				password: password
 			};
 
-			fetch('https://localhost:7199/api/user/login', {
+			fetch(URL + 'user/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

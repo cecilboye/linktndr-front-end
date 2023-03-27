@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <script type="text/javascript" src="./local.js"></script>
+  <script src="includes/globalscript.js"></script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,7 +78,7 @@
 
 
     //wanneer het scherm wordt geladen pakt het alle medewerkers
-    window.onload = function () {
+    onPageLoad((userData) => {
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       vacatureId = urlParams.get('vacid');
@@ -86,7 +86,7 @@
       fetch(URL + "Medewerker")
         .then(a => a.json())
         .then(b => GetVacature(b))
-    }
+    });
 
     //Haalt de vacature op
     function GetVacature(data) {
@@ -188,27 +188,8 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Logo</a>
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Link 1</a></li>
-          <li><a href="#">Link 2</a></li>
-          <li><a href="#">Link 3</a></li>
-          <li><a href="#">Link 4</a></li>
-          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <div id="header" lt-include-html="header.html"></div>
+  <div id="footer"></div>
 
   <div class="container">
     <div class="row">
