@@ -45,7 +45,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Logo</a>
+                <a class="navbar-brand" href="#"><img src="./img/linktindr.png" height="25px"/></a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
@@ -297,7 +297,7 @@
                 console.log(updateddata);
                 // Send data as JSON to backend URL using Fetch API
                 fetch('https://localhost:7199/api/Medewerker/update/'+userData["token"], {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -311,7 +311,7 @@
                 })
                 .then(data => {
                     if(data){
-                        cosole.log(data);
+                        console.log(data);
                         //document.getElementById("submitinfo").innerHTML = 'registratie succesvol afgerond. <a href="./">klik hier</a> om naar de inlog pagina te gaan.';
                     }
                 })
@@ -323,6 +323,10 @@
                 window.location.href = "./";
             }
 
+            //show value above radius input
+            function showValue(value) {
+                document.getElementById("RangeValue").innerHTML = value;
+            }
         </script>
 </body>
 
