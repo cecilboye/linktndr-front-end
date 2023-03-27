@@ -65,19 +65,35 @@
         </div>
     </div>
     <script>
+        let token = localStorage.getItem('Token');
+        let usertype = localStorage.getItem('UserType');
+        console.log(token);
+        if (!!token && !!usertype) {
+            switch(usertype){
+                case "MEDEWERKER":
+                    window.location.href = "./medewerker.html";
+                break;
+                case "TALENTMANAGER":
+                    window.location.href = "./talentmanager.html";
+                break;
+                case "OPDRACHTGEVER":
+                    window.location.href = "./vacature.html";
+                break;
+            }
+        }
+
 		function submitForm(e) {
             e.preventDefault();
 
 			const email = document.getElementById("email").value;
 			const password = document.getElementById("pwd").value;
-
 	
 			const data = {
 				email: email,
 				password: password
 			};
 
-			fetch('https://localhost:7199/api/User/login', {
+			fetch('https://localhost:7199/api/user/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -91,21 +107,26 @@
                 return response.json();
             })
             .then(data => {
-                // Store data in localStorage
-                localStorage.setItem('UserData', JSON.stringify(data));
-                console.log(data);
+                console.log('data', data);
 
-                switch(data["usertype"]){
-                    case "Medewerker":
+                // Store data in localStorage
+                localStorage.setItem('Token', data.token);
+                localStorage.setItem('UserType', data.usertype);
+                localStorage.setItem('UserId', data.userId);
+
+                switch(data.usertype){
+                    case "MEDEWERKER":
                         window.location.href = "./medewerker.html";
                     break;
-                    case "Talentmanager":
+                    case "TALENTMANAGER":
                         window.location.href = "./talentmanager.html";
                     break;
-                    case "Opdrachtgever":
+                    case "OPDRACHTGEVER":
                         window.location.href = "./vacature.html";
                     break;
                 }
+
+                console.log('Not found: ' + data.usertype)
                 
             })
 			.catch(error => console.error(error));

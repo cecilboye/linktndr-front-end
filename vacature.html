@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <script type="text/javascript" src="./local.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootstrap HTML Template</title>
@@ -11,6 +13,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="includes/globalscript.js"></script>
 
 <style>
     .card {
@@ -36,41 +40,38 @@
         padding: 10px 50px 10px 50px;
     }
 </style>
-<script src="includes/globalscript.js"></script>
 <script>
-    window.onload = function(){
-        console.log("toon vacatures");
-        fetch(BASEURL + "/api/Vacature")
+    onPageLoad((userData) => {
+        fetch(URL + "Vacature")
         .then(r => r.json())
-        .then(d => toonVacatures(d))
-    }
-    function toonVacatures(vacatures){
-        let vacatureScherm = document.getElementById("vacaturelijst");
-        vacatureScherm.innerHTML = "";
-        for(let x = 0; x < vacatures.length; x++){
-            vacatureScherm.innerHTML += `
-            <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-                <div class="card">
-                    <div class="card-header text-bold">
-                        ${vacatures[x].title}
-                    </div>
-                    <div class="card-body">
-                        <div class="text-center ">
-                            <button type="button" class="btn btn-primary p-2"> <a href="swipepage.html?vacid=${vacatures[x].id}">Info </a></button>
-                        </div>
-                    </div>
+        .then(vacatures => {
+            let vacatureScherm = document.getElementById("vacaturelijst");
+            vacatureScherm.innerHTML = "";
+            for(let x = 0; x < vacatures.length; x++){
+                vacatureScherm.innerHTML += `
                     <div class="row">
-                        <div class="col-sm-12 text-left">
-                            <p class="text-muted">${vacatures[x].location}</p>
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <div class="card">
+                                <div class="card-header text-bold">
+                                    ${vacatures[x].title}
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center ">
+                                        <button type="button" onclick="window.location.href='swipepage.html?vacid=${vacatures[x].id}'" class="btn btn-primary p-2">Info</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 text-left">
+                                        <p class="text-muted">${vacatures[x].location}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-            `
-        }
-    }
+                `
+            }
+        })
+    });
 </script>
 </head>
 <body>

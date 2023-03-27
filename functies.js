@@ -1,11 +1,8 @@
 function AddSollicitatie (idMedewerker, idVacature)
 {
     let sollicitatie = {
-        "medewerker_Id": idMedewerker,
-        "vacature_Id": idVacature,
-        "status": "Match",
-        "medewerker_akkoord": false,
-        "opdrachtgever_akkoord": false
+        "medewerkerId": idMedewerker,
+        "vacatureId": idVacature
     }
 
     fetch(URL + 'Sollicitatie/add',{
@@ -15,12 +12,10 @@ function AddSollicitatie (idMedewerker, idVacature)
         },
         body:JSON.stringify(sollicitatie)
     })
-    .then(response => {
-        alert('massive dubski');
-    })
-    .catch(error => {
-        alert('f in de chat');
-    });    
+    .then(a => {return true;});
+    //.catch(error => {
+    //    console.log("false");
+    //});    
 }
 /*
 function ShowSollicitatie (idMedewerker, idVacature)
