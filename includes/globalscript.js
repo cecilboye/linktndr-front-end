@@ -14,6 +14,7 @@ function onPageLoad(after) {
             })
             .then(response => response.json())
             .then(userData => {
+                console.log(userData);
                 document.getElementById("usertype-menu-item").innerHTML = userData.name;
 
                 after(userData);
@@ -28,3 +29,7 @@ function updateUserTypeMenuItem(usertype) {
     usertypeMenuItem.innerHTML = `<a href="#">${usertype}</a>`;
 }
 
+function logout(){
+    localStorage.clear();
+    window.location.href = "./";
+}

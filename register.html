@@ -168,7 +168,7 @@
                         telephone: telephone,
                     }
                 break;
-                case "Talentmanager":
+                case "Opdrachtgever":
                     data = {
                         email: email,
                         password: password,
@@ -210,6 +210,9 @@
             });
         }
         window.onload = function(){
+            if(localStorage.getItem('UserType')){
+                window.location.href = "./";
+            }
             //hide all inputs
             let elements = document.getElementsByClassName("hiddeninput");
             Array.from(elements).forEach(function (element) {
