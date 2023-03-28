@@ -7,12 +7,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Detailed Look</title>
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+  <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
+  <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
   <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <!-- Bootstrap JS -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./bootstrap/js/bootstrap.min.js"></script>
+
   <style>
     .card {
       border: 1px solid #ddd;
@@ -151,11 +154,6 @@
       {
         window.location = `swipepage.html?vacid=${vacid}`;
       }
-
-      function logout(){
-        localStorage.clear();
-        window.location.href = "./";
-    }
     </script>
   </body>
 </html>
