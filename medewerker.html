@@ -6,54 +6,34 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap HTML Template</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Medewerker!</title>
+        <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+        <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
+        <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="./bootstrap/js/bootstrap.min.js"></script>
     <script src="includes/globalscript.js"></script>
-
-    <style>
-        .profilepic {
-            object-fit: contain;
-            width: 400px;
-        }
-    
-        ul {
-            line-height: 50px;
-        }
-    
-        #usertype-menu-item,
-        .item-ingelogd {
-            color: white;
-            margin-top: 14px;
-        }
-    
-        .container {
-            margin-top: 100px;
-        }
-    </style>
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#"><img src="./img/linktindr.png" height="25px"/></a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="item-ingelogd">Je bent ingelogd als:&nbsp;</li>
-                    <li id="usertype-menu-item"></li>
-                    <li><button class="btn btn-light btn-outline-primary" onclick="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</button></li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-light">
+        <div class="row text-white collapse navbar-collapse container-fluid" id="navbarSupportedContent" style="height:50px; background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));">
+                <div class="item-ingelogd col-7">
+                    <a class="navbar-brand" href="index.html">
+                        <img src="img/linktindr.png" height="30" class="d-inline-block align-top" alt="">
+                    </a>
+                </div>
+                <div class="item-ingelogd col-2 text-end">
+                    Je bent ingelogd als:
+                </div>
+                <div class="col-2" id="usertype-menu-item">
+                  
+                </div>
+                <div class="col-1">
+                    <a href="#" class="btn btn-light btn-outline-danger btn-sm" onclick="logout()" >Logout</a>
+                </div>
         </div>
     </nav>
     <div class="container">
@@ -67,7 +47,7 @@
                     <div class="col-sm-8"><p id="NameElement"></p></div>
                 </div>
                 <div class="row">
-                    <label for="DateOfBirthElement" class="col-sm-4">Geboortedatum:</label>
+                    <label for="DateOfBirthElement" class="col-sm-4">Leeftijd:</label>
                     <div class="col-sm-8"><p id="DateOfBirthElement"></p></div>
                 </div>
                 <div class="row">
@@ -104,14 +84,14 @@
                 </div>
                 <div class="row">
                     <!--<button type="submit" class="btn btn-default btn-outline-primary" onclick="submitForm(event)">Bewerk</button>-->
-                    <button type="button" class="btn btn-primary col-sm-12" data-toggle="modal" data-target="#EditModal" data-id="@mdo">Bewerk</button>
+                    <button type="button" class="btn btn-primary col-sm-12" data-bs-toggle="modal" data-bs-target="#EditModal" data-bs-id="@mdo">Bewerk</button>
                 </div>
                 <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalLabel">Bewerk gegevens</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
@@ -195,7 +175,7 @@
                                 </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
                           <button type="button" class="btn btn-primary" onclick="submitForm(event)">Opslaan</button>
                         </div>
                       </div>
@@ -256,7 +236,8 @@
 
                     document.getElementById("PhotoElement").src = userData.photo;
                     document.getElementById('NameElement').innerHTML = userData.name;
-                    document.getElementById("DateOfBirthElement").innerHTML = new Date(userData.dateOfBirth).toISOString().substring(0, 10);
+                    //document.getElementById("DateOfBirthElement").innerHTML = new Date(userData.dateOfBirth).toISOString().substring(0, 10);
+                    document.getElementById("DateOfBirthElement").innerHTML = getAge(userData.dateOfBirth);
                     document.getElementById("PostCodeElement").innerHTML = userData.postCode;
                     document.getElementById("HouseNumberElement").innerHTML = userData.houseNumber;
                     document.getElementById("EmailElement").innerHTML = userData.email;
@@ -281,9 +262,11 @@
             function submitForm(e) {
                 e.preventDefault();
                 // Get form data
+                let dob = new Date(document.getElementById("DateOfBirthInput").value);
+                dob.setHours(12,0,0,0);
                 const updateddata = {
                     Name: document.getElementById("NameInput").value,
-                    DateOfBirth: document.getElementById("DateOfBirthInput").value,
+                    DateOfBirth: dob.toISOString(),
                     PostCode: document.getElementById("PostCodeInput").value,
                     HouseNumber: document.getElementById("HouseNumberInput").value,
                     Email: document.getElementById("EmailInput").value,
@@ -312,7 +295,7 @@
                 })
                 .then(data => {
                     if(data){
-                        window.location.href = "./medewerker.html";
+                        window.location.href = "./vacature.html";
                         //document.getElementById("submitinfo").innerHTML = 'registratie succesvol afgerond. <a href="./">klik hier</a> om naar de inlog pagina te gaan.';
                     }
                 })
@@ -321,6 +304,16 @@
             //show value above radius input
             function showValue(value) {
                 document.getElementById("RangeValue").innerHTML = value;
+            }
+            function getAge(dateString) {
+                var today = new Date();
+                var birthDate = new Date(dateString);
+                var age = today.getFullYear() - birthDate.getFullYear();
+                var m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age;
             }
         </script>
 </body>
