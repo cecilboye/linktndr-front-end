@@ -134,20 +134,26 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
     <script>
         onPageLoad((loggedInUser) => {
             if(localStorage.getItem('UserType') != "OPDRACHTGEVER"){
                 window.location.href = "./";
             }
             vacatures = {};
-            fetch('https://localhost:7199/api/opdrachtgever/'+loggedInUser.id)
+            fetch(URL + 'opdrachtgever/'+loggedInUser.id)
                 .then(response => response.json())
                 .then(userData => {
-                    fetch('https://localhost:7199/api/Vacature/opdrachtgever/'+userData.id)
+                    fetch(URL + 'Vacature/opdrachtgever/'+userData.id)
                         .then(response => response.json())
                         .then(vacatureData => {
                             let uitstroomrichting = [];
-                            fetch('https://localhost:7199/api/Specialization')
+                            fetch(URL + 'Specialization')
                                 .then(response => response.json())
                                 .then(fetchdata => {
                                     let SpecializationSelectElement = document.getElementById("SpecializationInput");

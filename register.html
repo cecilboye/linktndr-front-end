@@ -7,22 +7,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join LinkTindr</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
     <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style>.hiddeninput {display: "none"; }</style>
-</head>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
 
-<style>
-    .btn-primary{
-        background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));
-        color: white;
-        border-color: transparent;
-    }
-</style>>
+    <style>
+        .btn-primary{
+            background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));
+            color: white;
+            border-color: transparent;
+        }
+
+        .form-group{
+            margin-bottom: 10px;
+        }
+
+        .hiddeninput {
+            display: none;
+        }
+    </style>
+</head>
 
 <body>
     <div id="header" lt-include-html="header.html"></div>
@@ -31,11 +40,13 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center">
-                <h1>Welcome to LinkTinder</h1>
+                <br>
+                <h1>Welcome to LinkTindr</h1>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
+            <div class="col-sm-4 col-sm"></div>
+            <div class="col-sm-4 col-sm">
                 <form>
                     <div class="form-group">
                         <label for="email">Emailadres:</label>
@@ -107,9 +118,13 @@
                         <input  type="text" class="form-control" id="Image" placeholder="Vul hier een URL van een foto die je wilt uploaden"/>
                     </div>
                     <div class="form-group hiddeninput Medewerker Talentmanager Opdrachtgever">
-                        <button type="submit" class="btn btn-default btn-outline-primary" onclick="submitForm(event)">Registreer</button>
+                        <button type="submit" class="btn btn-primary" onclick="submitForm(event)">Registreer</button>
                         <label for="submit"><span id="submitinfo" class="text-success"></span></label>
                     </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
                 </form>
             </div>
         </div>
