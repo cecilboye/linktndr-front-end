@@ -2,11 +2,11 @@
 <html>
 
 <head>
-  <script type="text/javascript" src="./local.js"></script>
+  <script src="includes/globalscript.js"></script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bootstrap HTML Template</title>
+  <title>Find the Perfect Match</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <!-- jQuery library -->
@@ -56,6 +56,12 @@
       padding: 20px 20px 20px 20px;
       object-fit: cover;
     }
+    
+    .btn-primary{
+      background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));
+      color: white;
+      border-color: transparent;
+    }
   </style>
   <script>
     let vacatureId = -1;
@@ -78,7 +84,7 @@
 
 
     //wanneer het scherm wordt geladen pakt het alle medewerkers
-    window.onload = function () {
+    onPageLoad((userData) => {
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       vacatureId = urlParams.get('vacid');
@@ -86,7 +92,7 @@
       fetch(URL + "Medewerker")
         .then(a => a.json())
         .then(b => GetVacature(b))
-    }
+    });
 
     //Haalt de vacature op
     function GetVacature(data) {
@@ -188,25 +194,8 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><img src="./img/linktindr.png" height="25px"/></a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="item-ingelogd">Je bent ingelogd als:&nbsp;</li>
-                <li id="usertype-menu-item"></li>
-                <li><button class="btn btn-light btn-outline-primary" onclick="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</button></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+  <div id="header" lt-include-html="header.html"></div>
+  <div id="footer"></div>
 
   <div class="container">
     <div class="row">

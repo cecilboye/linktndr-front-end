@@ -2,8 +2,6 @@
 <html>
 
 <head>
-    <script type="text/javascript" src="./local.js"></script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medewerker!</title>
@@ -18,7 +16,7 @@
     <script src="includes/globalscript.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-light">
+    <!--<nav class="navbar navbar-light">
         <div class="row text-white collapse navbar-collapse container-fluid" id="navbarSupportedContent" style="height:50px; background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));">
                 <div class="item-ingelogd col-7">
                     <a class="navbar-brand" href="index.html">
@@ -35,7 +33,9 @@
                     <a href="#" class="btn btn-light btn-outline-danger btn-sm" onclick="logout()" >Logout</a>
                 </div>
         </div>
-    </nav>
+    </nav>-->
+    <div id="header" lt-include-html="header.html"></div>
+    <div id="footer"></div>
     <div class="container">
         <div class="row">
             <div class="col-sm-5 col-sm-offset-1">
@@ -192,12 +192,12 @@
                 if(localStorage.getItem('UserType') != 'MEDEWERKER'){
                     window.location.href = "./";
                 }
-                fetch('https://localhost:7199/api/medewerker/'+loggedInUser.id)
+                fetch(BASEURL+'/api/medewerker/'+loggedInUser.id)
                 .then(response => response.json())
                 .then(userData => {
                     //get all talentmanagers and put them in select tag as options
                     let element = document.getElementById("TalentmanagerInput");
-                    fetch('https://localhost:7199/api/Talentmanager')
+                    fetch(BASEURL+'/api/Talentmanager')
                     .then(response => response.json())
                     .then(fetchdata => {
                         // Create option elements and add them to the select element
@@ -215,7 +215,7 @@
 
                     //get all specialization values and put them in a select tag as options
                     let SpecializationSelectElement = document.getElementById("SpecializationInput");
-                    fetch('https://localhost:7199/api/Specialization')
+                    fetch(BASEURL+'/api/Specialization')
                     .then(response => response.json())
                     .then(fetchdata => {
                         // Create option elements and add them to the select element
