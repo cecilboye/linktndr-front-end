@@ -146,3 +146,7 @@ function updateUserTypeMenuItem(usertype) {
     usertypeMenuItem.innerHTML = `<a href="#">${usertype}</a>`;
 }
 
+function logout(){
+    localStorage.clear();
+    window.location.href = "./";
+}

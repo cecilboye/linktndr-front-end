@@ -46,7 +46,7 @@
                     <div class="col-sm-8"><p id="NameElement"></p></div>
                 </div>
                 <div class="row">
-                    <label for="DateOfBirthElement" class="col-sm-4">Geboortedatum:</label>
+                    <label for="DateOfBirthElement" class="col-sm-4">Leeftijd:</label>
                     <div class="col-sm-8"><p id="DateOfBirthElement"></p></div>
                 </div>
                 <div class="row">
@@ -83,14 +83,14 @@
                 </div>
                 <div class="row">
                     <!--<button type="submit" class="btn btn-default btn-outline-primary" onclick="submitForm(event)">Bewerk</button>-->
-                    <button type="button" class="btn btn-primary col-sm-12" data-toggle="modal" data-target="#EditModal" data-id="@mdo">Bewerk</button>
+                    <button type="button" class="btn btn-primary col-sm-12" data-bs-toggle="modal" data-bs-target="#EditModal" data-bs-id="@mdo">Bewerk</button>
                 </div>
                 <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalLabel">Bewerk gegevens</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
@@ -174,7 +174,7 @@
                                 </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
                           <button type="button" class="btn btn-primary" onclick="submitForm(event)">Opslaan</button>
                         </div>
                       </div>
@@ -187,75 +187,85 @@
             </div>
         </div>
         <script>
-            onPageLoad((userData) => {
-                //get all talentmanagers and put them in select tag as options
-                let element = document.getElementById("TalentmanagerInput");
-                fetch(URL + 'Talentmanager')
-                    .then(response => response.json())
-                    .then(fetchdata => {
-                        // Create option elements and add them to the select element
-                        fetchdata.forEach(item => {
-                            const option = document.createElement("option");
-                            option.text = item.name;
-                            option.value = item.id;
-                            if(item.id == userData.talentManagerId){
-                                option.selected = "selected";
+            onPageLoad((loggedInUser) => {
+                if(localStorage.getItem('UserType') != 'MEDEWERKER'){
+                    window.location.href = "./";
+                }
+                fetch('https://localhost:7199/api/medewerker/'+loggedInUser.id)
+                .then(response => response.json())
+                .then(userData => {
+                    //get all talentmanagers and put them in select tag as options
+                    let element = document.getElementById("TalentmanagerInput");
+                    fetch('https://localhost:7199/api/Talentmanager')
+                        .then(response => response.json())
+                        .then(fetchdata => {
+                            // Create option elements and add them to the select element
+                            fetchdata.forEach(item => {
+                                const option = document.createElement("option");
+                                option.text = item.name;
+                                option.value = item.id;
+                                if(item.id == userData.talentManagerId){
+                                    option.selected = "selected";
+                                }
+                                element.add(option);
+                            });
+                        })
+                        .catch(error => console.error(error));
+
+                        //get all specialization values and put them in a select tag as options
+                        let SpecializationSelectElement = document.getElementById("SpecializationInput");
+                        fetch('https://localhost:7199/api/Specialization')
+                        .then(response => response.json())
+                        .then(fetchdata => {
+                            // Create option elements and add them to the select element
+                            let i = 0;
+                            for (var key in fetchdata) {
+                                const option = document.createElement("option");
+                                option.text = fetchdata[key];
+                                option.value = key;
+                                if(i == userData.uitstroomrichting){
+                                    option.selected = "selected";
+                                    document.getElementById("SpecializationElement").innerHTML = fetchdata[key];
+                                }
+                                SpecializationSelectElement.add(option);
+                                i++;
                             }
-                            element.add(option);
-                        });
-                    })
-                    .catch(error => console.error(error));
+                        })
+                        .catch(error => console.error(error));
 
-                    //get all specialization values and put them in a select tag as options
-                    let SpecializationSelectElement = document.getElementById("SpecializationInput");
-                    fetch('https://localhost:7199/api/Specialization')
-                    .then(response => response.json())
-                    .then(fetchdata => {
-                        // Create option elements and add them to the select element
-                        let i = 0;
-                        for (var key in fetchdata) {
-                            const option = document.createElement("option");
-                            option.text = fetchdata[key];
-                            option.value = key;
-                            if(i == userData.uitstroomrichting){
-                                option.selected = "selected";
-                                document.getElementById("SpecializationElement").innerHTML = fetchdata[key];
-                            }
-                            SpecializationSelectElement.add(option);
-                            i++;
-                        }
-                    })
-                    .catch(error => console.error(error));
+                    document.getElementById("PhotoElement").src = userData.photo;
+                    document.getElementById('NameElement').innerHTML = userData.name;
+                    //document.getElementById("DateOfBirthElement").innerHTML = new Date(userData.dateOfBirth).toISOString().substring(0, 10);
+                    document.getElementById("DateOfBirthElement").innerHTML = getAge(userData.dateOfBirth);
+                    document.getElementById("PostCodeElement").innerHTML = userData.postCode;
+                    document.getElementById("HouseNumberElement").innerHTML = userData.houseNumber;
+                    document.getElementById("EmailElement").innerHTML = userData.email;
+                    document.getElementById("TelephoneElement").innerHTML = userData.telephone;
+                    document.getElementById("TalentmanagerElement").innerHTML = userData.talentManagerName;
+                    document.getElementById("RadiusElement").innerHTML = userData.radius;
+                    document.getElementById("BioElement").innerHTML = userData.profileText;
 
-                document.getElementById("PhotoElement").src = userData.photo;
-                document.getElementById('NameElement').innerHTML = userData.name;
-                document.getElementById("DateOfBirthElement").innerHTML = new Date(userData.dateOfBirth).toISOString().substring(0, 10);
-                document.getElementById("PostCodeElement").innerHTML = userData.postCode;
-                document.getElementById("HouseNumberElement").innerHTML = userData.houseNumber;
-                document.getElementById("EmailElement").innerHTML = userData.email;
-                document.getElementById("TelephoneElement").innerHTML = userData.telephone;
-                document.getElementById("TalentmanagerElement").innerHTML = userData.talentManagerName;
-                document.getElementById("RadiusElement").innerHTML = userData.radius;
-                document.getElementById("BioElement").innerHTML = userData.profileText;
-
-                document.getElementById("NameInput").value = userData.name;
-                document.getElementById("DateOfBirthInput").value = new Date(userData.dateOfBirth).toISOString().substring(0, 10);
-                document.getElementById("PostCodeInput").value = userData.postCode;
-                document.getElementById("HouseNumberInput").value = userData.houseNumber;
-                document.getElementById("EmailInput").value = userData.email;
-                document.getElementById("TelephoneInput").value = userData.telephone;
-                document.getElementById("RadiusInput").value = userData.radius;
-                document.getElementById("RangeValue").innerHTML = userData.radius;
-                document.getElementById("BioInput").value = userData.profileText;
-                document.getElementById("PhotoInput").value = userData.photo;
+                    document.getElementById("NameInput").value = userData.name;
+                    document.getElementById("DateOfBirthInput").value = new Date(userData.dateOfBirth).toISOString().substring(0, 10);
+                    document.getElementById("PostCodeInput").value = userData.postCode;
+                    document.getElementById("HouseNumberInput").value = userData.houseNumber;
+                    document.getElementById("EmailInput").value = userData.email;
+                    document.getElementById("TelephoneInput").value = userData.telephone;
+                    document.getElementById("RadiusInput").value = userData.radius;
+                    document.getElementById("RangeValue").innerHTML = userData.radius;
+                    document.getElementById("BioInput").value = userData.profileText;
+                    document.getElementById("PhotoInput").value = userData.photo;
+                })
             })
             
             function submitForm(e) {
                 e.preventDefault();
                 // Get form data
+                let dob = new Date(document.getElementById("DateOfBirthInput").value);
+                dob.setHours(12,0,0,0);
                 const updateddata = {
                     Name: document.getElementById("NameInput").value,
-                    DateOfBirth: document.getElementById("DateOfBirthInput").value,
+                    DateOfBirth: dob.toISOString(),
                     PostCode: document.getElementById("PostCodeInput").value,
                     HouseNumber: document.getElementById("HouseNumberInput").value,
                     Email: document.getElementById("EmailInput").value,
@@ -284,11 +294,25 @@
                 })
                 .then(data => {
                     if(data){
-                        cosole.log(data);
+                        window.location.href = "./vacature.html";
                         //document.getElementById("submitinfo").innerHTML = 'registratie succesvol afgerond. <a href="./">klik hier</a> om naar de inlog pagina te gaan.';
                     }
                 })
                 .catch(error => console.error(error));
+            }
+            //show value above radius input
+            function showValue(value) {
+                document.getElementById("RangeValue").innerHTML = value;
+            }
+            function getAge(dateString) {
+                var today = new Date();
+                var birthDate = new Date(dateString);
+                var age = today.getFullYear() - birthDate.getFullYear();
+                var m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age;
             }
         </script>
     </body>
