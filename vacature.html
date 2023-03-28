@@ -17,8 +17,7 @@
 
 </head>
 <body>
-    <div id="header" lt-include-html="header.html"></div>
-    <div id="footer"></div>
+    <div id="header"></div>
     <div class="container" id="vacaturelijst">
         <div class="card">
             <h5 class="card-header">Nieuwe vacature</h5>
@@ -76,12 +75,7 @@
             </div>
         </div>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
+    <div id="footer"></div>
     <script>
         onPageLoad((loggedInUser) => {
             if(localStorage.getItem('UserType') != "OPDRACHTGEVER"){
@@ -128,9 +122,11 @@
                                     <h5 class="card-title">${vacature.location}<p class="card-text">${uitstroomrichting[vacature.uitstroomrichting]}</p></h5>
                                     <p class="card-text">${vacature.description}</p>
                                     <p class="card-text">${startdatum} - ${einddatum}</p>
-                                    <a href="swipepage.html?vacid=${vacature.id}" class="btn btn-primary text-white">Zie beschikbare medewerkers</a>
-                                    <button class="btn btn-secondary text-white" onclick="editVacature(${vacature.id})">Bewerk vacature</button>
-                                    <button class="btn btn-danger text-white" onclick="deleteVacature(${vacature.id})">Verwijder vacature</button>
+                                    <div class="d-flex justify-content-between bd-highlight">
+                                        <a href="swipepage.html?vacid=${vacature.id}" class="btn btn-primary text-white">Zie beschikbare medewerkers</a>
+                                        <button class="btn btn-secondary text-white" onclick="editVacature(${vacature.id})">Bewerk vacature</button>
+                                        <button class="btn btn-danger text-white" onclick="deleteVacature(${vacature.id})">Verwijder vacature</button>
+                                    </div>
                                 </div>
                             </div>
                         `;

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to LinkTindr!</title>
@@ -30,8 +27,7 @@
 </head>
 
 <body>
-    <div id="header" lt-include-html="header.html"></div>
-    <div id="footer"></div>
+    <div id="header"></div>
     
     <div class="container" style="text-align: center;">
         <div class="row">
@@ -52,12 +48,15 @@
                         <label for="pwd">Password:</label>
                         <input type="password" class="form-control" id="pwd">
                     </div>
-                    <button type="submit" class="btn btn-primary"onclick="submitForm(event)">Login</button>
-                    <a href="./register.html" style="margin-left: 10px;">Klik hier om te registreren</a>
+                    <div class="d-flex justify-content-between bd-highlight">
+                        <button type="submit" class="btn btn-primary"onclick="submitForm(event)">Login</button>
+                        <a href="./register.html" style="margin-left: 10px;">Klik hier om te registreren</a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
+    <div id="footer"></div>
     <script>
         let token = localStorage.getItem('Token');
         let usertype = localStorage.getItem('UserType');

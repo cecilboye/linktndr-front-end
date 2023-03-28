@@ -52,16 +52,16 @@ function AddHeader(data) {
                 <ul class="nav navbar-nav navbar-right">
                     <li style="margin-top: 8px">logoutButton</li>
                     <li id="usertype-menu-item"></li>
-                    <li><a id="userName" href="" style="color: white;"><span class="glyphicon glyphicon-user" style="color: white;"></span> ${name}</a></li>
+                    <li><a id="userName" href="" style="color: white;"><span class="glyphicon glyphicon-user" style="color: white;"></span> name</a></li>
                 </ul>
             </div>
         </div>
         <ul class="nav navbar-nav navbar-right">
             <div>
-                <div id="logout" class="item-ingelogd" style="color:white; margin-right: 15px;">${logoutButton}
-                    <a id="userName" href="${href}" style="color: white;">
+                <div id="logout" class="item-ingelogd" style="color:white; margin-right: 15px;">logout
+                    <a id="userName" href="#" style="color: white;">
                         <span class="glyphicon glyphicon-user" style="color: white;"></span>
-                        ${name}
+                        name?
                     </a>
                 </div>
             </div>

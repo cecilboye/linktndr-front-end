@@ -16,8 +16,7 @@
     <script src="includes/globalscript.js"></script>
 </head>
 <body>
-    <div id="header" lt-include-html="header.html"></div>
-    <div id="footer"></div>
+    <div id="header"></div>
     <div class="container" id="sollicitatielijst">
         <div class="card">
             <h5 class="card-header">Welkom</h5>
@@ -75,6 +74,7 @@
             </div>
         </div>
     </div>
+    <div id="footer"></div>
     <script>
         onPageLoad((loggedInUser) => {
             if(localStorage.getItem('UserType') != "TALENTMANAGER") {
@@ -115,8 +115,10 @@
                                     <p class="card-text">${uitstroomrichting[sollicitatie.medewerkerUitstroomrichting]}</p>
                                     <p class="card-text">Vacature info: ${sollicitatie.vacatureDescription}</p>
                                     <p class="card-text">${startdatum} - ${einddatum}</p>
-                                    <button class="btn btn-primary text-white" onclick="editSollicitatie(${sollicitatie.id})">Bewerk sollicitatie</button>
-                                    <button class="btn btn-danger text-white" onclick="deleteSollicitatie(${sollicitatie.id})">Verwijder sollicitatie</button>
+                                    <div class="d-flex justify-content-between bd-highlight">
+                                        <button class="btn btn-primary text-white" onclick="editSollicitatie(${sollicitatie.id})">Bewerk sollicitatie</button>
+                                        <button class="btn btn-danger text-white" onclick="deleteSollicitatie(${sollicitatie.id})">Verwijder sollicitatie</button>
+                                    </div>        
                                 </div>
                             </div>
                         `;
