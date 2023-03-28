@@ -2,8 +2,12 @@
     background-image: linear-gradient(#fd2b7a,#ff6a5b);
 }
 
-.btn-primary{
+.btn-primary {
     background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));
     color: white;
     border-color: transparent;
+}
+
+.hiddeninput {
+    display: "none"; 
 }

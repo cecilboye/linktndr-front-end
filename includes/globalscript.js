@@ -56,6 +56,16 @@ function AddHeader(data) {
                 </ul>
             </div>
         </div>
+        <ul class="nav navbar-nav navbar-right">
+            <div>
+                <div id="logout" class="item-ingelogd" style="color:white; margin-right: 15px;">${logoutButton}
+                    <a id="userName" href="${href}" style="color: white;">
+                        <span class="glyphicon glyphicon-user" style="color: white;"></span>
+                        ${name}
+                    </a>
+                </div>
+            </div>
+        </ul>
     </nav>`;
 
     document.getElementById("header").innerHTML= `

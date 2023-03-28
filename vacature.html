@@ -8,46 +8,13 @@
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
     <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
+    <link rel="stylesheet" href="./includes/globalstyle.css"/>
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="./bootstrap/js/bootstrap.min.js"></script>
     <script src="includes/globalscript.js"></script>
-    <style>
-        .card {
-            width: 100%;
-            padding: 20px 20px 20px 20px;
-            margin-top: 50px;
-            position: relative; /* Set position to relative to create a stacking context */
-            z-index: 0; /* Set z-index to 0 to keep the element in the background */
-            border: none; /* Remove the border */
-            border-radius: 10px; /* Set the border radius to 10 pixels */
-            overflow: hidden; /* Hide any content that extends beyond the border */
-        }
 
-        .card::before {
-            content: ""; /* Create an empty content */
-            position: absolute; /* Set position to absolute to position the pseudo-element */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Set z-index to -1 to keep the pseudo-element behind the element */
-            border-radius: 10px; /* Set the border radius to 10 pixels to match the element */
-            border: 5px solid transparent; /* Set border to transparent so the gradient shows through */
-            border-image: linear-gradient(to right, rgb(253, 43, 122), rgb(255, 106, 91)) 1;
-            /* Set the border image to a linear gradient that goes from left to right */
-            /* The '1' at the end sets the width of the border image to 1 pixel */
-        }
-
-        .btn-primary{
-            padding: 10px 50px 10px 50px;
-            
-            background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));
-            color: white;
-            border-color: transparent;
-        }
-    </style>
 </head>
 <body>
     <div id="header" lt-include-html="header.html"></div>
@@ -109,6 +76,12 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
     <script>
         onPageLoad((loggedInUser) => {
             if(localStorage.getItem('UserType') != "OPDRACHTGEVER"){
@@ -124,11 +97,11 @@
                 document.getElementById("VactureIdInput").value = 0;
             })
             vacatures = {};
-            fetch('https://localhost:7199/api/Vacature/opdrachtgever/'+loggedInUser.id)
+            fetch(BASEURL+'/api/Vacature/opdrachtgever/'+loggedInUser.id)
             .then(response => response.json())
             .then(vacatureData => {
                 let uitstroomrichting = [];
-                fetch('https://localhost:7199/api/Specialization')
+                fetch(BASEURL+'/api/Specialization')
                 .then(response => response.json())
                 .then(fetchdata => {
                     let SpecializationSelectElement = document.getElementById("SpecializationInput");

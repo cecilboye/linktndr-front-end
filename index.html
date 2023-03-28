@@ -22,6 +22,10 @@
             color: white;
             border-color: transparent;
         }
+
+        .form-group{
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
@@ -29,15 +33,17 @@
     <div id="header" lt-include-html="header.html"></div>
     <div id="footer"></div>
     
-    <div class="container">
+    <div class="container" style="text-align: center;">
         <div class="row">
             <div class="col-sm-12 text-center">
+                <br>
                 <h1>Welcome to LinkTindr</h1>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-                <form>
+            <div class="col-sm-4 col-sm"></div>
+            <div class="col-sm-4 col-sm">
+                <form style="text-align: left;">
                     <div class="form-group">
                         <label for="email">Email address:</label>
                         <input type="email" class="form-control" id="email">
@@ -46,9 +52,8 @@
                         <label for="pwd">Password:</label>
                         <input type="password" class="form-control" id="pwd">
                     </div>
-                    
-                    <button type="submit" class="btn btn-default" onclick="submitForm(event)">Login</button>
-                    <a href="./register.html">Klik hier om te registreren</a>
+                    <button type="submit" class="btn btn-primary"onclick="submitForm(event)">Login</button>
+                    <a href="./register.html" style="margin-left: 10px;">Klik hier om te registreren</a>
                 </form>
             </div>
         </div>
