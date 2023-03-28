@@ -2,19 +2,17 @@
 <html>
 
 <head>
-    <script type="text/javascript" src="./local.js"></script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootstrap HTML Template</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
     <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <script src="includes/globalscript.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
 
 <style>
     .card {
@@ -40,128 +38,119 @@
         padding: 10px 50px 10px 50px;
     }
 </style>
-<script>
-    onPageLoad((userData) => {
-        fetch(URL + "Vacature")
-        .then(r => r.json())
-        .then(vacatures => {
-            let vacatureScherm = document.getElementById("vacaturelijst");
-            vacatureScherm.innerHTML = "";
-            for(let x = 0; x < vacatures.length; x++){
-                vacatureScherm.innerHTML += `
-                    <div class="row">
-                        <div class="col-sm-4 col-sm-offset-4">
-                            <div class="card">
-                                <div class="card-header text-bold">
-                                    ${vacatures[x].title}
-                                </div>
-                                <div class="card-body">
-                                    <div class="text-center ">
-                                        <button type="button" onclick="window.location.href='swipepage.html?vacid=${vacatures[x].id}'" class="btn btn-primary p-2">Info</button>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12 text-left">
-                                        <p class="text-muted">${vacatures[x].location}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `
-            }
-        })
-    });
-</script>
+<script src="includes/globalscript.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Logo</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="item-ingelogd">Je bent ingelogd als:&nbsp;</li>
-                    <li id="usertype-menu-item"></li> 
-                    <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-light">
+        <div class="row text-white collapse navbar-collapse container-fluid" id="navbarSupportedContent" style="height:50px; background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));">
+                <div class="item-ingelogd col-7">
+                    <a class="navbar-brand" href="index.html">
+                        <img src="img/linktindr.png" height="30" class="d-inline-block align-top" alt="">
+                    </a>
+                </div>
+                <div class="item-ingelogd col-2 text-end">
+                    Je bent ingelogd als:
+                </div>
+                <div class="col-2" id="usertype-menu-item">
+                  
+                </div>
+                <div class="col-1">
+                    <a href="#" class="btn btn-light btn-outline-danger btn-sm" onclick="logout()" >Logout</a>
+                </div>
         </div>
     </nav>
-
     <div class="container" id="vacaturelijst">
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-                <div class="card">
-                    <div class="card-header text-bold">
-                        glasvezel Specialist
-                    </div>
-                    <div class="card-body">
-                        <div class="text-center ">
-                            <button type="button" class="btn btn-primary p-2"> <a href="swipepage.html">Info </a></button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 text-left">
-                            <p class="text-muted">Ziggo</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="row">
-                <div class="col-sm-4 col-sm-offset-4">
-                    <div class="card">
-                        <div class="card-header text-bold">
-                            Fruitleer
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center ">
-                                <button type="button" class="btn btn-primary p-2">Info</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 text-left">
-                                <p class="text-muted">.NET Developer</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="row">
-                <div class="col-sm-4 col-sm-offset-4">
-                    <div class="card">
-                        <div class="card-header text-bold">
-                            Defensie
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center ">
-                                <button type="button" href="medewerker.html" class="btn btn-primary p-2">Info</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 text-left">
-                                <p class="text-muted">Informatie Analyst</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="card">
+            <h5 class="card-header">Nieuwe vacature</h5>
+            <div class="card-body">
+                <button type="button" class="btn btn-primary col-sm-12" data-bs-toggle="modal" data-bs-target="#EditModal">Klik hier om een nieuwe vacature aan te maken</button>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bewerk gegevens</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="title">Title:</label>
+                            <input type="text" class="form-control" id="title"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <input type="text" class="form-control" id="description"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Uitstroomrichting:</label>
+                            <select class="form-control" id="uitstroomrichting">
+                                <option value="0">Devops</option>
+                                <option value="1">Informatie Analist</option>
+                                <option value="2">C# Programmeur</option>
+                                <option value="3">java Programmeur</option>
+                            </select>
+                        </div>
+                        <div class="form-group hiddeninput Opdrachtgever">
+                            <label for="Locatie">Locatie:</label>
+                            <input type="text" class="form-control" id="locatie"/>
+                        </div>
+                        <div class="form-group hiddeninput Opdrachtgever">
+                            <label for="Startdatum">Startdatum:</label>
+                            <input type="Date" class="form-control" id="startdatum"/>
+                        </div>
+                        <div class="form-group hiddeninput Opdrachtgever">
+                            <label for="Einddatum">Einddatum:</label>
+                            <input type="Date" class="form-control" id="einddatum"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
+                    <button type="button" class="btn btn-primary" onclick="submitForm(event)">Opslaan</button>
+                </div>
+            </div>
+        </div>
     </div>
+    <script>
+        onPageLoad((loggedInUser) => {
+            if(localStorage.getItem('UserType') != "OPDRACHTGEVER"){
+                window.location.href = "./";
+            }
+            console.log(loggedInUser);
+            fetch('https://localhost:7199/api/opdrachtgever/'+loggedInUser.id)
+                .then(response => response.json())
+                .then(userData => {
+                    console.log(userData);
+                    fetch('https://localhost:7199/api/Vacature/opdrachtgever/'+userData.id)
+                        .then(response => response.json())
+                        .then(vacatureData => {
+                            console.log(vacatureData);
+                            const container = document.getElementById("vacaturelijst");
+                            vacatureData.forEach((vacature) => {
+                                console.log(vacature.title);
+                                const html = `
+                                    <div class="card">
+                                        <h5 class="card-header">${vacature.title}</h5>
+                                        <div class="card-body">
+                                            <h5 class="card-title">${vacature.location}</h5>
+                                            <p class="card-text">${vacature.description}</p>
+                                            <a href="swipepage.html?vacid=${vacature.id}" class="btn btn-primary">Zie beschikbare medewerkers</a>
+                                        </div>
+                                    </div>
+                                `;
+                                container.innerHTML += html;
+                            })
+                        })
+                        .catch(error => console.error(error));
+                })
+                .catch(error => console.error(error));
+
+        })
+    </script>
 </body>
-
 </html>

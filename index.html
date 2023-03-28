@@ -21,20 +21,21 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
+    <nav class="navbar navbar-inverse" style="border-color: rgb(254, 75, 16);">
+        <div class="container-fluid" style="background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><img src="./img/linktindr.png" height="25px"/></a>
+                <img src="img/linktindr.png" href="index.html" style="height: 40px; width: 40px; margin-top: 5px;"></img>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="item-ingelogd">Je bent ingelogd als:&nbsp;</li>
+                    <li class="item-ingelogd" style="color:white; margin-top:14px;">Je bent ingelogd als:&nbsp;</li>
                     <li id="usertype-menu-item"></li>
+                    <li><a id="userName" href="./register.html" style="color: white;"><span class="glyphicon glyphicon-user" style="color: white;"></span> Sign Up</a></li>
                 </ul>
             </div>
         </div>
@@ -59,7 +60,7 @@
                     </div>
                     
                     <button type="submit" class="btn btn-default" onclick="submitForm(event)">Login</button>
-                    <a href="./register.html"></a><button type="submit" class="btn btn-default">Klik hier om te registreren</a>
+                    <a href="./register.html">Klik hier om te registreren</a>
                 </form>
             </div>
         </div>
@@ -67,7 +68,6 @@
     <script>
         let token = localStorage.getItem('Token');
         let usertype = localStorage.getItem('UserType');
-        console.log(token);
         if (!!token && !!usertype) {
             switch(usertype){
                 case "MEDEWERKER":
@@ -107,8 +107,6 @@
                 return response.json();
             })
             .then(data => {
-                console.log('data', data);
-
                 // Store data in localStorage
                 localStorage.setItem('Token', data.token);
                 localStorage.setItem('UserType', data.usertype);
