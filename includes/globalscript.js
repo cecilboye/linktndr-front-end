@@ -14,7 +14,6 @@ function onPageLoad(after) {
             })
             .then(response => response.json())
             .then(userData => {
-                console.log(userData);
                 document.getElementById("usertype-menu-item").innerHTML = userData.name;
 
                 after(userData);
