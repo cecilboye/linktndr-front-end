@@ -1,45 +1,9 @@
-<!--<nav class="navbar navbar-inverse" style="border-color: rgb(254, 75, 16);">
-    <div class="container-fluid" style="background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <img src="img/logo_header.png" href="index.html" style="height: 40px; width: 40px; margin-top: 5px;"></img>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="item-ingelogd" style="color:white; margin-top:14px;">Je bent ingelogd als:&nbsp;</li>
-                <li id="usertype-menu-item"></li>
-                <li><a id="userName" href="./register.html" style="color: white;"><span class="glyphicon glyphicon-user" style="color: white;"></span> Sign Up</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>--><!--
-<html>
-    <body>
-        <nav class="navbar navbar-inverse" style="border-color: rgb(254, 75, 16);">
-            <div class="container-fluid" style="background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <img src="img/logo_header.png" href="index.html" style="height: 40px; width: 40px; margin-top: 5px;"></img>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="item-ingelogd" style="color:white; margin-top:14px;">Je bent ingelogd als:&nbsp;</li>
-                        <li id="usertype-menu-item"></li>
-                        <li><a id="userName" href="./register.html" style="color: white;"><span class="glyphicon glyphicon-user" style="color: white;"></span> Sign Up</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </body>
-</html>-->
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <nav class="navbar navbar-inverse" style="border-color: rgb(254, 75, 16);">
     <div class="container-fluid" style="background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));">
@@ -48,7 +12,7 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li id="logout" class="item-ingelogd" style="color:white; margin-top:14px;">${logoutButton}</li>
+                <li id="logout" class="item-ingelogd" style="color:white; margin-top:14px;"><button type="button" class="btn btn-primary" style="border-color: white; background-color: transparent">${logoutButton}</button></li>
                 <li id="usertype-menu-item"></li>
                 <li><a id="userName" href="${href}" style="color: white;"><span class="glyphicon glyphicon-user" style="color: white;"></span> ${name}</a></li>
             </ul>

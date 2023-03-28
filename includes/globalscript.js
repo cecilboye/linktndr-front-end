@@ -7,16 +7,16 @@ const uitstroomrichtingOptions = [
     "Java Programmeur"
 ];
 
-function includeHTML(userData) {
+/*function includeHTML(userData) {
     var z, i, elmnt, file, xhttp;
-    /* Loop through a collection of all HTML elements: */
+    //Loop through a collection of all HTML elements:
     z = document.getElementsByTagName("*");
     for (i = 0; i < z.length; i++) {
         elmnt = z[i];
-        /*search for elements with a certain atrribute:*/
+        //search for elements with a certain atrribute
         file = elmnt.getAttribute("lt-include-html");
         if (file) {
-            /* Make an HTTP request using the attribute value as the file name: */
+            //Make an HTTP request using the attribute value as the file name:
             xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4) {
@@ -26,24 +26,30 @@ function includeHTML(userData) {
                         document.getElementById("userName").innerHTML = `<span class="glyphicon glyphicon-user" style="color: white;"></span> ${userData.name}`;
                     }
                     if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
-                    /* Remove the attribute, and call this function once more: */
+                    //Remove the attribute, and call this function once more:
                     elmnt.removeAttribute("lt-include-html");
                     includeHTML();
                 }
             }
             xhttp.open("GET", file, true);
             xhttp.send();
-            /* Exit the function: */
+            //Exit the function:
             return;
         }
     }
-}
+}*/
 
 // after is een anonymous function
 function onPageLoad(after) {
     if (!localStorage.getItem("Token")) {
-        if (window.location != "./index.html") {
+        if (window.location.pathname == "/register.html")
+        {
+            AddHeader();
+        }
+        else
+        {
             window.location.href = "./index.html";
+            console.log(window.location.href);
         }
     }
     else {
@@ -75,7 +81,7 @@ function AddHeader(data)
     if (data != null)
     {
         name = data.name;
-        logoutButton = `<button onclick="logout()">Log Out</button>`;
+        logoutButton = `<button onclick="logout()" class="btn btn-secondary" style="color: white; border-color: white; background-color: transparent">Log Out</button>`;
         href = "./";
     }
 
@@ -110,7 +116,7 @@ function AddHeader(data)
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="item-ingelogd" style="color:white; margin-top:14px;">${logoutButton}</li>
+                    <li style="margin-top: 8px">${logoutButton}</li>
                     <li id="usertype-menu-item"></li>
                     <li><a id="userName" href="${href}" style="color: white;"><span class="glyphicon glyphicon-user" style="color: white;"></span> ${name}</a></li>
                 </ul>
@@ -125,8 +131,7 @@ function AddFooter()
 {
     document.getElementById("footer").innerHTML=
     `<div>
-        <div class="container-fluid" style="background-image: linear-gradient(white, rgb(255, 214, 210)); position: fixed; bottom: 8%; width: 100%; height: 7%; z-index: -1;"></div>
-        <div class="container-fluid" style="background-image: linear-gradient(rgb(255, 214, 210), rgb(255, 163, 155)); position: fixed; bottom: 3%; width: 100%; height: 5%; z-index: -1;"></div>
+        <div class="container-fluid" style="background-image: linear-gradient(white, rgb(255, 163, 155)); position: fixed; bottom: 3%; width: 100%; height: 8%; z-index: -1;"></div>
         <div class="container-fluid" style="background-image: linear-gradient(rgb(255, 163, 155), rgb(255, 106, 91)); position: fixed; bottom: 0%; width: 100%; height: 3%; z-index: -1; color: white; text-align: end; font-size: x-small;">LinkTindr® is een product van KlasVanFebruari LLC inc.</div>
     </div>`;
 }
