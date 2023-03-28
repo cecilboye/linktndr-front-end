@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="includes/globalscript.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vacature!</title>
     <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
@@ -12,7 +13,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="./bootstrap/js/bootstrap.min.js"></script>
-    <script src="includes/globalscript.js"></script>
     <style>
         .card {
             width: 100%;
@@ -20,8 +20,6 @@
             border: solid 5px;
             border-radius: 10px;
             margin-top: 50px;
-
-
         }
 
         .card-body
@@ -35,29 +33,50 @@
 
         .btn-primary{
             padding: 10px 50px 10px 50px;
+            
+            background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));
+            color: white;
+            border-color: transparent;
         }
     </style>
-
+    <!--<script>
+        onPageLoad((userData) => {
+            fetch(URL + "Vacature")
+            .then(r => r.json())
+            .then(vacatures => {
+                let vacatureScherm = document.getElementById("vacaturelijst");
+                vacatureScherm.innerHTML = "";
+                for(let x = 0; x < vacatures.length; x++){
+                    vacatureScherm.innerHTML += `
+                        <div class="row">
+                            <div class="col-sm-4 col-sm-offset-4">
+                                <div class="card">
+                                    <div class="card-header text-bold">
+                                        ${vacatures[x].title}
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center ">
+                                            <button type="button" onclick="window.location.href='swipepage.html?vacid=${vacatures[x].id}'" class="btn btn-primary p-2">Info</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 text-left">
+                                            <p class="text-muted">${vacatures[x].location}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+            })
+        });
+    </script>-->
 </head>
 <body>
-    <nav class="navbar navbar-light">
-        <div class="row text-white collapse navbar-collapse container-fluid" id="navbarSupportedContent" style="height:50px; background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));">
-                <div class="item-ingelogd col-7">
-                    <a class="navbar-brand" href="index.html">
-                        <img src="img/linktindr.png" height="30" class="d-inline-block align-top" alt="">
-                    </a>
-                </div>
-                <div class="item-ingelogd col-2 text-end">
-                    Je bent ingelogd als:
-                </div>
-                <div class="col-2" id="usertype-menu-item">
-                  
-                </div>
-                <div class="col-1">
-                    <a href="#" class="btn btn-light btn-outline-danger btn-sm" onclick="logout()" >Logout</a>
-                </div>
-        </div>
-    </nav>
+    <div id="header" lt-include-html="header.html"></div>
+    <div id="footer"></div>
+
     <div class="container" id="vacaturelijst">
         <div class="card">
             <h5 class="card-header">Nieuwe vacature</h5>
@@ -191,7 +210,7 @@
             let urlVar = (vacatureId == 0)?'add/':'update/'+vacatureId;
             let methodType =  (vacatureId == 0)?'POST':'PUT';
             // Send data as JSON to backend URL using Fetch API
-            fetch('https://localhost:7199/api/Vacature/'+urlVar, {
+            fetch(URL + 'Vacature/' + urlVar, {
                 method: methodType,
                 headers: {
                     'Content-Type': 'application/json'
@@ -225,7 +244,7 @@
             myModal.show();
         }
         function deleteVacature(id) {
-            fetch('https://localhost:7199/api/Vacature/delete/'+id, {
+            fetch(URL + 'Vacature/delete/' + id, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'

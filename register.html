@@ -2,9 +2,11 @@
 <html>
 
 <head>
+    <script src="includes/globalscript.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap HTML Template</title>
+    <title>Join LinkTindr</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- jQuery library -->
@@ -14,26 +16,17 @@
     <style>.hiddeninput {display: "none"; }</style>
 </head>
 
+<style>
+    .btn-primary{
+        background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));
+        color: white;
+        border-color: transparent;
+    }
+</style>>
+
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Logo</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="item-ingelogd">Je bent ingelogd als:&nbsp;</li>
-                    <li id="usertype-menu-item"></li> 
-                    <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div id="header" lt-include-html="header.html"></div>
+    <div id="footer"></div>
 
     <div class="container">
         <div class="row">
@@ -178,7 +171,7 @@
                 break;
             }
 			// Send data as JSON to backend URL using Fetch API
-			fetch('https://localhost:7199/api/'+usertype+'/add', {
+			fetch(URL + usertype+'/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -209,10 +202,7 @@
                 }
             });
         }
-        window.onload = function(){
-            if(localStorage.getItem('UserType')){
-                window.location.href = "./";
-            }
+        onPageLoad((userData) => {
             //hide all inputs
             let elements = document.getElementsByClassName("hiddeninput");
             Array.from(elements).forEach(function (element) {
@@ -220,7 +210,7 @@
             });
             //get all talentmanagers and put them in select tag as options
             let element = document.getElementById("Talentmanager");
-            fetch('https://localhost:7199/api/Talentmanager')
+            fetch(URL + 'Talentmanager')
                 .then(response => response.json())
                 .then(data => {
                     // Create option elements and add them to the select element
@@ -234,7 +224,7 @@
                 .catch(error => console.error(error));
             //get all specialization values and put them in a select tag as options
             let SpecializationSelectElement = document.getElementById("Specialization");
-            fetch('https://localhost:7199/api/Specialization')
+            fetch(URL + 'Specialization')
                 .then(response => response.json())
                 .then(data => {
                     // Create option elements and add them to the select element
@@ -246,7 +236,8 @@
                     }
                 })
                 .catch(error => console.error(error));
-        }
+        });
+        
         //show value above radius input
         function showValue(value) {
             document.getElementById("rangevalue").innerHTML = value;
