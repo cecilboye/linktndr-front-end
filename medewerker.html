@@ -198,41 +198,41 @@
                     //get all talentmanagers and put them in select tag as options
                     let element = document.getElementById("TalentmanagerInput");
                     fetch('https://localhost:7199/api/Talentmanager')
-                        .then(response => response.json())
-                        .then(fetchdata => {
-                            // Create option elements and add them to the select element
-                            fetchdata.forEach(item => {
-                                const option = document.createElement("option");
-                                option.text = item.name;
-                                option.value = item.id;
-                                if(item.id == userData.talentManagerId){
-                                    option.selected = "selected";
-                                }
-                                element.add(option);
-                            });
-                        })
-                        .catch(error => console.error(error));
-
-                        //get all specialization values and put them in a select tag as options
-                        let SpecializationSelectElement = document.getElementById("SpecializationInput");
-                        fetch('https://localhost:7199/api/Specialization')
-                        .then(response => response.json())
-                        .then(fetchdata => {
-                            // Create option elements and add them to the select element
-                            let i = 0;
-                            for (var key in fetchdata) {
-                                const option = document.createElement("option");
-                                option.text = fetchdata[key];
-                                option.value = key;
-                                if(i == userData.uitstroomrichting){
-                                    option.selected = "selected";
-                                    document.getElementById("SpecializationElement").innerHTML = fetchdata[key];
-                                }
-                                SpecializationSelectElement.add(option);
-                                i++;
+                    .then(response => response.json())
+                    .then(fetchdata => {
+                        // Create option elements and add them to the select element
+                        fetchdata.forEach(item => {
+                            const option = document.createElement("option");
+                            option.text = item.name;
+                            option.value = item.id;
+                            if(item.id == userData.talentManagerId){
+                                option.selected = "selected";
                             }
-                        })
-                        .catch(error => console.error(error));
+                            element.add(option);
+                        });
+                    })
+                    .catch(error => console.error(error));
+
+                    //get all specialization values and put them in a select tag as options
+                    let SpecializationSelectElement = document.getElementById("SpecializationInput");
+                    fetch('https://localhost:7199/api/Specialization')
+                    .then(response => response.json())
+                    .then(fetchdata => {
+                        // Create option elements and add them to the select element
+                        let i = 0;
+                        for (var key in fetchdata) {
+                            const option = document.createElement("option");
+                            option.text = fetchdata[key];
+                            option.value = key;
+                            if(i == userData.uitstroomrichting){
+                                option.selected = "selected";
+                                document.getElementById("SpecializationElement").innerHTML = fetchdata[key];
+                            }
+                            SpecializationSelectElement.add(option);
+                            i++;
+                        }
+                    })
+                    .catch(error => console.error(error));
 
                     document.getElementById("PhotoElement").src = userData.photo;
                     document.getElementById('NameElement').innerHTML = userData.name;
