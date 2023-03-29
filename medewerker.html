@@ -151,7 +151,7 @@
                                 <div class="form-group row">
                                     <label for="password" class="col-sm-10">password:</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="PasswordInput" placeholder="P@55W0RD!" required/>
+                                        <input type="password" class="form-control" id="PasswordInput" placeholder="P@55W0RD!" required/>
                                     </div>
                                 </div>
                         </div>
@@ -178,12 +178,12 @@
             if(localStorage.getItem('UserType') != 'MEDEWERKER'){
                 window.location.href = "./";
             }
-            fetch(BASEURL+'/api/medewerker/'+loggedInUser.id)
+            fetch(BASEURL+'/medewerker/'+loggedInUser.id)
             .then(response => response.json())
             .then(userData => {
                 //get all talentmanagers and put them in select tag as options
                 let element = document.getElementById("TalentmanagerInput");
-                fetch(BASEURL+'/api/Talentmanager')
+                fetch(BASEURL+'/Talentmanager')
                 .then(response => response.json())
                 .then(fetchdata => {
                     // Create option elements and add them to the select element
@@ -201,7 +201,7 @@
 
                 //get all specialization values and put them in a select tag as options
                 let SpecializationSelectElement = document.getElementById("SpecializationInput");
-                fetch(BASEURL+'/api/Specialization')
+                fetch(BASEURL+'/Specialization')
                 .then(response => response.json())
                 .then(fetchdata => {
                     // Create option elements and add them to the select element
@@ -242,6 +242,7 @@
                 document.getElementById("RangeValue").innerHTML = userData.radius;
                 document.getElementById("BioInput").value = userData.profileText;
                 document.getElementById("PhotoInput").value = userData.photo;
+                document.getElementById("PasswordInput").value = userData.Password;
             })
         })
         
@@ -266,7 +267,7 @@
             }
             console.log(updateddata);
             // Send data as JSON to backend URL using Fetch API
-            fetch(BASEURL+'/api/Medewerker/update/'+localStorage.getItem('UserId'), {
+            fetch(BASEURL+'/Medewerker/update/'+localStorage.getItem('UserId'), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

@@ -28,7 +28,6 @@
 
 <body>
     <div id="header"></div>
-    
     <div class="container" style="text-align: center;">
         <div class="row">
             <div class="col-sm-12 text-center">
@@ -88,7 +87,7 @@
 				password: password
 			};
 
-			fetch(BASEURL+'/api/user/login', {
+			fetch(BASEURL+'/user/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
