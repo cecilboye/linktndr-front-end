@@ -196,9 +196,14 @@
       
       //voeg de medewerker toe aan het carroussel!
       function AddToCarroussel(data){
+        if (!data.photo)
+        {
+          data.photo = "img/placeholder.jpg";
+        }
+
         document.getElementById('decarouseldiv').innerHTML += `
-          <div class="carousel-item${active}">
-            <img src="${data.photo}" alt="Moestafa" class="profilepic">
+          <div class="carousel-item ${active}">
+            <img src="${data.photo}" class="profilepic">
             <div class="carousel-caption">
               <h3>${data.name}</h3>
               <a href="swipepage_info.html?id=${data.id}&vacid=${vacatureId}" class="btn btn-primary ">Meer info</a>
