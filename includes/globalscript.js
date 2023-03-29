@@ -1,4 +1,4 @@
-const BASEURL = "https://localhost:7199";
+const BASEURL = "https://localhost:7199/api";
 
 function onPageLoad(after) {
     if (!localStorage.getItem("Token")) {
