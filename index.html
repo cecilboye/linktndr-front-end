@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <script src="includes/globalscript.js"></script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to LinkTindr!</title>
-    <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
     <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
+    <link rel="stylesheet" href="./includes/globalstyle.css"/>
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="./bootstrap/js/bootstrap.min.js"></script>
-
+    <script src="includes/globalscript.js"></script>
     <style>
         .btn-primary{
             background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));
@@ -30,9 +27,7 @@
 </head>
 
 <body>
-    <div id="header" lt-include-html="header.html"></div>
-    <div id="footer"></div>
-    
+    <div id="header"></div>
     <div class="container" style="text-align: center;">
         <div class="row">
             <div class="col-sm-12 text-center">
@@ -52,12 +47,15 @@
                         <label for="pwd">Password:</label>
                         <input type="password" class="form-control" id="pwd">
                     </div>
-                    <button type="submit" class="btn btn-primary"onclick="submitForm(event)">Login</button>
-                    <a href="./register.html" style="margin-left: 10px;">Klik hier om te registreren</a>
+                    <div class="d-flex justify-content-between bd-highlight">
+                        <button type="submit" class="btn btn-primary"onclick="submitForm(event)">Login</button>
+                        <a href="./register.html" style="margin-left: 10px;">Klik hier om te registreren</a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
+    <div id="footer"></div>
     <script>
         let token = localStorage.getItem('Token');
         let usertype = localStorage.getItem('UserType');
@@ -77,9 +75,7 @@
             }
         }
 
-        AddHeader();
-        //includeHTML();
-
+        AddHeader('register');
 		function submitForm(e) {
             e.preventDefault();
 
@@ -91,7 +87,7 @@
 				password: password
 			};
 
-			fetch(URL + 'user/login', {
+			fetch(BASEURL+'/user/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
