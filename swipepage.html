@@ -10,15 +10,10 @@
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
     <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
-    <!-- jQuery library
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
-    <!-- Bootstrap JS
-    <script src="./bootstrap/js/bootstrap.min.js"></script> -->
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- jQuery library-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
 
     <style>
       .carousel-control .glyphicon-chevron-left,
@@ -81,12 +76,17 @@
 
       .carousel-item{
         margin-top: 20%;
+        transition: 0s;
+        height: 0px;
       }
 
-      .carousel-item.active,
       .carousel-item-next,
       .carousel-item-prev {
         margin-top: 20%;
+      }
+
+      .carousel-item.active{
+        height: 100%;
       }
     </style>
     <script>
