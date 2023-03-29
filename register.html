@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
     <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
-    <link rel="stylesheet" href="./includes/globalstyle.css"/>
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->
@@ -210,7 +209,7 @@
             });
             //get all talentmanagers and put them in select tag as options
             let element = document.getElementById("Talentmanager");
-            fetch(BASEURL + '/Talentmanager')
+            fetch(URL + 'Talentmanager')
                 .then(response => response.json())
                 .then(data => {
                     // Create option elements and add them to the select element
@@ -224,7 +223,7 @@
                 .catch(error => console.error(error));
             //get all specialization values and put them in a select tag as options
             let SpecializationSelectElement = document.getElementById("Specialization");
-            fetch(BASEURL + '/Specialization')
+            fetch(URL + 'Specialization')
                 .then(response => response.json())
                 .then(data => {
                     // Create option elements and add them to the select element
