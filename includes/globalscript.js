@@ -30,7 +30,7 @@ function AddHeader(data = null) {
     console.log(data);
     let name = (data=='login' || data=='register')? data:data.name;
     let logoutButton = (data=='login' || data=='register')? '':'<button onclick="logout()" class="btn btn-secondary" style="color: white; border-color: white; background-color: transparent; margin-right: 10px;">Log Out</button>';
-    let href = (data=='register')? './register.html':'#';
+    let href = (data=='register')? './register.html':'./';
 
     document.getElementById("header").innerHTML=
     `<nav class="navbar navbar-inverse" style="border-color: rgb(254, 75, 16); background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));">
