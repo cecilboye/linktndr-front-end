@@ -1,235 +1,256 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <script src="includes/globalscript.js"></script>
 
-<head>
-  <script src="includes/globalscript.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find the Perfect Match</title>
+    <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
+    <!-- jQuery library-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Find the Perfect Match</title>
-  <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-  <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
-  <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <!-- Bootstrap JS -->
-  <script src="./bootstrap/js/bootstrap.min.js"></script>
-  <style>
-    .carousel-control .glyphicon-chevron-left,
-    .icon-prev,
-    .carousel-control .glyphicon-chevron-right {
-      margin-left: -100px;
-      color: black;
-      opacity: 1 !important;
-    }
-
-    .carousel-control {
-      font-size: 50px;
-      padding: 20px 40px;
-      opacity: 1;
-    }
-
-    .carousel-control .glyphicon-chevron-right,
-    .carousel-control .icon-next {
-      margin-right: -100px;
-      opacity: 1 !important;
-      ;
-    }
-
-    .test {
-      background-color: white;
-      height: 200px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-full-width {
-      width: 100%;
-    }
-
-    h3 {
-      color: black !important;
-    }
-    
-    .profilepic {
-      width: 400px;
-      height: 400px;
-      border-radius: 200px;
-      padding: 20px 20px 20px 20px;
-      object-fit: cover;
-    }
-    
-    .btn-primary{
-      background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));
-      color: white;
-      border-color: transparent;
-    }
-  </style>
-  <script>
-    let vacatureId = -1;
-
-    //maak een vacature-object aan (zelfde variabelen als VacatureDTO)
-    let vacature = {id: -1, title: "", description: "", uitstroomrichting: 0, location: "Breda", startdate: null, enddate: null, opdrachtgeverId: -1, opdrachtgeverName: "", OpdrachtgeverEmail: "", opdrachtgeverTelephone: -1}
-    let active = "active";
-
-    let vacatureLon = null;
-    let vacatureLat = null;
-
-
-    
-    //berekening die longitudes vrij correct maar toch efficiënt omrekent naar een Y-locatie in km op een vlakke map
-    function LonConversion(lon)
-    {
-      return lon * (72.91-((lon - 49) * 1.4967));
-    }
-
-
-
-    //wanneer het scherm wordt geladen pakt het alle medewerkers
-    onPageLoad((userData) => {
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      vacatureId = urlParams.get('vacid');
-
-      fetch(URL + "Medewerker")
-        .then(a => a.json())
-        .then(b => GetVacature(b))
-    });
-
-    //Haalt de vacature op
-    function GetVacature(data) {
-      //eerst controleren of er een vacatureId is meegegeven
-      if(vacatureId == undefined)
-      {
-        console.log("geen vacatureId meegegeven!")
+    <style>
+      .carousel-control .glyphicon-chevron-left,
+      .icon-prev,
+      .carousel-control .glyphicon-chevron-right {
+        /*margin-right: -100px;*/
+        color: black;
+        opacity: 1 !important;
       }
-      //indien er een vacatureId is meegegeven, splits de data op en filter ze!
-      else
-      {
-        console.log(URL + "Vacature/" + vacatureId);
-        fetch(URL + "Vacature/" + vacatureId)
-          .then(v => v.json())
-          .then(w => VacatureLocatie(data, w))
-          //.then(x => data.forEach(t => Filter(t, x)))
-          //.then(w => console.log(w))
+
+      .carousel-control {
+        font-size: 50px;
+        /*padding: 20px 40px;*/
+        opacity: 1;
       }
-    }
 
-    //haal de locatiedata van de vacature op en roept vervolgens de eerste filterfunctie aan voor elke medewerker
-    function VacatureLocatie(data, vacature)
-    {
-      fetch(`https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?q=${vacature.location}&fl=id%20identificatie%20weergavenaam%20bron%20type%20subtype%20openbareruimte_id%20nwb_id%20openbareruimtetype%20straatnaam%20straatnaam_verkort%20adresseerbaarobject_id%20nummeraanduiding_id%20huisnummer%20huisletter%20huisnummertoevoeging%20huis_nlt%20postcode%20buurtnaam%20buurtcode%20wijknaam%20wijkcode%20woonplaatscode%20woonplaatsnaam%20gemeentecode%20gemeentenaam%20provinciecode%20provincienaam%20provincieafkorting%20kadastraal_object_id%20kadastrale_gemeentecode%20kadastrale_gemeentenaam%20kadastrale_sectie%20perceelnummer%20kadastrale_grootte%20gekoppeld_perceel%20kadastrale_aanduiding%20volgnummer%20gekoppeld_appartement%20wegnummer%20hectometernummer%20zijde%20hectometerletter%20waterschapsnaam%20waterschapscode%20rdf_seealso%20centroide_ll%20centroide_rd%20boundingbox_ll%20boundingbox_rd%20score&fq=type%3A%28gemeente%20OR%20woonplaats%20OR%20weg%20OR%20postcode%20OR%20adres%29&df=tekst&bq=type%3Aprovincie%5E1.5&bq=type%3Agemeente%5E1.5&bq=type%3Awoonplaats%5E1.5&bq=type%3Aweg%5E1.5&bq=type%3Apostcode%5E0.5&bq=type%3Aadres%5E1&start=0&rows=1&sort=score%20desc%2Csortering%20asc%2Cweergavenaam%20asc&wt=json`)
-        .then(a => a.json())
-        .then(b => data.forEach(t => Filter_Richting(t, vacature, b)))
-    }
-
-    //controleert eerst of de uitstroomrichtingen overéénkomen. Zo ja, haalt de locatie van de medewerker op
-    function Filter_Richting(data, vacature, res)
-    {
-      //extraheer eerst de longitude/latitude van de vacature voor later gebruik
-      vacatureLon = res.response.docs[0].centroide_ll.substring(6,16);
-      vacatureLat = res.response.docs[0].centroide_ll.substring(16,27);
-      vacatureLon = LonConversion(vacatureLon);
-      vacatureLat *= 111,2385;
-
-      //uitstroomrichting-check
-      if (vacature.uitstroomrichting != data.uitstroomrichting)
-      {
-        console.log(`${data.name} voldoet niet aan de juiste uitstroomrichting (${vacature.uitstroomrichting}) en wordt dus niet getoond`);
-        return;
+      .carousel-control .glyphicon-chevron-right,
+      .carousel-control .icon-next {
+        /*margin-right: -100px;*/
+        opacity: 1 !important;
       }
-      else
-      {
-        console.log(data.name + " heeft de juiste uitstroomrichting!")
-        fetch(`https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?q=${data.postCode}%20${data.houseNumber}&fl=id%20identificatie%20weergavenaam%20bron%20type%20subtype%20openbareruimte_id%20nwb_id%20openbareruimtetype%20straatnaam%20straatnaam_verkort%20adresseerbaarobject_id%20nummeraanduiding_id%20huisnummer%20huisletter%20huisnummertoevoeging%20huis_nlt%20postcode%20buurtnaam%20buurtcode%20wijknaam%20wijkcode%20woonplaatscode%20woonplaatsnaam%20gemeentecode%20gemeentenaam%20provinciecode%20provincienaam%20provincieafkorting%20kadastraal_object_id%20kadastrale_gemeentecode%20kadastrale_gemeentenaam%20kadastrale_sectie%20perceelnummer%20kadastrale_grootte%20gekoppeld_perceel%20kadastrale_aanduiding%20volgnummer%20gekoppeld_appartement%20wegnummer%20hectometernummer%20zijde%20hectometerletter%20waterschapsnaam%20waterschapscode%20rdf_seealso%20centroide_ll%20centroide_rd%20boundingbox_ll%20boundingbox_rd%20score&fq=type%3A%28gemeente%20OR%20woonplaats%20OR%20weg%20OR%20postcode%20OR%20adres%29&df=tekst&bq=type%3Aprovincie%5E1.5&bq=type%3Agemeente%5E1.5&bq=type%3Awoonplaats%5E1.5&bq=type%3Aweg%5E1.5&bq=type%3Apostcode%5E0.5&bq=type%3Aadres%5E1&start=0&rows=1&sort=score%20desc%2Csortering%20asc%2Cweergavenaam%20asc&wt=json`)
-          .then(a => a.json())
-          .then(b => Filter_Locatie(data, b.response.docs[0].centroide_ll.substring(6,16), b.response.docs[0].centroide_ll.substring(16,27)))
-          //.then(b => console.log(`${data.name} woont in ${b.response.docs[0].gemeentenaam}`))
-          //.then(b => console.log(b))
-        //Filter_Locatie()
+
+      .btn-full-width {
+        width: 100%;
       }
-    }
 
-    //checkt of de medewerker voldoet aan de afstandseisen. zo ja, voegt de slide toe aan de carroussel
-    function Filter_Locatie(data, lon, lat){
-      //afstand-check
-      lon = LonConversion(lon);
-      lat *= 111,2385;
-
-      let radius = data.radius;
-      let afstandNZ = Math.abs(lat - vacatureLat);
-      let afstandEW = Math.abs(lon - vacatureLon);
+      h3 {
+        color: black !important
+      }
       
-      let afstand = Math.sqrt((Math.pow(afstandNZ, 2) + Math.pow(afstandEW, 2)));
-
-      //console.log(`Name: ${data.name}, Radius: ${radius}, MedewerkerLon: ${lon}, MedewerkerLat: ${lat}, vacatureLon: ${vacatureLon}, VacatureLat: ${vacatureLat}, Afstand N-Z: ${afstandNZ}, Afstand E-W: ${afstandEW}, Afstand: ${afstand}`);
-
-      if (radius >= afstand)
-      {//de medewerker mag getoond worden. huzzah!
-        console.log(`${data.name} voldoet aan de eisen. succes!`);
-        AddToCarroussel(data);
+      .carousel-item{
+        margin-left: auto;
+        margin-right: auto;
       }
-      else
-      {//jammer, deze woont te ver weg!
-        console.log(`Met ${afstand}km afstand (hemelsbreed) woont ${data.name} jammer genoeg verder dan hij/zij bereid is te reizen (${radius}km)`);
+      
+      .profilepic {
+        width: 400px;
+        height: 400px;
+        border-radius: 200px;
+        margin-left: 120px;
+        padding: 20px 20px 20px 20px;
+        object-fit: cover;
       }
-    }
-    
-    //voeg de medewerker toe aan het carroussel!
-    function AddToCarroussel(data){
-      document.getElementById('decarouseldiv').innerHTML += `
-        <div class="item ${active}">
-          <img src="${data.photo}" alt="Moestafa" class="profilepic">
-          <div class="carousel-caption">
-            <h3>${data.name}</h3>
-            <a href="swipepage_info.html?id=${data.id}&vacid=${vacatureId}" class="btn btn-primary ">Meer info</a>
-          </div>
-          <div class="test"></div>
-        </div>`;
+      
+      .btn-primary{
+        background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));
+        color: white;
+        border-color: transparent;
+      }
 
-        //class="profilepic"
+      .hidden{
+        visibility: hidden;
+      }
 
-      //zet na de eerste toevoeging de andere profielen op inactief, zodat ze niet allemaal tegelijk worden weergegeven
-      active = "inactive";
-    }
-  </script>
-</head>
+      .carousel-caption{
+        position: relative;
+        left: 0px;
+        right: 0px;
+      }
 
-<body>
-  <div id="header" lt-include-html="header.html"></div>
-  <div id="footer"></div>
+      .carousel-item{
+        margin-top: 20%;
+        transition: 0s;
+        height: 0px;
+      }
 
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-4 arrow left">
-        <div class="arrow-wrapper"> </div>
-      </div>
+      .carousel-item-next,
+      .carousel-item-prev {
+        margin-top: 20%;
+      }
 
-      <div class="col-sm-4">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+      .carousel-item.active{
+        height: 100%;
+      }
+    </style>
+    <script>
+      let vacatureId = -1;
 
-          <!-- Wrapper for slides -->
-          <div class="carousel-inner" id="decarouseldiv"> </div>
+      //maak een vacature-object aan (zelfde variabelen als VacatureDTO)
+      let vacature = {id: -1, title: "", description: "", uitstroomrichting: 0, location: "Breda", startdate: null, enddate: null, opdrachtgeverId: -1, opdrachtgeverName: "", OpdrachtgeverEmail: "", opdrachtgeverTelephone: -1}
+      let active = " active";
 
-          <!-- Left and right controls -->
-          <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-          </a>
+      let vacatureLon = null;
+      let vacatureLat = null;
+
+
+      
+      //berekening die longitudes vrij correct maar toch efficiënt omrekent naar een Y-locatie in km op een vlakke map
+      function LonConversion(lon)
+      {
+        return lon * (72.91-((lon - 49) * 1.4967));
+      }
+
+
+
+      //wanneer het scherm wordt geladen pakt het alle medewerkers
+      onPageLoad((userData) => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        vacatureId = urlParams.get('vacid');
+
+        fetch(URL + "Medewerker")
+          .then(a => a.json())
+          .then(b => GetVacature(b))
+      });
+
+      //Haalt de vacature op
+      function GetVacature(data) {
+        //eerst controleren of er een vacatureId is meegegeven
+        if(vacatureId == undefined)
+        {
+          console.log("geen vacatureId meegegeven!")
+        }
+        //indien er een vacatureId is meegegeven, splits de data op en filter ze!
+        else
+        {
+          //console.log(URL + "Vacature/" + vacatureId);
+          fetch(URL + "Vacature/" + vacatureId)
+            .then(v => v.json())
+            .then(w => VacatureLocatie(data, w))
+            //.then(x => data.forEach(t => Filter(t, x)))
+            //.then(w => console.log(w))
+        }
+      }
+
+      //haal de locatiedata van de vacature op en roept vervolgens de eerste filterfunctie aan voor elke medewerker
+      function VacatureLocatie(data, vacature)
+      {
+        fetch(`https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?q=${vacature.location}&fl=id%20identificatie%20weergavenaam%20bron%20type%20subtype%20openbareruimte_id%20nwb_id%20openbareruimtetype%20straatnaam%20straatnaam_verkort%20adresseerbaarobject_id%20nummeraanduiding_id%20huisnummer%20huisletter%20huisnummertoevoeging%20huis_nlt%20postcode%20buurtnaam%20buurtcode%20wijknaam%20wijkcode%20woonplaatscode%20woonplaatsnaam%20gemeentecode%20gemeentenaam%20provinciecode%20provincienaam%20provincieafkorting%20kadastraal_object_id%20kadastrale_gemeentecode%20kadastrale_gemeentenaam%20kadastrale_sectie%20perceelnummer%20kadastrale_grootte%20gekoppeld_perceel%20kadastrale_aanduiding%20volgnummer%20gekoppeld_appartement%20wegnummer%20hectometernummer%20zijde%20hectometerletter%20waterschapsnaam%20waterschapscode%20rdf_seealso%20centroide_ll%20centroide_rd%20boundingbox_ll%20boundingbox_rd%20score&fq=type%3A%28gemeente%20OR%20woonplaats%20OR%20weg%20OR%20postcode%20OR%20adres%29&df=tekst&bq=type%3Aprovincie%5E1.5&bq=type%3Agemeente%5E1.5&bq=type%3Awoonplaats%5E1.5&bq=type%3Aweg%5E1.5&bq=type%3Apostcode%5E0.5&bq=type%3Aadres%5E1&start=0&rows=1&sort=score%20desc%2Csortering%20asc%2Cweergavenaam%20asc&wt=json`)
+          .then(a => a.json())
+          .then(b => data.forEach(t => Filter_Richting(t, vacature, b)))
+      }
+
+      //controleert eerst of de uitstroomrichtingen overéénkomen. Zo ja, haalt de locatie van de medewerker op
+      function Filter_Richting(data, vacature, res)
+      {
+        //extraheer eerst de longitude/latitude van de vacature voor later gebruik
+        vacatureLon = res.response.docs[0].centroide_ll.substring(6,16);
+        vacatureLat = res.response.docs[0].centroide_ll.substring(16,27);
+        vacatureLon = LonConversion(vacatureLon);
+        vacatureLat *= 111,2385;
+
+        //uitstroomrichting-check
+        if (vacature.uitstroomrichting != data.uitstroomrichting)
+        {
+          //console.log(`${data.name} voldoet niet aan de juiste uitstroomrichting (${vacature.uitstroomrichting}) en wordt dus niet getoond`);
+          return;
+        }
+        else
+        {
+          //console.log(data.name + " heeft de juiste uitstroomrichting!")
+          fetch(`https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?q=${data.postCode}%20${data.houseNumber}&fl=id%20identificatie%20weergavenaam%20bron%20type%20subtype%20openbareruimte_id%20nwb_id%20openbareruimtetype%20straatnaam%20straatnaam_verkort%20adresseerbaarobject_id%20nummeraanduiding_id%20huisnummer%20huisletter%20huisnummertoevoeging%20huis_nlt%20postcode%20buurtnaam%20buurtcode%20wijknaam%20wijkcode%20woonplaatscode%20woonplaatsnaam%20gemeentecode%20gemeentenaam%20provinciecode%20provincienaam%20provincieafkorting%20kadastraal_object_id%20kadastrale_gemeentecode%20kadastrale_gemeentenaam%20kadastrale_sectie%20perceelnummer%20kadastrale_grootte%20gekoppeld_perceel%20kadastrale_aanduiding%20volgnummer%20gekoppeld_appartement%20wegnummer%20hectometernummer%20zijde%20hectometerletter%20waterschapsnaam%20waterschapscode%20rdf_seealso%20centroide_ll%20centroide_rd%20boundingbox_ll%20boundingbox_rd%20score&fq=type%3A%28gemeente%20OR%20woonplaats%20OR%20weg%20OR%20postcode%20OR%20adres%29&df=tekst&bq=type%3Aprovincie%5E1.5&bq=type%3Agemeente%5E1.5&bq=type%3Awoonplaats%5E1.5&bq=type%3Aweg%5E1.5&bq=type%3Apostcode%5E0.5&bq=type%3Aadres%5E1&start=0&rows=1&sort=score%20desc%2Csortering%20asc%2Cweergavenaam%20asc&wt=json`)
+            .then(a => a.json())
+            .then(b => Filter_Locatie(data, b.response.docs[0].centroide_ll.substring(6,16), b.response.docs[0].centroide_ll.substring(16,27)))
+            //.then(b => console.log(`${data.name} woont in ${b.response.docs[0].gemeentenaam}`))
+            //.then(b => console.log(b))
+          //Filter_Locatie()
+        }
+      }
+
+      //checkt of de medewerker voldoet aan de afstandseisen. zo ja, voegt de slide toe aan de carroussel
+      function Filter_Locatie(data, lon, lat){
+        //afstand-check
+        lon = LonConversion(lon);
+        lat *= 111,2385;
+
+        let radius = data.radius;
+        let afstandNZ = Math.abs(lat - vacatureLat);
+        let afstandEW = Math.abs(lon - vacatureLon);
+        
+        let afstand = Math.sqrt((Math.pow(afstandNZ, 2) + Math.pow(afstandEW, 2)));
+
+        //console.log(`Name: ${data.name}, Radius: ${radius}, MedewerkerLon: ${lon}, MedewerkerLat: ${lat}, vacatureLon: ${vacatureLon}, VacatureLat: ${vacatureLat}, Afstand N-Z: ${afstandNZ}, Afstand E-W: ${afstandEW}, Afstand: ${afstand}`);
+
+        if (radius >= afstand)
+        {//de medewerker mag getoond worden. huzzah!
+          //console.log(`${data.name} voldoet aan de eisen. succes!`);
+          AddToCarroussel(data);
+        }
+        else
+        {//jammer, deze woont te ver weg!
+          //console.log(`Met ${afstand}km afstand (hemelsbreed) woont ${data.name} jammer genoeg verder dan hij/zij bereid is te reizen (${radius}km)`);
+        }
+      }
+      
+      //voeg de medewerker toe aan het carroussel!
+      function AddToCarroussel(data){
+        if (!data.photo)
+        {
+          data.photo = "img/placeholder.jpg";
+        }
+
+        document.getElementById('decarouseldiv').innerHTML += `
+          <div class="carousel-item ${active}">
+            <img src="${data.photo}" class="profilepic">
+            <div class="carousel-caption">
+              <h3>${data.name}</h3>
+              <a href="swipepage_info.html?id=${data.id}&vacid=${vacatureId}" class="btn btn-primary ">Meer info</a>
+            </div>
+          </div>`;
+
+        //zet na de eerste toevoeging de andere profielen op inactief, zodat ze niet allemaal tegelijk worden weergegeven
+        active = "";
+      }
+    </script>
+  </head>
+  <body>
+    <div id="header" lt-include-html="header.html"></div>
+    <div id="footer"></div>
+
+    <div class="container">
+      <div class="row">
+
+        <!-- linkerpijl -->
+        <div class="col-sm-3" style="margin-top: 10%;">
+          <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev" style="position:relative; margin-right: 0%; margin-left: auto; margin-top: 20px;">
+            <img src="img/leftarrow.png"></img>
+            <span class="visually-hidden">Previous</span>
+          </button>
         </div>
-      </div>
 
-      <div class="col-sm-4 arrow right">
-        <div class="arrow-wrapper">
+        <!-- carousel -->
+        <div class="col-sm-6">
+          <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" id="decarouseldiv"></div>
+          </div>
+        </div>
 
+        <!-- rechterpijl -->
+        <div class="col-sm-3" style="margin-top: 10%;">
+          <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next" style="position:relative; margin-left: 0%; margin-right: auto; margin-top: 20px;">
+            <img src="img/rightarrow.png"></img>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
