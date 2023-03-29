@@ -83,7 +83,7 @@ function AddHeader(data)
     {
         name = data.name;
         logoutButton = `<button onclick="logout()" class="btn btn-secondary" style="color: white; border-color: white; background-color: transparent; margin-right: 10px;">Log Out</button>`;
-        href = "./";
+        href = "./index.html";
     }
 
     document.getElementById("header").innerHTML=
