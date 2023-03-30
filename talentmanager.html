@@ -166,7 +166,7 @@
             document.getElementById("EmailInput").value = loggedInUser.email;
             document.getElementById("PasswordInput").value = loggedInUser.password;
             document.getElementById("TelephoneInput").value = loggedInUser.telephone;
-            paramvalue = get_url_param('filter');
+            let paramvalue = get_url_param('filter');
             let filter = (paramvalue != '')? paramvalue : 'MATCH';
             document.getElementById('EditModal').addEventListener('hidden.bs.modal', function (event) {
                 document.getElementById("StatusInput").value = '';
@@ -187,11 +187,10 @@
             fetch(BASEURL+'/Sollicitatie/talentmanager/'+loggedInUser.id)
             .then(response => response.json())
             .then(sollicitatieData => {
-                let uitstroomrichting = [];
+                uitstroomrichting = [];
                 fetch(BASEURL+'/Specialization')
                 .then(response => response.json())
                 .then(fetchdata => {
-                    let SpecializationSelectElement = document.getElementById("SpecializationInput");
                     for (var key in fetchdata) {
                         uitstroomrichting.push(fetchdata[key]);
                     }
@@ -199,69 +198,8 @@
                     sollicitatieData.forEach((sollicitatie) => {
                         let visibility = (sollicitatie.status != filter)? 'style="display: none;"':'style="display: block;"';
                         sollicitaties[sollicitatie.id] = sollicitatie;
-                        const cardData = {
-                            dateType: '',
-                            date: '',
-                            buttonText: '',
-                            buttonFunction: ''
-                        }
-                        switch(sollicitatie.status){
-                            case 'MATCH':
-                                cardData.dateType = 'Periode: ';
-                                cardData.date = formattedDate(new Date(sollicitatie.vacatureStartdate))+' - '+formattedDate(new Date(sollicitatie.vacatureEnddate));
-                                cardData.buttonText = 'Plan sollicitatie datum in';
-                                cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
-                            break;
-                            case 'SOLLICITATIE':
-                                cardData.dateType = 'Sollicitatie datum: ';
-                                cardData.date = formattedDate(new Date(sollicitatie.date));
-                                cardData.buttonText = 'Sollicitatie bevestigen';
-                                cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
-                            break;
-                            case 'BEDENK':
-                                cardData.dateType = 'Deadline: ';
-                                cardData.date = formattedDate(new Date(sollicitatie.date));
-                                cardData.buttonText = 'Sollicitatie afronden';
-                                cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
-                            break;
-                            case 'ACCEPT':
-                                cardData.dateType = 'Periode: ';
-                                cardData.date = formattedDate(new Date(sollicitatie.vacatureStartdate))+' - '+formattedDate(new Date(sollicitatie.vacatureEnddate));
-                                cardData.buttonText = 'Check gegevens';
-                                cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
-                            break;
-                            case 'DECLINE':
-                                cardData.dateType = 'Afgewezen: ';
-                                cardData.date = formattedDate(new Date(sollicitatie.date));
-                                cardData.buttonText = 'Check gegevens';
-                                cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
-                            break;
-                        }
-                        const html = `
-                            <div class="card bg-light filteredCard card-${sollicitatie.status}" ${visibility}>
-                                <div class="d-flex justify-content-between bd-highlight">
-                                    <h5 class="card-title">${sollicitatie.vacatureTitle}</h5>
-                                    <p class="card-header col-6 col-sm-3">Status: ${sollicitatie.status}</p>
-                                </div>
-                                <div class="card-body row">
-                                    <p class="card-text col-6 col-sm-3">Medewerker:</p>
-                                    <h5 class="card-title col-6 col-sm-3">${sollicitatie.medewerkerName}</h5>
-                                    <div class="w-100"></div>
-                                    <p class="card-text col-6 col-sm-3">Uitstroomrichting:</p>
-                                    <p class="card-title col-6 col-sm-3">${uitstroomrichting[sollicitatie.medewerkerUitstroomrichting]}</p>
-                                    <div class="w-100"></div>
-                                    <p class="card-text col-6 col-sm-3">Opdrachtgever:</p>
-                                    <h5 class="card-title col-6 col-sm-3">${sollicitatie.opdrachtgeverName}</h5>
-                                    <div class="w-100"></div>
-                                    <p class="card-text col-6 col-sm-3">${cardData.dateType}</p>
-                                    <p class="card-text col-6 col-sm-3">${cardData.date}</p>
-                                    <div class="d-flex justify-content-between bd-highlight">
-                                        <button class="btn btn-primary text-white" onclick="${cardData.buttonFunction}">${cardData.buttonText}</button>
-                                        <button class="btn btn-danger text-white" onclick="deleteSollicitatie(${sollicitatie.id})">Verwijder sollicitatie</button>
-                                    </div>        
-                                </div>
-                            </div>
-                        `;
+                        const cardData = getCardData(sollicitatie);
+                        const html = addCard(sollicitatie, cardData, visibility, uitstroomrichting);
                         container.innerHTML += html;
                     })
                     let formGroup = document.getElementsByClassName('filterForm');
@@ -322,7 +260,7 @@
             let sollicitatieId = document.getElementById('SollicitatieIdInput').value;
             let date = new Date(document.getElementById('DateInput').value);
             date.setHours(12,0,0,0);
-            const updateddata = {
+            const updatedData = {
                 MedewerkerId: document.getElementById('MedewerkerIdInput').value,
                 VacatureId: document.getElementById('VacatureIdInput').value,
                 Date: date.toISOString(),
@@ -335,7 +273,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(updateddata)
+                body: JSON.stringify(updatedData)
             })
             .then(response => {
                 if (!response.ok) {
@@ -372,16 +310,104 @@
                         })
                         .then(data => {
                             if(data){
-                                window.location.href = './vacature.html?filter='+type;
+                                //window.location.href = './vacature.html?filter='+type;
+                                
+                                console.log(updateddata);
+                                
                             }
                         })
                         .catch(error => console.error(error));
                     }else{
-                        window.location.href = './vacature.html?filter='+type;
+                        //window.location.href = './vacature.html?filter='+type;
+                        sollicitaties[sollicitatieId]["status"] = updatedData.Status
+                        sollicitaties[sollicitatieId]["date"] = updatedData.Date;
+                        sollicitaties[sollicitatieId]["medewerker_akkoord"] = updatedData.Medewerker_akkoord;
+                        sollicitaties[sollicitatieId]["oprachtgever_akkoord"] = updatedData.Opdrachtgever_akkoord;
+                        updateCard(sollicitatieId, updatedData);
+                        var modal = bootstrap.Modal.getInstance(document.getElementById('EditModal'));
+                        modal.hide();
                     }
                 }
             })
             .catch(error => console.error(error));
+        }
+        function updateCard(id, updatedData){
+            let visibility = (updatedData.Status != document.getElementById('cardFilter').value)? 'style="display: none;"':'style="display: block;"';
+            console.log(visibility);
+            document.getElementById('card'+id).remove();
+            const cardData = getCardData(sollicitaties[id]);
+            const html = addCard(sollicitaties[id], cardData, visibility);
+            document.getElementById("sollicitatielijst").innerHTML += html;
+
+        }
+        function addCard(sollicitatie, cardData, visibility){
+            const html = `
+                <div id="card${sollicitatie.id}" class="card bg-light filteredCard card-${sollicitatie.status}" ${visibility}>
+                    <div class="d-flex justify-content-between bd-highlight">
+                        <h5 class="card-title">${sollicitatie.vacatureTitle}</h5>
+                        <p class="card-header col-6 col-sm-3">Status: ${sollicitatie.status}</p>
+                    </div>
+                    <div class="card-body row">
+                        <p class="card-text col-6 col-sm-3">Medewerker:</p>
+                        <h5 class="card-title col-6 col-sm-3">${sollicitatie.medewerkerName}</h5>
+                        <div class="w-100"></div>
+                        <p class="card-text col-6 col-sm-3">Uitstroomrichting:</p>
+                        <p class="card-title col-6 col-sm-3">${uitstroomrichting[sollicitatie.medewerkerUitstroomrichting]}</p>
+                        <div class="w-100"></div>
+                        <p class="card-text col-6 col-sm-3">Opdrachtgever:</p>
+                        <h5 class="card-title col-6 col-sm-3">${sollicitatie.opdrachtgeverName}</h5>
+                        <div class="w-100"></div>
+                        <p class="card-text col-6 col-sm-3">${cardData.dateType}</p>
+                        <p class="card-text col-6 col-sm-3">${cardData.date}</p>
+                        <div class="d-flex justify-content-between bd-highlight">
+                            <button class="btn btn-primary text-white" onclick="${cardData.buttonFunction}">${cardData.buttonText}</button>
+                            <button class="btn btn-danger text-white" onclick="deleteSollicitatie(${sollicitatie.id})">Verwijder sollicitatie</button>
+                        </div>        
+                    </div>
+                </div>
+            `;
+            return html;
+        }
+        function getCardData(sollicitatie){
+            const cardData = {
+                dateType: '',
+                date: '',
+                buttonText: '',
+                buttonFunction: ''
+            }
+            switch(sollicitatie.status){
+                case 'MATCH':
+                    cardData.dateType = 'Periode: ';
+                    cardData.date = formattedDate(new Date(sollicitatie.vacatureStartdate))+' - '+formattedDate(new Date(sollicitatie.vacatureEnddate));
+                    cardData.buttonText = 'Plan sollicitatie datum in';
+                    cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
+                break;
+                case 'SOLLICITATIE':
+                    cardData.dateType = 'Sollicitatie datum: ';
+                    cardData.date = formattedDate(new Date(sollicitatie.date));
+                    cardData.buttonText = 'Sollicitatie bevestigen';
+                    cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
+                break;
+                case 'BEDENK':
+                    cardData.dateType = 'Deadline: ';
+                    cardData.date = formattedDate(new Date(sollicitatie.date));
+                    cardData.buttonText = 'Sollicitatie afronden';
+                    cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
+                break;
+                case 'ACCEPT':
+                    cardData.dateType = 'Periode: ';
+                    cardData.date = formattedDate(new Date(sollicitatie.vacatureStartdate))+' - '+formattedDate(new Date(sollicitatie.vacatureEnddate));
+                    cardData.buttonText = 'Check gegevens';
+                    cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
+                break;
+                case 'DECLINE':
+                    cardData.dateType = 'Afgewezen: ';
+                    cardData.date = formattedDate(new Date(sollicitatie.date));
+                    cardData.buttonText = 'Check gegevens';
+                    cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
+                break;
+            }
+            return cardData;
         }
         function filter(){
             let chosenclass = document.getElementById('cardFilter').value;
@@ -428,6 +454,27 @@
                 if(data){
                     window.location.href = './talentmanager.html';
                     //document.getElementById('submitinfo').innerHTML = 'registratie succesvol afgerond. <a href='./'>klik hier</a> om naar de inlog pagina te gaan.';
+                }
+            })
+            .catch(error => console.error(error));
+        }
+        function deleteSollicitatie(id){
+            fetch(BASEURL + '/Sollicitatie/delete/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(id)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok:'+ JSON.stringify(response));
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data){
+                    document.getElementById('card'+id).remove();
                 }
             })
             .catch(error => console.error(error));

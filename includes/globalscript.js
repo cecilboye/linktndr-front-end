@@ -1,3 +1,4 @@
+//const BASEURL = "https://localhost:7199/api";
 const BASEURL = "https://linktindr.azurewebsites.net/api";
 
 function onPageLoad(after) {
