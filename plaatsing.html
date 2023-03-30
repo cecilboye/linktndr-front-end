@@ -22,7 +22,7 @@
             <h5 class="card-header">Talentmanager overview</h5>
             <div class="card-body">
                 <div class="d-flex justify-content-between bd-highlight">
-                    <a href="./talentmanager.html" class="btn btn-info col-sm-3">Bekijk sollicitaties</a>
+                    <a href="./talentmanager.html" class="btn btn-primary col-sm-3">Bekijk sollicitaties</a>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
                     </div>
                     <div class="modal-footer d-flex justify-content-between bd-highlight">
                         <button type="button" class="btn btn-primary" onclick="submitForm()">Maak medewerker beschikbaar</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sluiten</button>
                     </div>
                 </div>
             </div>
@@ -88,7 +88,7 @@
             }
             console.log(loggedInUser);
             plaatsingen = {};
-            fetch(BASEURL+'/Plaatsing/talentmanager/'+loggedInUser.id)
+            fetch(BASEURL+'Plaatsing/talentmanager/'+loggedInUser.id)
             .then(response => response.json())
             .then(plaatsingData => {
                 console.log(plaatsingData);
@@ -142,7 +142,7 @@
                 Active: false
             }
             console.log(updateddata);
-            fetch(BASEURL+'/Plaatsing/update/'+id, {
+            fetch(BASEURL+'Plaatsing/update/'+id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
