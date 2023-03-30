@@ -7,10 +7,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Detailed Look</title>
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
   <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
   <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
-  <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <!-- Bootstrap JS -->
@@ -36,6 +35,7 @@
 
     .card-body {
       margin-top: 10px;
+      height: 50%;
     }
 
     .navigator {
@@ -62,6 +62,15 @@
       color: white;
       border-color: transparent;
     }
+
+    .buttonimg{
+      height: 96px;
+      width: 96px;
+      opacity: 0.5;
+    }
+    .buttonimg:hover{
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -72,7 +81,7 @@
     <div class="row">
       <div class="col-sm-4 col-sm"></div>
       <div class="col-sm-4 col-sm">
-        <div class="card" style="margin-top: 40%;">
+        <div class="card" style="margin-top: 10%;">
           <div class="text-center">
             <img id="photo" src="img/placeholder.jpg" class="card-img-top profilepic" alt="...">
             </div>
@@ -87,8 +96,8 @@
               <p id="profileText" class="card-text text-center" style="padding:1%; padding-bottom:0px;";></p>
             </div>
             <div class="card-footer">
-              <button id="like" type="button" onclick="Like()" class="btn btn-success">Like</button>
-              <button id="dislike" type="button" onclick="Dislike()" class="btn btn-danger">Dislike</button>
+              <img src="img/thumbup.png" id="like" class="buttonimg" onclick="Like()"></img>
+              <img src="img/thumbdown.png" id="dislike" class="buttonimg" onclick="Dislike()"></img>
             </div>
           </div>
         </div>
@@ -96,15 +105,17 @@
     </div>
 
     <script>
-      //extraheer de id's van de medewerker en vacature uit de URL
+      //extraheer de id's van de medewerker en vacature uit de BASEURL
       const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      let id = urlParams.get('id');
-      let vacid = urlParams.get('vacid');
+      const URLParams = new URLSearchParams(queryString);
+      let id = URLParams.get('id');
+      let vacid = URLParams.get('vacid');
 
       onPageLoad((userData) => {
         //trek de medewerker-info uit de database
-        fetch(URL + "Medewerker/" + id)
+        //console.log(BASEURL + "Medewerker/" + id);
+
+        fetch(BASEURL + "Medewerker/" + id)
           .then(a => a.json())
           .then(b => DisplayMedewerker(b));
       });
@@ -139,7 +150,7 @@
             "vacatureId": idVacature
         }
 
-        fetch(URL + 'Sollicitatie/add',{
+        fetch(BASEURL + 'Sollicitatie/add',{
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'

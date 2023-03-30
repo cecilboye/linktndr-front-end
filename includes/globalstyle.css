@@ -8,6 +8,12 @@
     border-color: transparent;
 }
 
+.btn-danger {
+    background-image: linear-gradient(rgb(255, 0, 21),rgb(210, 25, 96));
+    color: white;
+    border-color: transparent;
+}
+
 .hiddeninput {
     display: "none"; 
 }

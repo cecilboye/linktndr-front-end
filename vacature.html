@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="includes/globalscript.js"></script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vacatures</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
     <link rel="stylesheet" href="./includes/globalstyle.css"/>
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="./bootstrap/js/bootstrap.min.js"></script>
-    <script src="includes/globalscript.js"></script>
 
 </head>
 <body>
@@ -69,7 +69,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()" data-bs-dismiss="modal">Sluiten</button>
+                    <button type="button" class="btn btn-primary" onclick="closeModal()" data-bs-dismiss="modal">Sluiten</button>
                     <button type="button" class="btn btn-primary" onclick="submitForm(event)">Opslaan</button>
                 </div>
             </div>
@@ -91,11 +91,11 @@
                 document.getElementById("VactureIdInput").value = 0;
             })
             vacatures = {};
-            fetch(BASEURL+'/Vacature/opdrachtgever/'+loggedInUser.id)
+            fetch(BASEURL+'Vacature/opdrachtgever/'+loggedInUser.id)
             .then(response => response.json())
             .then(vacatureData => {
                 let uitstroomrichting = [];
-                fetch(BASEURL+'/Specialization')
+                fetch(BASEURL+'Specialization')
                 .then(response => response.json())
                 .then(fetchdata => {
                     let SpecializationSelectElement = document.getElementById("SpecializationInput");
@@ -124,7 +124,7 @@
                                     <p class="card-text">${startdatum} - ${einddatum}</p>
                                     <div class="d-flex justify-content-between bd-highlight">
                                         <a href="swipepage.html?vacid=${vacature.id}" class="btn btn-primary text-white">Zie beschikbare medewerkers</a>
-                                        <button class="btn btn-secondary text-white" onclick="editVacature(${vacature.id})">Bewerk vacature</button>
+                                        <button class="btn btn-primary text-white" onclick="editVacature(${vacature.id})">Bewerk vacature</button>
                                         <button class="btn btn-danger text-white" onclick="deleteVacature(${vacature.id})">Verwijder vacature</button>
                                     </div>
                                 </div>
@@ -155,10 +155,10 @@
                 enddate: enddate.toISOString(),
                 opdrachtgeverid: localStorage.getItem('UserId')
             }
-            let urlVar = (vacatureId == 0)?'add/':'update/'+vacatureId;
+            let BASEURLVar = (vacatureId == 0)?'add/':'update/'+vacatureId;
             let methodType =  (vacatureId == 0)?'POST':'PUT';
-            // Send data as JSON to backend URL using Fetch API
-            fetch(BASEURL + '/Vacature/' + urlVar, {
+            // Send data as JSON to backend BASEURL using Fetch API
+            fetch(BASEURL + '/Vacature/' + BASEURLVar, {
                 method: methodType,
                 headers: {
                     'Content-Type': 'application/json'

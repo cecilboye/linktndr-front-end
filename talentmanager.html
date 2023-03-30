@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Talentmanager!</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
@@ -22,7 +23,7 @@
             <h5 class="card-header">Talentmanager overview</h5>
             <div class="card-body">
                 <div class="d-flex justify-content-between bd-highlight">
-                    <a href="./plaatsing.html" class="btn btn-info col-sm-3">Bekijk plaatsingen</a>
+                    <a href="./plaatsing.html" class="btn btn-primary col-sm-3">Bekijk plaatsingen</a>
                     <button type="button" class="btn btn-primary col-sm-3" data-bs-toggle="modal" data-bs-target="#TalentmanagerModal">Eigen gegevens wijzigen</button>
                     <div class="justify-content-end">
                         <select class="form-select" id="cardFilter" onchange="filter()">
@@ -105,7 +106,7 @@
                 </div>
                 <div class="modal-footer d-flex justify-content-between bd-highlight">
                     <button type="button" class="btn btn-primary filterForm form-MATCH" onclick="submitForm('SOLLICITATIE')">Opslaan</button>
-                    <button type="button" class="btn btn-info filterForm form-SOLLICITATIE" onclick="submitForm('SOLLICITATIE')">Nieuwe datum opslaan</button>
+                    <button type="button" class="btn btn-primary filterForm form-SOLLICITATIE" onclick="submitForm('SOLLICITATIE')">Nieuwe datum opslaan</button>
                     <button type="button" class="btn btn-primary filterForm form-SOLLICITATIE" onclick="submitForm('BEDENK')">Sollicitatie heeft plaatsgevonden</button>
                     <button type="button" class="btn btn-primary filterForm form-BEDENK" onclick="submitForm('ACCEPTDECLINE')">Afronden</button>
                 </div>
@@ -184,7 +185,7 @@
                 document.getElementById("opdrachtgeverAkkoord").checked = false;
             })
             sollicitaties = {};
-            fetch(BASEURL+'/Sollicitatie/talentmanager/'+loggedInUser.id)
+            fetch(BASEURL+'Sollicitatie/talentmanager/'+loggedInUser.id)
             .then(response => response.json())
             .then(sollicitatieData => {
                 uitstroomrichting = [];
@@ -268,7 +269,7 @@
                 Medewerker_akkoord: document.getElementById('medewerkerAkkoord').checked,
                 Opdrachtgever_akkoord: document.getElementById('opdrachtgeverAkkoord').checked
             }
-            fetch(BASEURL+'/Sollicitatie/update/'+sollicitatieId, {
+            fetch(BASEURL+'Sollicitatie/update/'+sollicitatieId, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -295,7 +296,7 @@
                             EndDate: enddateValue,
                             Active: true
                         }
-                        fetch(BASEURL+'/Plaatsing/add', {
+                        fetch(BASEURL+'Plaatsing/add', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -420,7 +421,7 @@
                 formInput.style.display = (formInput.classList.contains('form-'+chosenclass))?'block':'none';
             });
         }
-        function get_url_param(param_name){
+        function get_BASEURL_param(param_name){
             let query = window.location.search.substring(1);
             let vars = query.split('&');
             for (var i=0;i<vars.length;i++) {
@@ -436,8 +437,8 @@
                 Password: document.getElementById('PasswordInput').value,
                 Telephone: document.getElementById('TelephoneInput').value
             }
-            // Send data as JSON to backend URL using Fetch API
-            fetch(BASEURL+'/Talentmanager/update/'+localStorage.getItem('UserId'), {
+            // Send data as JSON to backend BASEURL using Fetch API
+            fetch(BASEURL+'Talentmanager/update/'+localStorage.getItem('UserId'), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
