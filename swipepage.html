@@ -115,7 +115,7 @@
         const urlParams = new URLSearchParams(queryString);
         vacatureId = urlParams.get('vacid');
 
-        fetch(URL + "Medewerker")
+        fetch(BASEURL + "/Medewerker")
           .then(a => a.json())
           .then(b => GetVacature(b))
       });
@@ -131,7 +131,7 @@
         else
         {
           //console.log(URL + "Vacature/" + vacatureId);
-          fetch(URL + "Vacature/" + vacatureId)
+          fetch(BASEURL + "/Vacature/" + vacatureId)
             .then(v => v.json())
             .then(w => VacatureLocatie(data, w))
             //.then(x => data.forEach(t => Filter(t, x)))
