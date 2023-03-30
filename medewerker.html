@@ -156,7 +156,7 @@
                                 </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
+                          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sluiten</button>
                           <button type="button" class="btn btn-primary" onclick="submitForm(event)">Opslaan</button>
                         </div>
                       </div>
@@ -176,14 +176,14 @@
     <script>
         onPageLoad((loggedInUser) => {
             if(localStorage.getItem('UserType') != 'MEDEWERKER'){
-                window.location.href = "./";
+                window.location.href = "./index.html";
             }
-            fetch(BASEURL+'/medewerker/'+loggedInUser.id)
+            fetch(URL+'medewerker/'+loggedInUser.id)
             .then(response => response.json())
             .then(userData => {
                 //get all talentmanagers and put them in select tag as options
                 let element = document.getElementById("TalentmanagerInput");
-                fetch(BASEURL+'/Talentmanager')
+                fetch(URL+'Talentmanager')
                 .then(response => response.json())
                 .then(fetchdata => {
                     // Create option elements and add them to the select element
@@ -201,7 +201,7 @@
 
                 //get all specialization values and put them in a select tag as options
                 let SpecializationSelectElement = document.getElementById("SpecializationInput");
-                fetch(BASEURL+'/Specialization')
+                fetch(URL+'Specialization')
                 .then(response => response.json())
                 .then(fetchdata => {
                     // Create option elements and add them to the select element
@@ -267,7 +267,7 @@
             }
             console.log(updateddata);
             // Send data as JSON to backend URL using Fetch API
-            fetch(BASEURL+'/Medewerker/update/'+localStorage.getItem('UserId'), {
+            fetch(URL+'Medewerker/update/'+localStorage.getItem('UserId'), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -282,7 +282,7 @@
             })
             .then(data => {
                 if(data){
-                    window.location.href = "./vacature.html";
+                    window.location.href = "./medewerker.html";
                     //document.getElementById("submitinfo").innerHTML = 'registratie succesvol afgerond. <a href="./">klik hier</a> om naar de inlog pagina te gaan.';
                 }
             })

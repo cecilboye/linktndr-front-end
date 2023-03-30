@@ -1,4 +1,4 @@
-const BASEURL = "https://localhost:7199/api";
+const URL = "https://linktindr.azurewebsites.net/api/";
 
 function onPageLoad(after) {
     if (!localStorage.getItem("Token")) {
@@ -12,7 +12,7 @@ function onPageLoad(after) {
     else {
         var userToken = localStorage.getItem('Token');
         if (!!userToken) {
-            fetch(BASEURL + '/user', {
+            fetch(URL + 'user', {
                 headers: {
                     'Authorization': userToken
                 }
@@ -27,10 +27,10 @@ function onPageLoad(after) {
 }
 
 function AddHeader(data = null) {
-    console.log(data);
+    //console.log(data);
     let name = (data=='login' || data=='register')? data:data.name;
     let logoutButton = (data=='login' || data=='register')? '':'<button onclick="logout()" class="btn btn-secondary" style="color: white; border-color: white; background-color: transparent; margin-right: 10px;">Log Out</button>';
-    let href = (data=='register')? './register.html':'./';
+    let href = (data=='register')? './register.html':'./index.html';
 
     document.getElementById("header").innerHTML=
     `<nav class="navbar navbar-inverse" style="border-color: rgb(254, 75, 16); background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));">
@@ -149,7 +149,7 @@ function AddHeader(data) {
 */
 function logout() {
     localStorage.clear();
-    window.location.href = "./";
+    window.location.href = "./index.html";
 }
 
 function updateUserTypeMenuItem(usertype) {

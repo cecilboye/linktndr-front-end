@@ -22,7 +22,7 @@
             <h5 class="card-header">Talentmanager overview</h5>
             <div class="card-body">
                 <div class="d-flex justify-content-between bd-highlight">
-                    <a href="./plaatsing.html" class="btn btn-info col-sm-3">Bekijk plaatsingen</a>
+                    <a href="./plaatsing.html" class="btn btn-primary col-sm-3">Bekijk plaatsingen</a>
                     <button type="button" class="btn btn-primary col-sm-3" data-bs-toggle="modal" data-bs-target="#TalentmanagerModal">Eigen gegevens wijzigen</button>
                     <div class="justify-content-end">
                         <select class="form-select" id="cardFilter" onchange="filter()">
@@ -105,7 +105,7 @@
                 </div>
                 <div class="modal-footer d-flex justify-content-between bd-highlight">
                     <button type="button" class="btn btn-primary filterForm form-MATCH" onclick="submitForm('SOLLICITATIE')">Opslaan</button>
-                    <button type="button" class="btn btn-info filterForm form-SOLLICITATIE" onclick="submitForm('SOLLICITATIE')">Nieuwe datum opslaan</button>
+                    <button type="button" class="btn btn-primary filterForm form-SOLLICITATIE" onclick="submitForm('SOLLICITATIE')">Nieuwe datum opslaan</button>
                     <button type="button" class="btn btn-primary filterForm form-SOLLICITATIE" onclick="submitForm('BEDENK')">Sollicitatie heeft plaatsgevonden</button>
                     <button type="button" class="btn btn-primary filterForm form-BEDENK" onclick="submitForm('ACCEPTDECLINE')">Afronden</button>
                 </div>
@@ -184,11 +184,11 @@
                 document.getElementById("opdrachtgeverAkkoord").checked = false;
             })
             sollicitaties = {};
-            fetch(BASEURL+'/Sollicitatie/talentmanager/'+loggedInUser.id)
+            fetch(URL+'Sollicitatie/talentmanager/'+loggedInUser.id)
             .then(response => response.json())
             .then(sollicitatieData => {
                 let uitstroomrichting = [];
-                fetch(BASEURL+'/Specialization')
+                fetch(URL+'Specialization')
                 .then(response => response.json())
                 .then(fetchdata => {
                     let SpecializationSelectElement = document.getElementById("SpecializationInput");
@@ -330,7 +330,7 @@
                 Medewerker_akkoord: document.getElementById('medewerkerAkkoord').checked,
                 Opdrachtgever_akkoord: document.getElementById('opdrachtgeverAkkoord').checked
             }
-            fetch(BASEURL+'/Sollicitatie/update/'+sollicitatieId, {
+            fetch(URL+'Sollicitatie/update/'+sollicitatieId, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -357,7 +357,7 @@
                             EndDate: enddateValue,
                             Active: true
                         }
-                        fetch(BASEURL+'/Plaatsing/add', {
+                        fetch(URL+'Plaatsing/add', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -411,7 +411,7 @@
                 Telephone: document.getElementById('TelephoneInput').value
             }
             // Send data as JSON to backend URL using Fetch API
-            fetch(BASEURL+'/Talentmanager/update/'+localStorage.getItem('UserId'), {
+            fetch(URL+'Talentmanager/update/'+localStorage.getItem('UserId'), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

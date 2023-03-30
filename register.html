@@ -167,7 +167,7 @@
                 break;
             }
 			// Send data as JSON to backend URL using Fetch API
-			fetch(BASEURL +'/'+ usertype+'/add', {
+			fetch(URL + usertype + '/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -182,7 +182,7 @@
             })
             .then(data => {
                 if(data){
-                    document.getElementById("submitinfo").innerHTML = 'registratie succesvol afgerond. <a href="./">klik hier</a> om naar de inlog pagina te gaan.';
+                    document.getElementById("submitinfo").innerHTML = 'registratie succesvol afgerond. <a href="./index.html">klik hier</a> om naar de inlog pagina te gaan.';
                 }
             })
             .catch(error => console.error(error));
@@ -201,7 +201,7 @@
         window.onload = function(){
             AddHeader('login');
             if(localStorage.getItem('UserType')){
-                window.location.href = "./";
+                window.location.href = "./index.html";
             }
             //hide all inputs
             let elements = document.getElementsByClassName("hiddeninput");
@@ -210,7 +210,7 @@
             });
             //get all talentmanagers and put them in select tag as options
             let element = document.getElementById("Talentmanager");
-            fetch(BASEURL + '/Talentmanager')
+            fetch(URL + 'Talentmanager')
                 .then(response => response.json())
                 .then(data => {
                     // Create option elements and add them to the select element
@@ -224,7 +224,7 @@
                 .catch(error => console.error(error));
             //get all specialization values and put them in a select tag as options
             let SpecializationSelectElement = document.getElementById("Specialization");
-            fetch(BASEURL + '/Specialization')
+            fetch(URL + 'Specialization')
                 .then(response => response.json())
                 .then(data => {
                     // Create option elements and add them to the select element
