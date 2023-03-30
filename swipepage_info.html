@@ -106,9 +106,9 @@
     <script>
       //extraheer de id's van de medewerker en vacature uit de BASEURL
       const queryString = window.location.search;
-      const BASEURLParams = new BASEURLSearchParams(queryString);
-      let id = BASEURLParams.get('id');
-      let vacid = BASEURLParams.get('vacid');
+      const URLParams = new URLSearchParams(queryString);
+      let id = URLParams.get('id');
+      let vacid = URLParams.get('vacid');
 
       onPageLoad((userData) => {
         //trek de medewerker-info uit de database

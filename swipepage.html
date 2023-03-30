@@ -115,8 +115,8 @@
       //wanneer het scherm wordt geladen pakt het alle medewerkers
       onPageLoad((userData) => {
         const queryString = window.location.search;
-        const BASEURLParams = new BASEURLSearchParams(queryString);
-        vacatureId = BASEURLParams.get('vacid');
+        const URLParams = new URLSearchParams(queryString);
+        vacatureId = URLParams.get('vacid');
 
         fetch(BASEURL + "Medewerker")
           .then(a => a.json())
