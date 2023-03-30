@@ -1,132 +1,437 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap HTML Template</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Talentmanager!</title>
+    <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
+    <link rel="stylesheet" href="./includes/globalstyle.css"/>
     <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="includes/globalscript.js"></script>
 </head>
-<style>
-    .card {
-        width: 100%;
-        padding: 20px 20px 20px 20px;
-        border: solid 5px;
-        border-radius: 10px;
-        margin-top: 50px;
-    }
-
-    .card-body
-    {
-        padding: 50px;
-    }
-
-    .card-footer {
-        width: 50%;
-    }
-
-    .btn-primary{
-        padding: 10px 50px 10px 50px;
-    }
-</style>
-
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Logo</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="item-ingelogd">Je bent ingelogd als:&nbsp;</li>
-                    <li id="usertype-menu-item"></li> 
-                    <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-                <div class="card">
-                    <div class="card-header">
-                        Match!
+    <div id="header"></div>
+    <div class="container" id="sollicitatielijst">
+        <div class="card">
+            <h5 class="card-header">Talentmanager overview</h5>
+            <div class="card-body">
+                <div class="d-flex justify-content-between bd-highlight">
+                    <a href="./plaatsing.html" class="btn btn-info col-sm-3">Bekijk plaatsingen</a>
+                    <button type="button" class="btn btn-primary col-sm-3" data-bs-toggle="modal" data-bs-target="#TalentmanagerModal">Eigen gegevens wijzigen</button>
+                    <div class="justify-content-end">
+                        <select class="form-select" id="cardFilter" onchange="filter()">
+                            <option value="MATCH">Nieuwe matches</option>
+                            <option value="SOLLICITATIE">Lopende sollicitaties</option>
+                            <option value="BEDENK">In bedenktijd</option>
+                            <option value="ACCEPT">Geaccepteerd</option>
+                            <option value="DECLINE">Afgewezen</option>
+                        </select>
                     </div>
-                    <div class="card-body">
-                        <div class="text-center ">
-                            <button type="button" class="btn btn-primary p-2">Info</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 text-left">
-                            <p class="text-muted">Ziggo</p>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <p class="text-muted">Moestafa</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-                <div class="card">
-                    <div class="card-header">
-                        Match!
-                    </div>
-                    <div class="card-body">
-                        <div class="text-center ">
-                            <button type="button" class="btn btn-primary p-2">Info</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 text-left">
-                            <p class="text-muted">Defensie</p>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <p class="text-muted">Edo</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-                <div class="card">
-                    <div class="card-header">
-                        Match!
-                    </div>
-                    <div class="card-body">
-                        <div class="text-center ">
-                            <button type="button" class="btn btn-primary p-2">Info</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 text-left">
-                            <p class="text-muted">Fruitleer</p>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <p class="text-muted">David Van Meel</p>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Plan Sollicitatie</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group filterForm form-MATCH form-SOLLICITATIE form-BEDENK form-ACCEPT form-DECLINE">
+                            <label for="Status">Status:</label>
+                            <input type="text" class="form-control" id="StatusInput" disabled/>
+                        </div>
+                        <div class="form-group filterForm form-MATCH form-SOLLICITATIE form-BEDENK form-ACCEPT form-DECLINE">
+                            <label for="Medewerker">Medewerker:</label>
+                            <input type="text" class="form-control" id="MedewerkerInput" disabled/>
+                        </div>
+                        <div class="form-group filterForm form-MATCH form-SOLLICITATIE form-BEDENK form-ACCEPT form-DECLINE">
+                            <label for="Vacature">Vacature:</label>
+                            <input type="text" class="form-control" id="VacatureInput" disabled/>
+                        </div>
+                        <div class="form-group filterForm form-MATCH form-SOLLICITATIE form-BEDENK form-ACCEPT form-DECLINE">
+                            <label for="Opdrachtgever">Opdrachtgever:</label>
+                            <input type="text" class="form-control" id="OpdrachtgeverInput" disabled/>
+                        </div>
+                        <div class="form-group filterForm form-MATCH form-SOLLICITATIE form-BEDENK form-ACCEPT form-DECLINE">
+                            <label for="Locatie">Locatie:</label>
+                            <input type="text" class="form-control" id="LocationInput" disabled/>
+                        </div>
+                        <div class="form-group filterForm form-MATCH form-SOLLICITATIE">
+                            <label for="DateInput">Datum afspraak:</label>
+                            <input type="Date" class="form-control" id="DateInput"/>
+                        </div>
+                        <div class="form-group filterForm form-BEDENK form-ACCEPT form-DECLINE">
+                            <label for="Beslissing">Beslissing:</label>
+                        </div>
+                        <div class="form-group filterForm form-BEDENK form-ACCEPT form-DECLINE">
+                            <input class="form-check-input" type="checkbox" value='' id="medewerkerAkkoord">
+                            <label class="form-check-label" for="medewerkerAkkoord">
+                              Medewerker akkoord
+                            </label>
+                        </div>
+                        <div class="form-group filterForm form-BEDENK form-ACCEPT form-DECLINE">
+                            <input class="form-check-input" type="checkbox" value='' id="opdrachtgeverAkkoord">
+                            <label class="form-check-label" for="opdrachtgeverAkkoord">
+                              Opdrachtgever akkoord
+                            </label>
+                        </div>
+                        <div class="form-group filterForm form-BEDENK form-ACCEPT form-DECLINE">
+                            <label for="StartDateInput">Start Datum:</label>
+                            <input type="Date" class="form-control" id="StartDateInput"/>
+                        </div>
+                        <div class="form-group filterForm form-BEDENK form-ACCEPT form-DECLINE">
+                            <label for="EndDateInput">Eind Datum:</label>
+                            <input type="Date" class="form-control" id="EndDateInput"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="Hidden" class="form-control" id="MedewerkerIdInput" value="0"/>
+                            <input type="Hidden" class="form-control" id="VacatureIdInput" value="0"/>
+                            <input type="Hidden" class="form-control" id="SollicitatieIdInput" value="0"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-between bd-highlight">
+                    <button type="button" class="btn btn-primary filterForm form-MATCH" onclick="submitForm('SOLLICITATIE')">Opslaan</button>
+                    <button type="button" class="btn btn-info filterForm form-SOLLICITATIE" onclick="submitForm('SOLLICITATIE')">Nieuwe datum opslaan</button>
+                    <button type="button" class="btn btn-primary filterForm form-SOLLICITATIE" onclick="submitForm('BEDENK')">Sollicitatie heeft plaatsgevonden</button>
+                    <button type="button" class="btn btn-primary filterForm form-BEDENK" onclick="submitForm('ACCEPTDECLINE')">Afronden</button>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="modal fade" id="TalentmanagerModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="talentmangerModalLabel">Bewerk profiel</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row">
+                            <label for="firstname" class="col-sm-10">Naam:</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="NameInput" placeholder="Voornaam Achternaam"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-10">Emailadres:</label>
+                            <div class="col-sm-12">
+                                <input type="email" class="form-control" id="EmailInput" placeholder="email@email.nl"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="telephone" class="col-sm-10">Telefoonnummer:</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="TelephoneInput" placeholder="0669696969"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-10">Wachtwoord:</label>
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" id="PasswordInput" placeholder="P@55W0RD!" required/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-between bd-highlight">
+                    <button type="button" class="btn btn-primary filterForm form-MATCH" onclick="editTalentmanager()">Opslaan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script>
+        onPageLoad((loggedInUser) => {
+            if(localStorage.getItem('UserType') != 'TALENTMANAGER') {
+                window.location.href = './';
+            }
+            console.log(loggedInUser);
+            document.getElementById("NameInput").value = loggedInUser.name;
+            document.getElementById("EmailInput").value = loggedInUser.email;
+            document.getElementById("PasswordInput").value = loggedInUser.password;
+            document.getElementById("TelephoneInput").value = loggedInUser.telephone;
+            paramvalue = get_url_param('filter');
+            let filter = (paramvalue != '')? paramvalue : 'MATCH';
+            document.getElementById('EditModal').addEventListener('hidden.bs.modal', function (event) {
+                document.getElementById("StatusInput").value = '';
+                document.getElementById("MedewerkerInput").value = '';
+                document.getElementById("VacatureInput").value = '';
+                document.getElementById("OpdrachtgeverInput").value = '';
+                document.getElementById("LocationInput").value = '';
+                document.getElementById("DateInput").value = '';
+                document.getElementById("StartDateInput").value = '';
+                document.getElementById("EndDateInput").value = '';
+                document.getElementById("MedewerkerIdInput").value = 0;
+                document.getElementById("VacatureIdInput").value = 0;
+                document.getElementById("SollicitatieIdInput").value = 0;
+                document.getElementById("medewerkerAkkoord").checked = false;
+                document.getElementById("opdrachtgeverAkkoord").checked = false;
+            })
+            sollicitaties = {};
+            fetch(BASEURL+'/Sollicitatie/talentmanager/'+loggedInUser.id)
+            .then(response => response.json())
+            .then(sollicitatieData => {
+                let uitstroomrichting = [];
+                fetch(BASEURL+'/Specialization')
+                .then(response => response.json())
+                .then(fetchdata => {
+                    let SpecializationSelectElement = document.getElementById("SpecializationInput");
+                    for (var key in fetchdata) {
+                        uitstroomrichting.push(fetchdata[key]);
+                    }
+                    const container = document.getElementById("sollicitatielijst");
+                    sollicitatieData.forEach((sollicitatie) => {
+                        let visibility = (sollicitatie.status != filter)? 'style="display: none;"':'style="display: block;"';
+                        sollicitaties[sollicitatie.id] = sollicitatie;
+                        const cardData = {
+                            dateType: '',
+                            date: '',
+                            buttonText: '',
+                            buttonFunction: ''
+                        }
+                        switch(sollicitatie.status){
+                            case 'MATCH':
+                                cardData.dateType = 'Periode: ';
+                                cardData.date = formattedDate(new Date(sollicitatie.vacatureStartdate))+' - '+formattedDate(new Date(sollicitatie.vacatureEnddate));
+                                cardData.buttonText = 'Plan sollicitatie datum in';
+                                cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
+                            break;
+                            case 'SOLLICITATIE':
+                                cardData.dateType = 'Sollicitatie datum: ';
+                                cardData.date = formattedDate(new Date(sollicitatie.date));
+                                cardData.buttonText = 'Sollicitatie bevestigen';
+                                cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
+                            break;
+                            case 'BEDENK':
+                                cardData.dateType = 'Deadline: ';
+                                cardData.date = formattedDate(new Date(sollicitatie.date));
+                                cardData.buttonText = 'Sollicitatie afronden';
+                                cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
+                            break;
+                            case 'ACCEPT':
+                                cardData.dateType = 'Periode: ';
+                                cardData.date = formattedDate(new Date(sollicitatie.vacatureStartdate))+' - '+formattedDate(new Date(sollicitatie.vacatureEnddate));
+                                cardData.buttonText = 'Check gegevens';
+                                cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
+                            break;
+                            case 'DECLINE':
+                                cardData.dateType = 'Afgewezen: ';
+                                cardData.date = formattedDate(new Date(sollicitatie.date));
+                                cardData.buttonText = 'Check gegevens';
+                                cardData.buttonFunction = 'editSollicitatie('+sollicitatie.id+')';
+                            break;
+                        }
+                        const html = `
+                            <div class="card bg-light filteredCard card-${sollicitatie.status}" ${visibility}>
+                                <div class="d-flex justify-content-between bd-highlight">
+                                    <h5 class="card-title">${sollicitatie.vacatureTitle}</h5>
+                                    <p class="card-header col-6 col-sm-3">Status: ${sollicitatie.status}</p>
+                                </div>
+                                <div class="card-body row">
+                                    <p class="card-text col-6 col-sm-3">Medewerker:</p>
+                                    <h5 class="card-title col-6 col-sm-3">${sollicitatie.medewerkerName}</h5>
+                                    <div class="w-100"></div>
+                                    <p class="card-text col-6 col-sm-3">Uitstroomrichting:</p>
+                                    <p class="card-title col-6 col-sm-3">${uitstroomrichting[sollicitatie.medewerkerUitstroomrichting]}</p>
+                                    <div class="w-100"></div>
+                                    <p class="card-text col-6 col-sm-3">Opdrachtgever:</p>
+                                    <h5 class="card-title col-6 col-sm-3">${sollicitatie.opdrachtgeverName}</h5>
+                                    <div class="w-100"></div>
+                                    <p class="card-text col-6 col-sm-3">${cardData.dateType}</p>
+                                    <p class="card-text col-6 col-sm-3">${cardData.date}</p>
+                                    <div class="d-flex justify-content-between bd-highlight">
+                                        <button class="btn btn-primary text-white" onclick="${cardData.buttonFunction}">${cardData.buttonText}</button>
+                                        <button class="btn btn-danger text-white" onclick="deleteSollicitatie(${sollicitatie.id})">Verwijder sollicitatie</button>
+                                    </div>        
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += html;
+                    })
+                    let formGroup = document.getElementsByClassName('filterForm');
+                    Array.from(formGroup).forEach((formInput) => {
+                        formInput.style.display = (formInput.classList.contains('form-'+document.getElementById('cardFilter').value))?'block':'none';
+                    });
+                    document.getElementById('cardFilter').value = filter;
+                })
+                .catch(error => console.error(error));
+            })
+            .catch(error => console.error(error));
+        })
+        function editSollicitatie(id) {        
+            switch(sollicitaties[id]['status']){
+                case 'MATCH':
+                    document.getElementById('exampleModalLabel').innerHTML = 'Plan de sollicitatie in.';
+                break;
+                case 'SOLLICITATIE':
+                    document.getElementById('exampleModalLabel').innerHTML = 'Heeft de sollicitatie plaatsgevonden?';
+                break;
+                case 'BEDENK':
+                    document.getElementById('exampleModalLabel').innerHTML = 'Gaan beide partijen met elkaar in zee?';
+                    document.getElementById('medewerkerAkkoord').disabled = false;
+                    document.getElementById('opdrachtgeverAkkoord').disabled = false;
+                break;
+                case 'ACCEPT':
+                    document.getElementById('exampleModalLabel').innerHTML = 'Medewerker is aangenomen!';
+                    document.getElementById('medewerkerAkkoord').disabled = true;
+                    document.getElementById('opdrachtgeverAkkoord').disabled = true;
+                break;
+                case 'DECLINE':
+                    document.getElementById('exampleModalLabel').innerHTML = 'Helaas, 1 of beide partijen waren niet akkoord.';
+                    document.getElementById('medewerkerAkkoord').disabled = true;
+                    document.getElementById('opdrachtgeverAkkoord').disabled = true;
+                break;
+            }
+            console.log(sollicitaties[id]);     
+            document.getElementById('StatusInput').value = sollicitaties[id]['status'];
+            document.getElementById('MedewerkerInput').value = sollicitaties[id]['medewerkerName'];
+            document.getElementById('VacatureInput').value = sollicitaties[id]['vacatureTitle'];
+            document.getElementById('OpdrachtgeverInput').value = sollicitaties[id]['opdrachtgeverName'];
+            document.getElementById('LocationInput').value = sollicitaties[id]['vacatureLocation'];
+            document.getElementById('medewerkerAkkoord').checked = sollicitaties[id]['medewerker_akkoord'];
+            document.getElementById('opdrachtgeverAkkoord').checked = sollicitaties[id]['opdrachtgever_akkoord'];
+            document.getElementById('DateInput').value = new Date(sollicitaties[id]['date']).toISOString().substring(0, 10);
+            document.getElementById('SollicitatieIdInput').value = sollicitaties[id]['id'];
+            document.getElementById('MedewerkerIdInput').value = sollicitaties[id]['medewerkerId'];
+            document.getElementById('VacatureIdInput').value = sollicitaties[id]['vacatureId'];
+            document.getElementById('StartDateInput').value = new Date(sollicitaties[id]['vacatureStartdate']).toISOString().substring(0, 10);
+            document.getElementById('EndDateInput').value = new Date(sollicitaties[id]['vacatureEnddate']).toISOString().substring(0, 10);
+            var myModal = new bootstrap.Modal(document.getElementById('EditModal'), {});
+            myModal.show();
+        }
+        function submitForm(type) {
+            if(type == 'ACCEPTDECLINE'){
+                type = (document.getElementById('medewerkerAkkoord').checked && document.getElementById('opdrachtgeverAkkoord').checked)? 'ACCEPT':'DECLINE';
+            }
+            let sollicitatieId = document.getElementById('SollicitatieIdInput').value;
+            let date = new Date(document.getElementById('DateInput').value);
+            date.setHours(12,0,0,0);
+            const updateddata = {
+                MedewerkerId: document.getElementById('MedewerkerIdInput').value,
+                VacatureId: document.getElementById('VacatureIdInput').value,
+                Date: date.toISOString(),
+                Status: type,
+                Medewerker_akkoord: document.getElementById('medewerkerAkkoord').checked,
+                Opdrachtgever_akkoord: document.getElementById('opdrachtgeverAkkoord').checked
+            }
+            fetch(BASEURL+'/Sollicitatie/update/'+sollicitatieId, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateddata)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok:'+ JSON.stringify(response));
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data){
+                    if(type == 'ACCEPT'){
+                        let startdateValue = new Date(document.getElementById('StartDateInput').value);
+                        startdateValue.setHours(12,0,0,0);
+                        let enddateValue = new Date(document.getElementById('EndDateInput').value);
+                        enddateValue.setHours(12,0,0,0);
+                        const plaatsingData = {
+                            medewerkerId: localStorage.getItem('UserId'),
+                            sollicitatieId: sollicitatieId,
+                            StartDate: startdateValue,
+                            EndDate: enddateValue,
+                            Active: true
+                        }
+                        fetch(BASEURL+'/Plaatsing/add', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(plaatsingData)
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok:'+ JSON.stringify(response));
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if(data){
+                                window.location.href = './vacature.html?filter='+type;
+                            }
+                        })
+                        .catch(error => console.error(error));
+                    }else{
+                        window.location.href = './vacature.html?filter='+type;
+                    }
+                }
+            })
+            .catch(error => console.error(error));
+        }
+        function filter(){
+            let chosenclass = document.getElementById('cardFilter').value;
+            let allcards = document.getElementsByClassName('filteredCard');
+            Array.from(allcards).forEach((card) => {
+                card.style.display = (card.classList.contains('card-'+chosenclass))?'block':'none';
+            });
+            let formGroup = document.getElementsByClassName('filterForm');
+            Array.from(formGroup).forEach((formInput) => {
+                formInput.style.display = (formInput.classList.contains('form-'+chosenclass))?'block':'none';
+            });
+        }
+        function get_url_param(param_name){
+            let query = window.location.search.substring(1);
+            let vars = query.split('&');
+            for (var i=0;i<vars.length;i++) {
+                    var pair = vars[i].split('=');
+                    if(pair[0] == param_name){return pair[1];}
+            }
+            return(false);
+        }
+        function editTalentmanager() {
+            const updateddata = {
+                Name: document.getElementById('NameInput').value,
+                Email: document.getElementById('EmailInput').value,
+                Password: document.getElementById('PasswordInput').value,
+                Telephone: document.getElementById('TelephoneInput').value
+            }
+            // Send data as JSON to backend URL using Fetch API
+            fetch(BASEURL+'/Talentmanager/update/'+localStorage.getItem('UserId'), {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateddata)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok:'+ JSON.stringify(response));
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data){
+                    window.location.href = './talentmanager.html';
+                    //document.getElementById('submitinfo').innerHTML = 'registratie succesvol afgerond. <a href='./'>klik hier</a> om naar de inlog pagina te gaan.';
+                }
+            })
+            .catch(error => console.error(error));
+        }
+    </script>
 </body>
-
 </html>

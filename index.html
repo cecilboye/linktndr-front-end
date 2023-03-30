@@ -1,55 +1,44 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap HTML Template</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Welcome to LinkTindr!</title>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
+    <link rel="stylesheet" href="./includes/globalstyle.css"/>
     <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="includes/globalscript.js"></script>
     <style>
-        #usertype-menu-item, .item-ingelogd{
-            color:white;
-            margin-top:14px;
+        .btn-primary{
+            background-image: linear-gradient(rgb(253, 43, 122),rgb(255, 106, 91));
+            color: white;
+            border-color: transparent;
+        }
+
+        .form-group{
+            margin-bottom: 10px;
         }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Logo</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="item-ingelogd">Je bent ingelogd als:&nbsp;</li>
-                    <li id="usertype-menu-item"></li> 
-                    <li><a href="./register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
+    <div id="header"></div>
+    <div class="container" style="text-align: center;">
         <div class="row">
             <div class="col-sm-12 text-center">
-                <h1>Welcome to LinkTinder</h1>
+                <br>
+                <h1>Welcome to LinkTindr</h1>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-                <form>
+            <div class="col-sm-4 col-sm"></div>
+            <div class="col-sm-4 col-sm">
+                <form style="text-align: left;">
                     <div class="form-group">
                         <label for="email">Email address:</label>
                         <input type="email" class="form-control" id="email">
@@ -58,16 +47,20 @@
                         <label for="pwd">Password:</label>
                         <input type="password" class="form-control" id="pwd">
                     </div>
-                    
-                    <button type="submit" class="btn btn-default" onclick="submitForm(event)">Login</button>
+                    <div class="d-flex justify-content-between bd-highlight">
+                        <button type="submit" class="btn btn-primary"onclick="submitForm(event)">Login</button>
+                        <a href="./register.html" style="margin-left: 10px;">Klik hier om te registreren</a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
+    <div id="footer"></div>
     <script>
         let token = localStorage.getItem('Token');
         let usertype = localStorage.getItem('UserType');
-        console.log(token);
+        //console.log(token);
+
         if (!!token && !!usertype) {
             switch(usertype){
                 case "MEDEWERKER":
@@ -82,6 +75,7 @@
             }
         }
 
+        AddHeader('register');
 		function submitForm(e) {
             e.preventDefault();
 
@@ -93,7 +87,7 @@
 				password: password
 			};
 
-			fetch('https://localhost:7199/api/user/login', {
+			fetch(BASEURL+'/user/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -107,9 +101,8 @@
                 return response.json();
             })
             .then(data => {
-                console.log('data', data);
-
                 // Store data in localStorage
+
                 localStorage.setItem('Token', data.token);
                 localStorage.setItem('UserType', data.usertype);
                 localStorage.setItem('UserId', data.userId);

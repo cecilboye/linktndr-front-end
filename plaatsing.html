@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talentmanager!</title>
+    <!-- Bootstrap CSS <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.rtl.min.css"/>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap-grid.min.css"/>
+    <link rel="stylesheet" href="./includes/globalstyle.css"/>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="includes/globalscript.js"></script>
+</head>
+<body>
+    <div id="header"></div>
+    <div class="container">
+        <div class="card">
+            <h5 class="card-header">Talentmanager overview</h5>
+            <div class="card-body">
+                <div class="d-flex justify-content-between bd-highlight">
+                    <a href="./talentmanager.html" class="btn btn-info col-sm-3">Bekijk sollicitaties</a>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <h5>Actief:</h5>
+        <div class="list-group" id="actievePlaatsingen"></div>
+        <br/>
+        <h5>Afgerond:</h5>
+        <div class="list-group" id="afgerondePlaatsingen"></div>
+        <div class="modal fade" id="PlaatsingModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Plaatsing gegevens</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="Medewerker">Medewerker:</label>
+                                <input type="text" class="form-control" id="MedewerkerInput" disabled/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Vacature">Vacature:</label>
+                                <input type="text" class="form-control" id="VacatureInput" disabled/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Opdrachtgever">Opdrachtgever:</label>
+                                <input type="text" class="form-control" id="OpdrachtgeverInput" disabled/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Locatie">Locatie:</label>
+                                <input type="text" class="form-control" id="LocationInput" disabled/>
+                            </div>
+                            <div class="form-group">
+                                <label for="StartDateInput">Start Datum:</label>
+                                <input type="Date" class="form-control" id="StartDateInput" disabled/>
+                            </div>
+                            <div class="form-group">
+                                <label for="EndDateInput">Eind Datum:</label>
+                                <input type="Date" class="form-control" id="EndDateInput" disabled/>
+                            </div>
+                            <input type="Hidden" class="form-control" id="PlaatsingIdInput" value="0"/>
+                            <input type="Hidden" class="form-control" id="MedewerkerIdInput" value="0"/>
+                            <input type="Hidden" class="form-control" id="SollicitatieIdInput" value="0"/>
+                        </form>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between bd-highlight">
+                        <button type="button" class="btn btn-primary" onclick="submitForm()">Maak medewerker beschikbaar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script>
+        onPageLoad((loggedInUser) => {
+            if(localStorage.getItem('UserType') != 'TALENTMANAGER') {
+                window.location.href = './';
+            }
+            console.log(loggedInUser);
+            plaatsingen = {};
+            fetch(BASEURL+'/Plaatsing/talentmanager/'+loggedInUser.id)
+            .then(response => response.json())
+            .then(plaatsingData => {
+                console.log(plaatsingData);
+                const actieveDiv = document.getElementById("actievePlaatsingen");
+                const afgerondeDiv = document.getElementById("afgerondePlaatsingen");
+                plaatsingData.forEach((plaatsing) => {
+                    plaatsingen[plaatsing.id] = plaatsing;
+                    let startEndDate = formattedDate(new Date(plaatsing.startDate))+' - '+formattedDate(new Date(plaatsing.endDate));
+                    const html = `
+                    <a href="#" onclick="showModal(${plaatsing.id})" class="list-group-item list-group-item-action" aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">${plaatsing.medewerkerName}</h5>
+                            <h5 class="mb-1">${plaatsing.vacatureTitle}</h5>
+                            <h5 class="mb-1">${plaatsing.opdrachtgeverName}</h5>
+                        </div>
+                        <small class="text-muted">${startEndDate}</small>
+                    </a>
+                    `;
+                    if(plaatsing.active){ 
+                        actieveDiv.innerHTML += html; 
+                    }else{
+                        afgerondeDiv.innerHTML += html;
+                    }
+                })
+            })
+        })
+        function showModal(id){
+            document.getElementById('PlaatsingIdInput').value = id;
+            document.getElementById('SollicitatieIdInput').value = plaatsingen[id]['medewerkerId'];
+            document.getElementById('MedewerkerIdInput').value = plaatsingen[id]['medewerkerId'];
+            document.getElementById('MedewerkerInput').value = plaatsingen[id]['medewerkerName'];
+            document.getElementById('VacatureInput').value = plaatsingen[id]['vacatureTitle'];
+            document.getElementById('OpdrachtgeverInput').value = plaatsingen[id]['opdrachtgeverName'];
+            document.getElementById('LocationInput').value = plaatsingen[id]['vacatureLocation'];
+            document.getElementById('StartDateInput').value = new Date(plaatsingen[id]['startDate']).toISOString().substring(0, 10);
+            document.getElementById('EndDateInput').value = new Date(plaatsingen[id]['endDate']).toISOString().substring(0, 10);
+            var myModal = new bootstrap.Modal(document.getElementById('PlaatsingModal'), {});
+            myModal.show();
+        }
+        function submitForm(){
+            let id = document.getElementById('PlaatsingIdInput').value;
+            let startdateValue = new Date(document.getElementById('StartDateInput').value);
+            startdateValue.setHours(12,0,0,0);
+            let enddateValue = new Date(document.getElementById('EndDateInput').value);
+            enddateValue.setHours(12,0,0,0);
+            const updateddata = {
+                medewerkerId: plaatsingen[id]['medewerkerId'],
+                sollicitatieId: plaatsingen[id]['sollicitatieId'],
+                StartDate: startdateValue,
+                EndDate: enddateValue,
+                Active: false
+            }
+            console.log(updateddata);
+            fetch(BASEURL+'/Plaatsing/update/'+id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateddata)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok:'+ JSON.stringify(response));
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data){
+                    window.location.href = './plaatsing.html';
+                }
+            })
+            .catch(error => console.error(error));
+        }
+        </script>
+</body>
+</html>
