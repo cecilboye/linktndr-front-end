@@ -104,17 +104,17 @@
     </div>
 
     <script>
-      //extraheer de id's van de medewerker en vacature uit de URL
+      //extraheer de id's van de medewerker en vacature uit de BASEURL
       const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      let id = urlParams.get('id');
-      let vacid = urlParams.get('vacid');
+      const BASEURLParams = new BASEURLSearchParams(queryString);
+      let id = BASEURLParams.get('id');
+      let vacid = BASEURLParams.get('vacid');
 
       onPageLoad((userData) => {
         //trek de medewerker-info uit de database
-        //console.log(URL + "Medewerker/" + id);
+        //console.log(BASEURL + "Medewerker/" + id);
 
-        fetch(URL + "Medewerker/" + id)
+        fetch(BASEURL + "Medewerker/" + id)
           .then(a => a.json())
           .then(b => DisplayMedewerker(b));
       });
@@ -149,7 +149,7 @@
             "vacatureId": idVacature
         }
 
-        fetch(URL + 'Sollicitatie/add',{
+        fetch(BASEURL + 'Sollicitatie/add',{
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'

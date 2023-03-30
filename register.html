@@ -95,7 +95,7 @@
                     </div>
                     <div class="form-group hiddeninput Medewerker">
                         <label for="image">Foto:</label>
-                        <input  type="text" class="form-control" id="Image" placeholder="Vul hier een URL van een foto die je wilt uploaden"/>
+                        <input  type="text" class="form-control" id="Image" placeholder="Vul hier een BASEURL van een foto die je wilt uploaden"/>
                     </div>
                     <div class="form-group hiddeninput Medewerker Talentmanager Opdrachtgever">
                         <button type="submit" class="btn btn-primary" onclick="submitForm(event)">Registreer</button>
@@ -166,8 +166,8 @@
                     }
                 break;
             }
-			// Send data as JSON to backend URL using Fetch API
-			fetch(URL + usertype + '/add', {
+			// Send data as JSON to backend BASEURL using Fetch API
+			fetch(BASEURL + usertype + '/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -210,7 +210,7 @@
             });
             //get all talentmanagers and put them in select tag as options
             let element = document.getElementById("Talentmanager");
-            fetch(URL + 'Talentmanager')
+            fetch(BASEURL + 'Talentmanager')
                 .then(response => response.json())
                 .then(data => {
                     // Create option elements and add them to the select element
@@ -224,7 +224,7 @@
                 .catch(error => console.error(error));
             //get all specialization values and put them in a select tag as options
             let SpecializationSelectElement = document.getElementById("Specialization");
-            fetch(URL + 'Specialization')
+            fetch(BASEURL + 'Specialization')
                 .then(response => response.json())
                 .then(data => {
                     // Create option elements and add them to the select element

@@ -166,7 +166,7 @@
             document.getElementById("EmailInput").value = loggedInUser.email;
             document.getElementById("PasswordInput").value = loggedInUser.password;
             document.getElementById("TelephoneInput").value = loggedInUser.telephone;
-            paramvalue = get_url_param('filter');
+            paramvalue = get_BASEURL_param('filter');
             let filter = (paramvalue != '')? paramvalue : 'MATCH';
             document.getElementById('EditModal').addEventListener('hidden.bs.modal', function (event) {
                 document.getElementById("StatusInput").value = '';
@@ -184,11 +184,11 @@
                 document.getElementById("opdrachtgeverAkkoord").checked = false;
             })
             sollicitaties = {};
-            fetch(URL+'Sollicitatie/talentmanager/'+loggedInUser.id)
+            fetch(BASEURL+'Sollicitatie/talentmanager/'+loggedInUser.id)
             .then(response => response.json())
             .then(sollicitatieData => {
                 let uitstroomrichting = [];
-                fetch(URL+'Specialization')
+                fetch(BASEURL+'Specialization')
                 .then(response => response.json())
                 .then(fetchdata => {
                     let SpecializationSelectElement = document.getElementById("SpecializationInput");
@@ -330,7 +330,7 @@
                 Medewerker_akkoord: document.getElementById('medewerkerAkkoord').checked,
                 Opdrachtgever_akkoord: document.getElementById('opdrachtgeverAkkoord').checked
             }
-            fetch(URL+'Sollicitatie/update/'+sollicitatieId, {
+            fetch(BASEURL+'Sollicitatie/update/'+sollicitatieId, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -357,7 +357,7 @@
                             EndDate: enddateValue,
                             Active: true
                         }
-                        fetch(URL+'Plaatsing/add', {
+                        fetch(BASEURL+'Plaatsing/add', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -394,7 +394,7 @@
                 formInput.style.display = (formInput.classList.contains('form-'+chosenclass))?'block':'none';
             });
         }
-        function get_url_param(param_name){
+        function get_BASEURL_param(param_name){
             let query = window.location.search.substring(1);
             let vars = query.split('&');
             for (var i=0;i<vars.length;i++) {
@@ -410,8 +410,8 @@
                 Password: document.getElementById('PasswordInput').value,
                 Telephone: document.getElementById('TelephoneInput').value
             }
-            // Send data as JSON to backend URL using Fetch API
-            fetch(URL+'Talentmanager/update/'+localStorage.getItem('UserId'), {
+            // Send data as JSON to backend BASEURL using Fetch API
+            fetch(BASEURL+'Talentmanager/update/'+localStorage.getItem('UserId'), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

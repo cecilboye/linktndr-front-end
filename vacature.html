@@ -90,11 +90,11 @@
                 document.getElementById("VactureIdInput").value = 0;
             })
             vacatures = {};
-            fetch(URL+'Vacature/opdrachtgever/'+loggedInUser.id)
+            fetch(BASEURL+'Vacature/opdrachtgever/'+loggedInUser.id)
             .then(response => response.json())
             .then(vacatureData => {
                 let uitstroomrichting = [];
-                fetch(URL+'Specialization')
+                fetch(BASEURL+'Specialization')
                 .then(response => response.json())
                 .then(fetchdata => {
                     let SpecializationSelectElement = document.getElementById("SpecializationInput");
@@ -154,10 +154,10 @@
                 enddate: enddate.toISOString(),
                 opdrachtgeverid: localStorage.getItem('UserId')
             }
-            let urlVar = (vacatureId == 0)?'add/':'update/'+vacatureId;
+            let BASEURLVar = (vacatureId == 0)?'add/':'update/'+vacatureId;
             let methodType =  (vacatureId == 0)?'POST':'PUT';
-            // Send data as JSON to backend URL using Fetch API
-            fetch(URL + '/Vacature/' + urlVar, {
+            // Send data as JSON to backend BASEURL using Fetch API
+            fetch(BASEURL + '/Vacature/' + BASEURLVar, {
                 method: methodType,
                 headers: {
                     'Content-Type': 'application/json'
@@ -191,7 +191,7 @@
             myModal.show();
         }
         function deleteVacature(id) {
-            fetch(URL + '/Vacature/delete/' + id, {
+            fetch(BASEURL + '/Vacature/delete/' + id, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'

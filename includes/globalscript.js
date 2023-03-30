@@ -1,4 +1,4 @@
-const URL = "https://linktindr.azurewebsites.net/api/";
+const BASEURL = "https://linktindr.azurewebsites.net/api/";
 
 function onPageLoad(after) {
     if (!localStorage.getItem("Token")) {
@@ -12,7 +12,7 @@ function onPageLoad(after) {
     else {
         var userToken = localStorage.getItem('Token');
         if (!!userToken) {
-            fetch(URL + 'user', {
+            fetch(BASEURL + 'user', {
                 headers: {
                     'Authorization': userToken
                 }

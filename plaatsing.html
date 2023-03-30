@@ -88,7 +88,7 @@
             }
             console.log(loggedInUser);
             plaatsingen = {};
-            fetch(URL+'Plaatsing/talentmanager/'+loggedInUser.id)
+            fetch(BASEURL+'Plaatsing/talentmanager/'+loggedInUser.id)
             .then(response => response.json())
             .then(plaatsingData => {
                 console.log(plaatsingData);
@@ -142,7 +142,7 @@
                 Active: false
             }
             console.log(updateddata);
-            fetch(URL+'Plaatsing/update/'+id, {
+            fetch(BASEURL+'Plaatsing/update/'+id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
