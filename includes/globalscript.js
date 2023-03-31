@@ -1,4 +1,5 @@
-const BASEURL = "https://linktindr.azurewebsites.net/api/";
+//const BASEURL = "https://localhost:7199/api";
+const BASEURL = "https://linktindr.azurewebsites.net/api";
 
 function onPageLoad(after) {
     if (!localStorage.getItem("Token")) {
