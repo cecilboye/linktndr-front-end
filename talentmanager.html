@@ -167,8 +167,7 @@
             document.getElementById("EmailInput").value = loggedInUser.email;
             document.getElementById("PasswordInput").value = loggedInUser.password;
             document.getElementById("TelephoneInput").value = loggedInUser.telephone;
-            let paramvalue = get_url_param('filter');
-            let filter = (paramvalue != '')? paramvalue : 'MATCH';
+            let filter = 'MATCH';
             document.getElementById('EditModal').addEventListener('hidden.bs.modal', function (event) {
                 document.getElementById("StatusInput").value = '';
                 document.getElementById("MedewerkerInput").value = '';
